@@ -7,15 +7,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ProductService {
-
     private ConcurrentHashMap<Long, Product> products = new ConcurrentHashMap<>();
     private AtomicLong nextId = new AtomicLong();
 
     public ProductService(){
-        save();
+        save(new Product("Raul", 1234));
+        save(new Product("AndresRex", 1234));
+        save(new Product("Ruben Camacho", 1234));
     }
-    public void save(){
-
+    public Product save(Product productToInsert){
+        long l = nextId.incrementAndGet();
+        products.put(l, productToInsert);
+        return productToInsert;
     }
 
 }
