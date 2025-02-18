@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="shortcut icon" href="/pictures/logo.ico" type="image/x-icon">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /*Bar settings*/
+        ::-webkit-scrollbar {
+            width: 10px;
+            background-color: #87CEEB;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4682B4;
+            border-radius: 5px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #091770;
+            color: #4169E1;
+        }
+
+        /*First title settings*/
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Space between letters */
+            font-weight: normal;
+            color: #ffffff;
+        }
+
+        /*Form settings*/
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #ADD8E6;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /*Settings on the form boxes*/
+        input[type="text"],
+        input[type="number"],
+        input[type="email"] {
+            width: calc(100% - 12px);
+            padding: 8px; /* Increment internal space */
+            margin-bottom: 15px;
+            border: 1px solid #4682B4;
+            border-radius: 3px; /* Round border */
+            background-color: #fff;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4682B4;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Soft transition */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1E90FF;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Semi-transparent black background */
+        }
+
+        .modal-content {
+            background-color: #4682B4; /* Blue color */
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            color: #ffffff; /* White color */
+        }
+
+        .close {
+            color: #ffffff; /* White color */
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #f5deb3; /* Light brown */
+        }
+    </style>
+</head>
+<body>
+<h1>Add Products</h1>
+<form action="/products/add" method="post" id="addFormProduct">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price"><br>
+    <input type="submit" value="Add">
+</form>
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>You must fill in all the fields of the form.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById("addFormProduct").addEventListener("submit", function(event) {
+        const name = document.getElementById("name").value.trim();
+        const price = document.getElementById("price").value.trim();
+
+        if (!name || !price){
+            document.getElementById("myModal").style.display = "block";
+            event.preventDefault();
+        }
+    });
+
+    document.querySelector(".close").addEventListener("click", function() {
+        document.getElementById("myModal").style.display = "none";
+    });
+
+    window.addEventListener("click", function(event) {
+        if (event.target == document.getElementById("myModal")) {
+            document.getElementById("myModal").style.display = "none";
+        }
+    });
+
+    document.getElementById("price").addEventListener("input", function (){
+        const exp = document.getElementById("price").value.trim();
+        if (exp < 0){
+            document.getElementById("price").setCustomValidity('Price must be higher than 0');
+        } else {
+            document.getElementById("price").setCustomValidity('');
+        }
+    });
+</script>
+</body>
+</html>

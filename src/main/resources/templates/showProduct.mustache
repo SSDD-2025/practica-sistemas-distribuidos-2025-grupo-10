@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Producer Details</title>
+    <!--link rel="shortcut icon" href="/pictures/logo.ico" type="image/x-icon">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /*Bar settings*/
+        ::-webkit-scrollbar {
+            width: 10px;
+            background-color: #afdbe1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #084c60;
+            border-radius: 5px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #afdbe1;
+            color: #084c60;
+            background-position: center;
+            display: flex;
+            flex-direction: row; /* Align elements in a row */
+            align-items: stretch; /* Adjust items height */
+            height: 100vh;
+            position: relative;
+            margin: 0; /* No additional margin */
+        }
+        .btn-menu {
+            display: flex;
+            flex-direction: column; /* Align buttons vertically*/
+            align-items: center; /* Center buttons horizontally */
+            justify-content: center;
+            background-color: #084c60;
+            padding: 20px;
+            width: 200px;
+            z-index: 2; /* Make sure it is on the bottom */
+            position: relative; /* Ensure that it does not move behind other elements. */
+        }
+        /*Button settings*/
+        .btn {
+            display: block;
+            margin: 10px 0;
+            padding: 15px 25px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: #084c60;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s; /* Added transition for resizing */
+        }
+        .btn:hover {
+            transform: scale(1.1); /* Occupy the remaining space*/
+        }
+        .background-right {
+            flex: 1; /* Occupies all available space */
+            background-color: #bbe1ec;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.2; /* Opacity so as not to distract from content */
+            margin-left: 20px;
+        }
+        .producer-details-container {
+            flex: 1; /* Fill remaining space */
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semitransparent background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        .confirmation-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .confirmation-popup h2 {
+            margin-top: 0;
+        }
+
+        .confirmation-popup a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .confirmation-popup .primary {
+            background-color: #08373b;
+            color: white;
+        }
+
+        .confirmation-popup .secondary {
+            background-color: #ccc;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="btn-menu">
+
+    <a class="btn btn-primary" onclick="showDeleteConfirmation()">Delete Product</a>
+    <a href="/products" class="btn btn-primary">Return to list of Products</a>
+</div>
+<div class="product-details-container">
+    <h1>Producer Details</h1>
+    <p>Name: {{product.name}}</p>
+    <p>Experience: {{product.price}}</p>
+</div>
+<div class="background-right"></div>
+
+<div id="deleteConfirmationPopup" class="confirmation-popup">
+    <h2>Are you sure you want to delete this producer?</h2>
+    <a href="/product/delete/{{product.id}}" class="primary">Yes</a>
+    <a href="#" class="secondary" onclick="hideDeleteConfirmation()">No</a>
+</div>
+
+<script>
+    function showDeleteConfirmation(){
+        document.getElementById('deleteConfirmationPopup').style.display = 'block';
+    }
+
+    function hideDeleteConfirmation(){
+        document.getElementById('deleteConfirmationPopup').style.display = 'none';
+    }
+</script>
+</body>
+</html>

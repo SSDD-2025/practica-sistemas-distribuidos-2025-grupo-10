@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <!--<link rel="shortcut icon" href="/pictures/logo.ico" type="image/x-icon"> añade un logo en la pestaña de la página-->
+    <!-- <link rel="stylesheet" href="style1.css">-->
+    <style>
+        /*Bar settings*/
+        ::-webkit-scrollbar {
+            width: 10px;
+            background-color: #d2b48c;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #654321;
+            border-radius: 5px;
+        }
+
+        .container {
+            width: 250px;
+            padding: 10px; /* Internal space around the content */
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.5); /* White background with 80% opacity */
+            border-radius: 10px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            margin-left: 30px;
+            flex-grow: 1;
+        }
+        .container:last-child{
+            margin-right: 0; /*Deletes the right margin of the last container*/
+        }
+
+        .container img {
+            width: 100%; /* To make the image fill the entire width of the container */
+            height: auto; /* Automatic height adjustment */
+            display: block; /* So that there is no extra space under the image */
+            margin-bottom: 10px; /* Space between the image and the button */
+        }
+        .container img:hover{
+            transform: scale(1.1);
+        }
+
+        .button-container{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .button{
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #9b7045;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Soft transition */
+        }
+        .button:hover {
+            transform: scale(1.2); /* Increases size a 5% */
+        }
+        .containers-wrapper {
+            display: flex; /* Main container with flex display */
+        }
+        h1 {
+            color: #3D1406;
+            font-family: 'Pacifico', cursive;
+            font-weight: bold;
+            align-items: flex-start;
+            align-content: flex-start;
+
+
+            padding: 20px; /* Internal spacing */
+            text-align: center; /* Text centering */
+            width: 100%; /* Occupy the entire screen width */
+            margin-top: 15px; /* Removes the default top margin */
+            margin-bottom: 12px; /* Add bottom margin */
+        }
+        h2 {
+            color: #592412;
+            font-family: 'Pacifico', cursive;
+            font-weight: bold;
+
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            margin-top: 0; /* Removes the default top margin */
+            margin-bottom: 0; /* Add bottom margin */
+        }
+
+        body {
+            background-color: #d29a87;
+            background-size: cover; /* Adjust the image size to cover the entire background*/
+            background-repeat: no-repeat; /* Prevents background image from repeating*/
+
+            font-family: 'Arial', sans-serif;
+            color: #654321; /* Text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            position: relative;
+            padding-top: 20px;
+        }
+
+        h1, h2{
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<h1>What do you want to do?</h1>
+<div class="containers-wrapper">
+    <div class="container">
+        <div class="image">
+            <img src="/resources/static/laasistenta.jpg">
+        </div>
+        <div class="button-container">
+            <a href="/products" class="button" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go to Products</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
