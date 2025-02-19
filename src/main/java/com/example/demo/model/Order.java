@@ -1,23 +1,29 @@
 package com.example.demo.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
-    private int id;
-    private int total;
+    private long id;
+    private BigDecimal total;
     private int numItems;
     private Date date;
     private User user;
+    private List<Product> products;  // Lista de productos en el pedido
+    private String status;  // Estado del pedido (pendiente, procesado, etc.)
 
-    public Order(int id, int total, int numItems, Date date, User user) {
+    public Order(long id, BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
         this.id = id;
         this.total = total;
         this.numItems = numItems;
         this.date = date;
         this.user = user;
+        this.products = products;
+        this.status = status;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -25,11 +31,11 @@ public class Order {
         this.id = id;
     }
 
-    public int getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -41,19 +47,35 @@ public class Order {
         this.numItems = numItems;
     }
 
-    public Date getdate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setdate(Date date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public User getuser() {
+    public User getUser() {
         return user;
     }
 
-    public void setuser(User user) {
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

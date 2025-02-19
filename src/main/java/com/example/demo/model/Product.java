@@ -1,18 +1,21 @@
 package com.example.demo.model;
 
 public class Product {
+    private Long id;   // El ID ahora es Long, para que coincida con los demás modelos.
     private String name;
     private int price;
-    private Long id;
-    public Product(){
 
+    // Constructor vacío
+    public Product() {
     }
 
+    // Constructor con parámetros
     public Product(String name, int price) {
         this.name = name;
         this.price = price;
     }
 
+    // Getter y setter para id
     public Long getId() {
         return id;
     }
@@ -21,19 +24,22 @@ public class Product {
         this.id = id;
     }
 
-    public String getname() {
+    // Getter y setter para name
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getprice() {
+    // Getter y setter para price
+    public int getPrice() {
         return price;
     }
 
-    public void setprice(int price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }
+
