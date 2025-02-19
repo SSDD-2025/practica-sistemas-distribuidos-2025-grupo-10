@@ -1,11 +1,21 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String name;
     private BigDecimal price;
+    @ManyToOne
+    private Category category; //no se si está bien
+    @ManyToMany
+    private List<Order> orders = new ArrayList<>();
 
     // Constructor vacío
     public Product() {
@@ -13,6 +23,7 @@ public class Product {
 
     // Constructor con parámetros
     public Product(String name, BigDecimal price) {
+        super();
         this.name = name;
         this.price = price;
     }
@@ -26,7 +37,7 @@ public class Product {
         this.id = id;
     }
 
-    // Getter y setter para name
+    // Getters and setters for name
     public String getName() {
         return name;
     }
@@ -43,5 +54,18 @@ public class Product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+    public List<Order> getOrders(){
+        return orders;
+    }
+    public void setOrders(List<Order> orders){
+        this.orders = orders;
+    }
+    public Category getCategory(){
+        return category;
+    }
+    public void setCategory(Category category){
+        this.category = category;
+    }
 }
+
 

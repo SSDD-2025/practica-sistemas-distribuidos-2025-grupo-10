@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     @GetMapping("/products")
     public String StringShowProducts(Model model){
         model.addAttribute("products", productService.findall());
