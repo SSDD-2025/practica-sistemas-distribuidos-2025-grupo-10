@@ -23,8 +23,8 @@ public class OrderService {
     public OrderService() {
         // Creamos una lista de productos de ejemplo
         List<Product> products = new ArrayList<>();
-        products.add(new Product("Laptop", 1000));
-        products.add(new Product("Phone", 800));
+        products.add(new Product("Laptop", new BigDecimal("1000")));
+        products.add(new Product("Phone", new BigDecimal("800")));
 
         // Creamos el pedido de ejemplo
         save(new Order(nextId.getAndIncrement(), new BigDecimal("1800.00"), 2, new Date(), new User(), products, "pending"));
