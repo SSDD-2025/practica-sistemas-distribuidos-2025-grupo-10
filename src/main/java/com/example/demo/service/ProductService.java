@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Product;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -14,9 +15,9 @@ public class ProductService {
     private AtomicLong nextId = new AtomicLong();
 
     public ProductService(){
-        save(new Product("Raul", 1234));
-        save(new Product("AndresRex", 1234));
-        save(new Product("Ruben Camacho", 1234));
+        save(new Product("Raul", new BigDecimal(48615)));
+        save(new Product("AndresRex", new BigDecimal(4551)));
+        save(new Product("Ruben Camacho", new BigDecimal(4515331)));
     }
     public void save(Product product){
         long id = nextId.getAndIncrement();
