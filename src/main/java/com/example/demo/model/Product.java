@@ -1,16 +1,18 @@
 package com.example.demo.model;
 
+import java.math.BigDecimal;
+
 public class Product {
-    private Long id;   // El ID ahora es Long, para que coincida con los demás modelos.
+    private Long id;
     private String name;
-    private int price;
+    private BigDecimal price;
 
     // Constructor vacío
     public Product() {
     }
 
     // Constructor con parámetros
-    public Product(String name, int price) {
+    public Product(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
     }
@@ -34,11 +36,11 @@ public class Product {
     }
 
     // Getter y setter para price
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
