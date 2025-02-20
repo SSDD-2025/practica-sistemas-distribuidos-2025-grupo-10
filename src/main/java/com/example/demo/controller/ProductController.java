@@ -22,6 +22,7 @@ public class ProductController {
     private OrderRepository orderRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+
     @GetMapping("/products")
     public String StringShowProducts(Model model){
         model.addAttribute("products", productService.findall());

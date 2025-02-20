@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import jakarta.persistence.ManyToMany;
+
 public class User {
     private Long id; 
     private String username;

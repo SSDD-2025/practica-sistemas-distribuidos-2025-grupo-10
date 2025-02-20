@@ -40,6 +40,7 @@ public class Category {
     public List<Product> getProducts(){
         return products;
     }
+
     public void setProduct(List<Product> products){
         this.products = products;
     }
