@@ -10,7 +10,6 @@ public class Order {
     private int numItems;
     private Date date;
     private User user;
-    private List<Product> products;  // Lista de productos en el pedido
     private String status;  // Estado del pedido (pendiente, procesado, etc.)
 
     public Order(long id, BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
@@ -61,14 +60,6 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
     public String getStatus() {
