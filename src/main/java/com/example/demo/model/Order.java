@@ -1,10 +1,18 @@
 package com.example.demo.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)   
     private long id;
     private BigDecimal total;
     private int numItems;
@@ -12,6 +20,9 @@ public class Order {
     private User user;
     private String status;  // Estado del pedido (pendiente, procesado, etc.)
 
+    @ManyToMany
+    private List<Product> products = new ArrayList<>();
+    
     public Order(long id, BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
         this.id = id;
         this.total = total;
@@ -68,5 +79,11 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    public List<Product> getProducts(){
+        return products;
+    }
+    public void setProducts(List<Product> products){
+        this.products = products;
     }
 }

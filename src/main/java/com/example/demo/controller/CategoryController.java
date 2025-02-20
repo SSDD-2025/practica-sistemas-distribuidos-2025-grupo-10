@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.CategoryService;
+import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +18,10 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @GetMapping("/categories")
     public String showCategories(Model model) {

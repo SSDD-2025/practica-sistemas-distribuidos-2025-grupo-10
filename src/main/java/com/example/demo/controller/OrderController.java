@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Order;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +21,14 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     // Mostrar todos los pedidos
     @GetMapping("/orders")
