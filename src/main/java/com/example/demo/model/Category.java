@@ -13,9 +13,11 @@ public class Category {
     private long id;
     private String name; // Conjunto de productos asociados a la categoría
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
+    public Category(){
+    }
     public Category(String name) {
         this.name = name;
     }

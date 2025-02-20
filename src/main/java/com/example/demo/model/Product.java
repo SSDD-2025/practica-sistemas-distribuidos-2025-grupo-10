@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,16 +13,14 @@ public class Product {
     private long id;
     private String name;
     private BigDecimal price;
-
-    //@ManyToOne
-    //private Category category; //no se si está bien
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false) //  Un producto pertenece a una categoria,
-                                                //  pero una categoria tiene varios productos
     private Category category;
 
-    @ManyToMany(mappedBy = "Order")
+    //@ManyToOne
+    //@JoinColumn(name = "id", nullable = false) //  Un producto pertenece a una categoria,
+                                                //  pero una categoria tiene varios productos
+    @ManyToMany
     private List<Order> orders = new ArrayList<>();
 
     // Constructor vacío

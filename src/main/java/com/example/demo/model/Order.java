@@ -14,10 +14,10 @@ public class Order {
     private BigDecimal total;
     private int numItems;
     private Date date;
-    private User user;
+    private User user; //creo que esto no debería ir ahí, tendrá un usuario asignado con lo de la BBDD
     private String status;  // Estado del pedido (pendiente, procesado, etc.)
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "orders")
     private List<Product> products = new ArrayList<>();
     public Order(){}
     public Order(long id, BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {

@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+
 @Entity
 public class User {
-    private Long id; 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String username;
     private String password;
     private String email;
