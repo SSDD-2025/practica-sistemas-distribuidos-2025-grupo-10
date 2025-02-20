@@ -12,9 +12,16 @@ public class Product {
     private long id;
     private String name;
     private BigDecimal price;
+
+    //@ManyToOne
+    //private Category category; //no se si está bien
+
     @ManyToOne
-    private Category category; //no se si está bien
-    @ManyToMany
+    @JoinColumn(name = "id", nullable = false) //  Un producto pertenece a una categoria,
+                                                //  pero una categoria tiene varios productos
+    private Category category;
+
+    @ManyToMany(mappedBy = "Order")
     private List<Order> orders = new ArrayList<>();
 
     // Constructor vacío
