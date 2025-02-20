@@ -5,17 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <!--<link rel="shortcut icon" href="/pictures/logo.ico" type="image/x-icon"> añade un logo en la pestaña de la página-->
-    <!-- <link rel="stylesheet" href="style1.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /*Bar settings*/
         ::-webkit-scrollbar {
             width: 10px;
-            background-color: #252424;
+            background-color: #d2b48c;
         }
 
         ::-webkit-scrollbar-thumb {
-            background-color: #434140;
+            background-color: #654321;
             border-radius: 5px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            border-bottom: 1px solid #ccc;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
         }
 
         .container {
@@ -50,7 +82,7 @@
         .button{
             display: inline-block;
             padding: 8px 20px;
-            background-color: #476167;
+            background-color: #9b7045;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -64,6 +96,7 @@
         }
         h1 {
             color: black;
+            font-family: 'Pacifico', cursive;
             font-weight: bold;
             align-items: flex-start;
             align-content: flex-start;
@@ -77,6 +110,7 @@
         }
         h2 {
             color: black;
+            font-family: 'Pacifico', cursive;
             font-weight: bold;
 
             padding: 20px;
@@ -91,7 +125,7 @@
             background-size: cover; /* Adjust the image size to cover the entire background*/
             background-repeat: no-repeat; /* Prevents background image from repeating*/
 
-            font-family: 'Arial';
+            font-family: 'Arial', sans-serif;
             color: black; /* Text color */
             display: flex;
             flex-direction: column;
@@ -109,6 +143,14 @@
     </style>
 </head>
 <body>
+<nav class="navbar">
+    <div class="menu-icon">☰</div>
+    <div class="nav-links">
+        <a href="/products">INICIAR SESIÓN</a>
+        <a href="/products"><i class="fas fa-search"></i></a>
+        <a href="/products"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+</nav>
 <h1>What do you want to do?</h1>
 <div class="containers-wrapper">
     <div class="container">

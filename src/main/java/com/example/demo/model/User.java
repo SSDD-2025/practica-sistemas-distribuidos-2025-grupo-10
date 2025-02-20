@@ -1,7 +1,8 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-
+@Entity
 public class User {
     private Long id; 
     private String username;

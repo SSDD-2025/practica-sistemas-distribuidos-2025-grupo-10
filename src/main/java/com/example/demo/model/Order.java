@@ -1,15 +1,12 @@
 package com.example.demo.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Entity
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)   
@@ -22,7 +19,7 @@ public class Order {
 
     @ManyToMany
     private List<Product> products = new ArrayList<>();
-    
+    public Order(){}
     public Order(long id, BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
         this.id = id;
         this.total = total;
