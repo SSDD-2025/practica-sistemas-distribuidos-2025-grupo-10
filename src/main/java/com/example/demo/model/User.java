@@ -3,12 +3,19 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users") // Asegúrate de que el nombre de la tabla sea correcto
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "username") // Asegúrate de que el nombre de la columna sea correcto
     private String username;
+
+    @Column(name = "password") // Asegúrate de que el nombre de la columna sea correcto
     private String password;
+
+    @Column(name = "email") // Asegúrate de que el nombre de la columna sea correcto
     private String email;
 
     public User() {}
