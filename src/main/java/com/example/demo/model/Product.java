@@ -17,9 +17,6 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    //@ManyToOne
-    //@JoinColumn(name = "id", nullable = false) //  Un producto pertenece a una categoria,
-                                                //  pero una categoria tiene varios productos
     @ManyToMany
     private List<Order> orders = new ArrayList<>();
 

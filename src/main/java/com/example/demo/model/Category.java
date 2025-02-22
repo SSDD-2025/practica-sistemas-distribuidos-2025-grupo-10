@@ -46,5 +46,12 @@ public class Category {
     public void setProduct(List<Product> products){
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Category[id=%d, name='%s']", id, name);
+    }
+
+
 }
 

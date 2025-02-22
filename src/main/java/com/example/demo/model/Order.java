@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Entity
 public class Order {
     @Id
@@ -19,9 +20,9 @@ public class Order {
 
     @ManyToMany(mappedBy = "orders")
     private List<Product> products = new ArrayList<>();
+
     public Order(){}
-    public Order(long id, BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
-        this.id = id;
+    public Order(BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
         this.total = total;
         this.numItems = numItems;
         this.date = date;
