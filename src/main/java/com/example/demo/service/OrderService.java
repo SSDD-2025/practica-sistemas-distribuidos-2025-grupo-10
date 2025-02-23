@@ -1,51 +1,39 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Order;
-import com.example.demo.model.User;
-import com.example.demo.model.Product;
+import com.example.demo.repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.*;
+
 
 @Service
 public class OrderService {
-
-    private ConcurrentMap<Long, Order> orders = new ConcurrentHashMap<>();
-    private AtomicLong nextId = new AtomicLong();
-
-    public OrderService() {
-        // Creamos una lista de productos de ejemplo
-        List<Product> products = new ArrayList<>();
-        products.add(new Product("Laptop", new BigDecimal("1000")));
-        products.add(new Product("Phone", new BigDecimal("800")));
-
-        // Creamos el pedido de ejemplo
-        save(new Order(nextId.getAndIncrement(), new BigDecimal("1800.00"), 2, new Date(), new User(), products, "pending"));
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private ProductService productService;
+    public OrderService(OrderRepository orderRepository){
+        this.orderRepository = orderRepository;
+        //orderRepository.save(new Order(new BigDecimal(10), 4, new Date(), null, ""));
+                //BigDecimal total, int numItems, Date date, List<Product> products, String status
     }
-
-    public void save(Order order) {
-        long id = nextId.getAndIncrement();
-        order.setId((int) id);  // Asegúrate de que el id es un tipo int si lo necesitas
-        this.orders.put(id, order);
+    public Optional<Order> findById(long id){
+        return orderRepository.findById(id);
     }
-
-    public Collection<Order> findAll() {
-        return orders.values();
+    public boolean exist(long id){
+        return orderRepository.existsById(id);
     }
-
-    public Order getOrderById(long id) {
-        return orders.get(id);
+    public Collection<Order> findAll(){
+        return orderRepository.findAll();
     }
-
-    public void deleteOrderById(long id) {
-        this.orders.remove(id);
+    public Order save(Order order){
+        return orderRepository.save(order);
+    }
+    public void deleteOrderById(Long id){
+        orderRepository.deleteById(id);
     }
 }
 

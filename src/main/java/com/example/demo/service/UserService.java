@@ -1,16 +1,19 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
-
+    /*
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -44,4 +47,43 @@ public class UserService {
             entityManager.remove(user);
         }
     }
+
+     */
+
+    private final UserRepository userRepository;
+
+    public UserService (UserRepository userRepository) {
+        this.userRepository = userRepository;
+        //  Test usage only
+        userRepository.save(new User("Andresrex", "Bocadillo de Panceta", "Nico el mejor"));
+    }
+
+    public void save (User user){
+        userRepository.save(user);
+    }
+
+    public Collection<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public Optional<User> findUserById (Long id){
+        return userRepository.findById(id);
+    }
+
+    public void deleteUserById(Long id){
+        userRepository.deleteById(id);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Optional;
+
 @Controller
 public class ProductController {
     @Autowired
@@ -40,7 +42,7 @@ public class ProductController {
     }
     @GetMapping("/products/{id}")
     public String showProduct(Model model, @PathVariable long id){
-        Product product = productService.getProductById(id);
+        Optional<Product> product = productService.findProductById(id);
         model.addAttribute("product", product);
         return "showProduct";
     }

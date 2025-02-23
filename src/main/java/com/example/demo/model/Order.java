@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -15,18 +16,16 @@ public class Order {
     private BigDecimal total;
     private int numItems;
     private Date date;
-    private User user; //creo que esto no debería ir ahí, tendrá un usuario asignado con lo de la BBDD
     private String status;  // Estado del pedido (pendiente, procesado, etc.)
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "orders")
     private List<Product> products = new ArrayList<>();
 
     public Order(){}
-    public Order(BigDecimal total, int numItems, Date date, User user, List<Product> products, String status) {
+    public Order(BigDecimal total, int numItems, Date date, List<Product> products, String status) {
         this.total = total;
         this.numItems = numItems;
         this.date = date;
-        this.user = user;
         this.products = products;
         this.status = status;
     }
@@ -61,14 +60,6 @@ public class Order {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getStatus() {

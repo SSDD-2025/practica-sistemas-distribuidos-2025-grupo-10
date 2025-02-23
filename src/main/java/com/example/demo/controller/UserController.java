@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Order;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -39,15 +42,25 @@ public class UserController {
     // Ver detalles de un usuario
     @GetMapping("/users/{id}")
     public String showUser(Model model, @PathVariable Long id) {
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "showUser"; // Vista que muestra los detalles del usuario
+        Optional<User> user = userService.findUserById(id);
+        if (user.isPresent()){
+            model.addAttribute("order", user.get());
+            return "order";
+        } else{
+            return "orders";
+        }
+
     }
 
     // Eliminar un usuario
     @PostMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
-        userService.deleteUserById(id); // Eliminamos el usuario
-        return "redirect:/users"; // Redirigimos a la lista de usuarios
+        Optional<User> user = userService.findUserById(id);
+        if (user.isPresent()){
+            userService.deleteUserById(id);
+            return "order";
+        } else{
+            return "orders";
+        }
     }
 }

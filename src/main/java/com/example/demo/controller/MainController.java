@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     @GetMapping("/mainPage")
     public String showMainPage(){
+        //  Llame algun metodo de inicializar usuario
         return "mainPage";
     }
     @GetMapping("/startProducts")
