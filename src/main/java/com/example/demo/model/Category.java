@@ -11,13 +11,17 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String name; // Conjunto de productos asociados a la categoría
+    private String name;
 
+    //  Relations
+    //  Verificada (Team) (Ejem 9)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products;
 
     public Category(){
+
     }
+
     public Category(String name) {
         this.name = name;
     }
@@ -51,7 +55,5 @@ public class Category {
     public String toString() {
         return String.format("Category[id=%d, name='%s']", id, name);
     }
-
-
 }
 

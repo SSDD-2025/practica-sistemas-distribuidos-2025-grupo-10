@@ -13,23 +13,31 @@ public class Product {
     private long id;
     private String name;
     private BigDecimal price;
-    @JsonIgnore
+
+    //  Relations
+    //  Verificada (Player) (ejem 9)
     @ManyToOne
     private Category category;
 
+    //  Verificada (Player) ()
     @ManyToMany
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
+
+    //  Verificada (ejem 10)
+    @ManyToMany(mappedBy="teams")
+    private List<User> users;
 
     // Constructor vacío
     public Product() {
+
     }
+
     // Constructor con parámetros
     public Product(String name, BigDecimal price) {
         super();
         this.name = name;
         this.price = price;
     }
-
 
     //  Getter y setters
     public Long getId() {

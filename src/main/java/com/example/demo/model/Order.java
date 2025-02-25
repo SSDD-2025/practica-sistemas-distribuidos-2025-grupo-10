@@ -17,11 +17,20 @@ public class Order {
     private int numItems;
     private Date date;
     private String status;  // Estado del pedido (pendiente, procesado, etc.)
-    @JsonIgnore
-    @ManyToMany(mappedBy = "orders")
-    private List<Product> products = new ArrayList<>();
 
-    public Order(){}
+    //  Relations
+    //  Verificada (Team)
+    @ManyToMany(mappedBy = "orders")
+    private List<Product> products;
+
+    //  Verificada (Ejem 8)
+    @ManyToOne
+    private User user;
+
+    public Order(){
+
+    }
+
     public Order(BigDecimal total, int numItems, Date date, List<Product> products, String status) {
         this.total = total;
         this.numItems = numItems;
@@ -69,9 +78,11 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
     public List<Product> getProducts(){
         return products;
     }
+
     public void setProducts(List<Product> products){
         this.products = products;
     }

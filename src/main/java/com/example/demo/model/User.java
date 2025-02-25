@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users") // Asegúrate de que el nombre de la tabla sea correcto
 public class User {
@@ -37,4 +40,15 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+
+
+    //  Relations
+    //  Verificada (Ejem 8)
+    @OneToMany(mappedBy = "User")
+    private List<Order> userOrders;
+
+    //  Verificada (Ejem 10)
+    @ManyToMany
+    private List<Product> userProducts;
 }
