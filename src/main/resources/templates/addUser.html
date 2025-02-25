@@ -1,19 +1,125 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html lang="en">
 <head>
-    <title>Add User</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        ::-webkit-scrollbar {
+            width: 10px;
+            background-color: #87CEEB;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4682B4;
+            border-radius: 5px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #091770;
+            color: #4169E1;
+        }
+
+        /*First title settings*/
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Space between letters */
+            font-weight: normal;
+            color: #ffffff;
+        }
+
+        /*Form settings*/
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #ADD8E6;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /*Settings on the form boxes*/
+        input[type="text"],
+        input[type="number"],
+        input[type="email"] {
+            width: calc(100% - 12px);
+            padding: 8px; /* Increment internal space */
+            margin-bottom: 15px;
+            border: 1px solid #4682B4;
+            border-radius: 3px; /* Round border */
+            background-color: #fff;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4682B4;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Soft transition */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1E90FF;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Semi-transparent black background */
+        }
+
+        .modal-content {
+            background-color: #4682B4; /* Blue color */
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            color: #ffffff; /* White color */
+        }
+
+        .close {
+            color: #ffffff; /* White color */
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #f5deb3; /* Light brown */
+        }
+    </style>
 </head>
 <body>
 <h1>Add New User</h1>
-<form action="#" th:action="@{/users/add}" th:object="${user}" method="post">
+<form action="/producers/add" method="post" id="addFormProducer">
     <label for="username">Username:</label>
-    <input type="text" id="username" th:field="*{username}" /><br/>
+    <input type="text" id="username" name="username"><br>
     <label for="password">Password:</label>
-    <input type="password" id="password" th:field="*{password}" /><br/>
+    <input type="text" id="password" name="password"><br>
     <label for="email">Email:</label>
-    <input type="email" id="email" th:field="*{email}" /><br/>
+    <input type="email" id="email" name="email">
     <button type="submit">Add User</button>
 </form>
-<a href="/users">Back to Users</a>
+<a href="/mainPage">Back to Users</a>
 </body>
 </html>
