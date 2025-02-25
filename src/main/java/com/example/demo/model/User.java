@@ -6,21 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users") // Asegúrate de que el nombre de la tabla sea correcto
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "username") // Asegúrate de que el nombre de la columna sea correcto
     private String username;
-
-    @Column(name = "password") // Asegúrate de que el nombre de la columna sea correcto
     private String password;
-
-    @Column(name = "email") // Asegúrate de que el nombre de la columna sea correcto
     private String email;
+    //  Relations
+    //  Verificada (Ejem 8)
+    @OneToMany(mappedBy = "user")
+    private List<Order> userOrders;
 
+    //  Verificada (Ejem 10)
+    @ManyToMany
+    private List<Product> userProducts;
     public User() {}
 
     public User(String username, String password, String email) {
@@ -43,12 +43,5 @@ public class User {
 
 
 
-    //  Relations
-    //  Verificada (Ejem 8)
-    @OneToMany(mappedBy = "User")
-    private List<Order> userOrders;
 
-    //  Verificada (Ejem 10)
-    @ManyToMany
-    private List<Product> userProducts;
 }

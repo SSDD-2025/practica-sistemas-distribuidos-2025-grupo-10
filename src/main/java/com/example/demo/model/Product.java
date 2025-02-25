@@ -24,7 +24,7 @@ public class Product {
     private List<Order> orders;
 
     //  Verificada (ejem 10)
-    @ManyToMany(mappedBy="teams")
+    @ManyToMany(mappedBy="userProducts")
     private List<User> users;
 
     // Constructor vacío
