@@ -3,6 +3,7 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,9 @@ public class Order {
     private String status;  // Estado del pedido (pendiente, procesado, etc.)
 
     //  Relations
-    //  Verificada (Team)
+    //  (ejem 10) Order - Product
     @ManyToMany(mappedBy = "orders")
-    private List<Product> products;
-
-    //  Verificada (Ejem 8)
-    @ManyToOne
-    private User user;
+    private List<Product> products = new ArrayList<>();
 
     public Order(){
 

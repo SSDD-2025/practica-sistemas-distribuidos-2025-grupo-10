@@ -18,7 +18,6 @@ public class CategoryService {
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        initializeData();
     }
 
     public void save(Category category) {

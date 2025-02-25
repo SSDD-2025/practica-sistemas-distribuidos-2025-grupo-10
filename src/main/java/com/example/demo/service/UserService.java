@@ -54,8 +54,6 @@ public class UserService {
 
     public UserService (UserRepository userRepository) {
         this.userRepository = userRepository;
-        //  Test usage only
-        userRepository.save(new User("Andresrex", "Bocadillo de Panceta", "Nico el mejor"));
     }
 
     public void save (User user){

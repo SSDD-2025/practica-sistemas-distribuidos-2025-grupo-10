@@ -18,7 +18,6 @@ public class ProductService {
 
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
-        save(new Product());
     }
     public void save(Product product){
         productRepository.save(product);

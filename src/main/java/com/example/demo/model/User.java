@@ -13,21 +13,26 @@ public class User {
     private String username;
     private String password;
     private String email;
-    //  Relations
-    //  Verificada (Ejem 8)
-    @OneToMany(mappedBy = "user")
-    private List<Order> userOrders;
 
-    //  Verificada (Ejem 10)
+    //  Relations
+    //  (Ejem 7)    //  A la hora de borrar un usuario, se borran todos sus pedidos
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Order> userOrders = new ArrayList<>();
+
+    //  (Ejem 10) User - Product
     @ManyToMany
-    private List<Product> userProducts;
-    public User() {}
+    private List<Product> userProducts = new ArrayList<>();
+
+    public User() {
+
+    }
 
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
     }
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -41,7 +46,19 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
+    public List<Order> getUserOrders() {
+        return userOrders;
+    }
 
+    public void setUserOrders(List<Order> userOrders) {
+        this.userOrders = userOrders;
+    }
 
+    public List<Product> getUserProducts() {
+        return userProducts;
+    }
 
+    public void setUserProducts(List<Product> userProducts) {
+        this.userProducts = userProducts;
+    }
 }

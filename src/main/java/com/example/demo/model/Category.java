@@ -14,9 +14,9 @@ public class Category {
     private String name;
 
     //  Relations
-    //  Verificada (Team) (Ejem 9)
+    // (Ejem 9)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     public Category(){
 

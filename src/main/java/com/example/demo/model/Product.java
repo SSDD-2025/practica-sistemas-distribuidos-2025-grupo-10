@@ -15,17 +15,17 @@ public class Product {
     private BigDecimal price;
 
     //  Relations
-    //  Verificada (Player) (ejem 9)
+    //  (ejem 9)
     @ManyToOne
     private Category category;
 
-    //  Verificada (Player) ()
+    //  (ejem 10) Order - Product
     @ManyToMany
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
-    //  Verificada (ejem 10)
+    //  (ejem 10) User - Product
     @ManyToMany(mappedBy="userProducts")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     // Constructor vacío
     public Product() {
@@ -69,6 +69,13 @@ public class Product {
     }
     public void setCategory(Category category){
         this.category = category;
+    }
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
 

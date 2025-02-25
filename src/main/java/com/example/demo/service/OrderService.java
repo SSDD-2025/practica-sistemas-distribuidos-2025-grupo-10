@@ -11,14 +11,12 @@ import java.util.*;
 
 @Service
 public class OrderService {
+
     @Autowired
     private OrderRepository orderRepository;
-    @Autowired
-    private ProductService productService;
+
     public OrderService(OrderRepository orderRepository){
         this.orderRepository = orderRepository;
-        //orderRepository.save(new Order(new BigDecimal(10), 4, new Date(), null, ""));
-                //BigDecimal total, int numItems, Date date, List<Product> products, String status
     }
     public Optional<Order> findById(long id){
         return orderRepository.findById(id);
