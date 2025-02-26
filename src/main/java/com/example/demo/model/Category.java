@@ -15,7 +15,7 @@ public class Category {
 
     //  Relations
     // (Ejem 9)
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 
     public Category(){

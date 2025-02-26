@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)   
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private BigDecimal total;
     private int numItems;
@@ -19,7 +19,7 @@ public class Order {
 
     //  Relations
     //  (ejem 10) Order - Product
-    @ManyToMany(mappedBy = "orders")
+    @ManyToMany()
     private List<Product> products = new ArrayList<>();
 
     public Order(){

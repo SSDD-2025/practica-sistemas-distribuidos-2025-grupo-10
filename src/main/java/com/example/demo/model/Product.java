@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,10 +19,11 @@ public class Product {
     //  Relations
     //  (ejem 9)
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL) //  Si un producto no tiene categoria, quiere que en el html ponga "NO tiene categoria"
     private Category category;
 
     //  (ejem 10) Order - Product
-    @ManyToMany
+    @ManyToMany(mappedBy = "products")
     private List<Order> orders = new ArrayList<>();
 
     //  (ejem 10) User - Product
