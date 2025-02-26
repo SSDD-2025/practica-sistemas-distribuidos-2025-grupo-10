@@ -162,10 +162,10 @@
 <nav class="navbar">
 
     <div class="nav-links">
-        <a class="nav-item nav-link" href="/">Inicio</a>
-        <a class="nav-item nav-link" href="/category/baño">Baño</a>
-        <a class="nav-item nav-link" href="/category/cocina">Cocina</a>
-        <a class="nav-item nav-link" href="/category/habitación">Habitación</a>
+        <a class="nav-item nav-link active" href="/">Inicio</a>
+        {{#categories}}
+        <a class="nav-item nav-link" href="/category/{{id}}">{{name}}</a>
+        {{/categories}}
     </div>
     <span class="navbar-brand" href="/">CasaNova</span>
     <div class="nav-icons">
