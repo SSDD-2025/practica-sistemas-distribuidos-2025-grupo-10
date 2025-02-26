@@ -155,12 +155,22 @@
             font-family: sans-serif;
             pointer-events: none;
         }
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            /* Espacio entre botones */
+        }
+
+        .btn-container form {
+            margin: 0;
+            /* Elimina margen extra del formulario */
+        }
+
     </style>
 </head>
 
 <body>
 <nav class="navbar">
-
     <div class="nav-links">
         <a class="nav-item nav-link" href="/">Inicio</a>
         <a class="nav-item nav-link" href="/category/baño">Baño</a>
@@ -171,110 +181,89 @@
     <div class="nav-icons">
         <a href="/search"><i class="fas fa-search"></i></a>
         <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
-
         <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
-               aria-expanded="false">
+            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="/settings">⚙ Ajustes</a></li>
                 <li><a class="dropdown-item" href="/orders">📦 Mis pedidos</a></li>
                 <li><a class="dropdown-item admin-only" href="/admin">🛠 Administración</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/logout">🚪 Cerrar sesión</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="category-title">
-    <h1>Administración</h1>
+    <h1>Productos</h1>
 </div>
 
 <div class="container">
-
-
-    <div class="card">
-        <div class="card-header">
-            <h4>Añadir Nuevo Producto</h4>
-        </div>
-        <div class="card-body">
-            <form action="/products/add" method="post" id="addFormProduct">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nombre del Producto</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="price" class="form-label">Precio</label>
-                    <input type="number" class="form-control" id="price" name="price" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Añadir Producto</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Debes completar todos los campos del formulario.</p>
-        </div>
-    </div>
-
-    <!-- Sección para editar productos -->
     <div class="card mt-4">
         <div class="card-header">
-            <h4>Editar Productos</h4>
+            <h4>Lista de Productos</h4>
         </div>
         <div class="card-body">
             <ul class="list-group">
-                <!-- Lista de productos (esto se llenaría dinámicamente desde el backend) -->
-                <li class="list-group-item">
-                    Producto 1
-                    <button class="btn btn-warning btn-sm float-end">Editar</button>
-                    <button class="btn btn-danger btn-sm float-end me-2">Eliminar</button>
+                {{#products}}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{name}} - ${{price}}</span>
+                    <div class="btn-container">
+                        <a href="/products/{{id}}/edit" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="/products/{{id}}/delete" method="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </div>
                 </li>
-                <li class="list-group-item">
-                    Producto 2
-                    <button class="btn btn-warning btn-sm float-end">Editar</button>
-                    <button class="btn btn-danger btn-sm float-end me-2">Eliminar</button>
-                </li>
+                {{/products}}
             </ul>
         </div>
     </div>
 </div>
 <a href="/products" class="button" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go to Products</a>
+</body>
+
+
 <script>
-    document.getElementById("addFormProduct").addEventListener("submit", function (event) {
-        const name = document.getElementById("name").value.trim();
-        const price = document.getElementById("price").value.trim();
-
-        if (!name || !price) {
-            document.getElementById("myModal").style.display = "block";
-            event.preventDefault();
-        }
+    // Cargar productos dinámicamente al cargar la página
+    document.addEventListener("DOMContentLoaded", function () {
+        cargarProductos();
     });
 
-    document.querySelector(".close").addEventListener("click", function () {
-        document.getElementById("myModal").style.display = "none";
-    });
+    function cargarProductos() {
+        fetch("/products")
+            .then(response => response.json())
+            .then(products => {
+                const productList = document.getElementById("product-list");
+                productList.innerHTML = ""; // Limpia la lista antes de agregar nuevos productos
 
-    window.addEventListener("click", function (event) {
-        if (event.target == document.getElementById("myModal")) {
-            document.getElementById("myModal").style.display = "none";
-        }
-    });
+                products.forEach(product => {
+                    const li = document.createElement("li");
+                    li.classList.add("list-group-item");
+                    li.setAttribute("data-id", product.id);
+                    li.innerHTML = `
+                        ${product.name} - $${product.price}
+                        <a href="/products/${product.id}/edit" class="btn btn-warning btn-sm float-end me-2">Editar</a>
+                        <button class="btn btn-danger btn-sm float-end me-2" onclick="eliminarProducto(${product.id}, this)">Eliminar</button>
+                    `;
+                    productList.appendChild(li);
+                });
+            })
+            .catch(error => console.error("Error al cargar productos:", error));
+    }
 
-    document.getElementById("price").addEventListener("input", function () {
-        const exp = document.getElementById("price").value.trim();
-        if (exp < 0) {
-            document.getElementById("price").setCustomValidity('El precio debe ser mayor a 0');
-        } else {
-            document.getElementById("price").setCustomValidity('');
-        }
-    });
+    function eliminarProducto(id, button) {
+        fetch(`/products/${id}/delete`, { method: "POST" })
+            .then(response => {
+                if (response.ok) {
+                    button.parentElement.remove(); // Elimina el producto de la lista sin recargar la página
+                } else {
+                    console.error("Error al eliminar el producto");
+                }
+            })
+            .catch(error => console.error("Error en la solicitud:", error));
+    }
 </script>
+</html>

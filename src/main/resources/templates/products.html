@@ -143,15 +143,34 @@
 </head>
 <body>
 <h1 style="margin-bottom: 30px;">Available products</h1>
-<ul class="product-list">
+<ul class="list-group">
     {{#products}}
-    <li class="product-item">
-        <span class="arrow"></span><a href="/producers/showProduct/{{id}}" class="vintage-link">{{name}}</a>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>{{name}}</span>
+
     </li>
     {{/products}}
 </ul>
+
+
+
 <a href="/products/add" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Add Product</a>
+<a href="/products/manage" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Manage Product</a>
 <a href="/mainPage" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go back to main menu</a>
 </div>
+
+<script>
+    // Mostrar el popup de confirmación para eliminar
+    function showDeleteConfirmation(productId) {
+        document.getElementById('deleteConfirmationPopup').style.display = 'block';
+        document.getElementById('deleteProductLink').href = '/products/' + productId + '/delete';  // URL de eliminación
+    }
+
+    // Ocultar el popup de confirmación
+    function hideDeleteConfirmation() {
+        document.getElementById('deleteConfirmationPopup').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

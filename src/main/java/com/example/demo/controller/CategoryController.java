@@ -58,4 +58,10 @@ public class CategoryController{
         return "redirect:/categories";  // Redirige después de eliminar la categoría
     }
 
+    @GetMapping("/")
+    public String showHomePage(Model model) {
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories); // Pasamos las categorías al HTML
+        return "mainPage";
+    }
 }

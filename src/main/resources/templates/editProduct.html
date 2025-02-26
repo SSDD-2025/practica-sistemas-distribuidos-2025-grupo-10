@@ -155,99 +155,82 @@
             font-family: sans-serif;
             pointer-events: none;
         }
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            /* Espacio entre botones */
+        }
+
+        .btn-container form {
+            margin: 0;
+            /* Elimina margen extra del formulario */
+        }
+
     </style>
 </head>
 
 <body>
 <nav class="navbar">
-
-    <div class="nav-links">
-        <a class="nav-item nav-link" href="/">Inicio</a>
-        <a class="nav-item nav-link" href="/category/baño">Baño</a>
-        <a class="nav-item nav-link" href="/category/cocina">Cocina</a>
-        <a class="nav-item nav-link" href="/category/habitación">Habitación</a>
-    </div>
+        <div class="nav-links">
+            <a class="nav-item nav-link active" href="/">Inicio</a>
+            {{#categories}}
+            <a class="nav-item nav-link" href="/category/{{id}}">{{name}}</a>
+            {{/categories}}
+        </div>
     <span class="navbar-brand" href="/">CasaNova</span>
     <div class="nav-icons">
         <a href="/search"><i class="fas fa-search"></i></a>
         <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
-
         <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
-               aria-expanded="false">
+            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="/settings">⚙ Ajustes</a></li>
                 <li><a class="dropdown-item" href="/orders">📦 Mis pedidos</a></li>
                 <li><a class="dropdown-item admin-only" href="/admin">🛠 Administración</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/logout">🚪 Cerrar sesión</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="category-title">
-    <h1>Administración</h1>
+    <h1>Editar el producto</h1>
 </div>
+<div class="container mt-5">
+<h2>Editar Producto</h2>
 
-<div class="container">
+<!-- Formulario para editar el producto -->
+    <form action="/products/{{product.id}}/update" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre del Producto</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" required>
+        </div>
 
+        <div class="mb-3">
+            <label for="price" class="form-label">Precio</label>
+            <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{product.price}}" required>
+        </div>
 
-    <div class="card">
-        <div class="card-header">
-            <h4>Añadir Nuevo Producto</h4>
-        </div>
-        <div class="card-body">
-            <form action="/products/add" method="post" id="addFormProduct">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nombre del Producto</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="price" class="form-label">Precio</label>
-                    <input type="number" class="form-control" id="price" name="price" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Añadir Producto</button>
-            </form>
-        </div>
-    </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Categoría</label>
+            <select class="form-control" id="category" name="categoryId">
+                <option value="">Sin categoría</option> <!-- Opción vacía si no tiene categoría -->
+                {{#categories}}
 
-    <!-- Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Debes completar todos los campos del formulario.</p>
+                {{/categories}}
+            </select>
         </div>
-    </div>
 
-    <!-- Sección para editar productos -->
-    <div class="card mt-4">
-        <div class="card-header">
-            <h4>Editar Productos</h4>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="/products" class="btn btn-secondary">Cancelar</a>
         </div>
-        <div class="card-body">
-            <ul class="list-group">
-                <!-- Lista de productos (esto se llenaría dinámicamente desde el backend) -->
-                <li class="list-group-item">
-                    Producto 1
-                    <button class="btn btn-warning btn-sm float-end">Editar</button>
-                    <button class="btn btn-danger btn-sm float-end me-2">Eliminar</button>
-                </li>
-                <li class="list-group-item">
-                    Producto 2
-                    <button class="btn btn-warning btn-sm float-end">Editar</button>
-                    <button class="btn btn-danger btn-sm float-end me-2">Eliminar</button>
-                </li>
-            </ul>
-        </div>
-    </div>
+    </form>
+
 </div>
-<a href="/products" class="button" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go to Products</a>
 <script>
     document.getElementById("addFormProduct").addEventListener("submit", function (event) {
         const name = document.getElementById("name").value.trim();
@@ -278,3 +261,5 @@
         }
     });
 </script>
+</body>
+</html>

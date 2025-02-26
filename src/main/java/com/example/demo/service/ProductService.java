@@ -32,6 +32,13 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public void updateProduct(Product oldProduct, Product updatedProduct) {
+        oldProduct.setName(updatedProduct.getName());
+        oldProduct.setPrice(updatedProduct.getPrice());
+        oldProduct.setCategory(updatedProduct.getCategory());
+        productRepository.save(oldProduct);
+    }
+
     public void initializeData(){
         productRepository.save(new Product());
         productRepository.save(new Product());
