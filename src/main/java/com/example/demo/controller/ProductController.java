@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -112,6 +113,4 @@ public class ProductController {
         model.addAttribute("products", productService.findall());
         return "manageProducts"; // Busca el archivo en templates/manageProducts.html
     }
-
-
 }

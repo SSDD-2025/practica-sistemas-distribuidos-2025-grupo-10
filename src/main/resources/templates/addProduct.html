@@ -22,39 +22,6 @@
             padding-top: 60px;
         }
 
-        /* Aquí puedes agregar estilos personalizados para la categoría */
-        .product-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .category-title {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 2em;
-            color: #333;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .card {
-            margin-top: 20px;
-        }
-
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -72,95 +39,204 @@
         .nav-links {
             display: flex;
             gap: 15px;
-            color: black;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: black;
             font-size: 16px;
+            padding: 5px 10px;
+            transition: color 0.3s;
         }
 
         .nav-links a.active {
-            color: grey;
+            color: black;
             font-weight: bold;
         }
 
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-icons a {
+        .nav-links a:not(.active) {
             color: grey;
-            display: flex;
-            gap: 15px;
         }
 
-        .nav-icons a:hover {
+        .nav-links a:hover {
             color: black;
         }
 
-        .nav-icons i {
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #061a80;
+            color: white;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
             font-size: 18px;
-            width: 22px;
-            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .dropdown-toggle {
-            text-decoration: none;
-            color: black;
-            display: flex;
-            align-items: center;
+        .sidebar a:hover {
+            background-color: #0a2da3;
         }
 
-        .dropdown-menu {
-            min-width: 200px;
-            padding: 5px 0;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown-menu .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            font-size: 14px;
-        }
-
-        .dropdown-menu .dropdown-item i {
-            width: 20px;
-            font-size: 16px;
-            text-align: center;
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
             color: black;
         }
 
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f8f9fa;
+        .sidebar.show {
+            left: 0;
         }
 
-        .dropdown-menu-end {
-            right: 0 !important;
-            left: auto !important;
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            gap: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            margin-top: 60px;
+            max-width: 200px;
         }
 
-        .navbar-brand {
+        .content img {
+            width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .content img:hover {
+            transform: scale(1.1);
+        }
+
+        .store-title {
             position: absolute;
-            transform: translateX(-50%);
+            top: 90px;
             left: 50%;
-            font-size: 30px;
+            transform: translateX(-50%);
+            background-color: #dcdcdc;
+            padding: 3px 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 45px;
+            font-family: 'Playfair Display', serif;
             color: #061a80;
-            text-decoration: none;
-            font-family: sans-serif;
-            pointer-events: none;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .store-title:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+            color: black;
+            transition: color 0.3s;
+        }
+
+        .cart-icon:hover {
+            color: grey;
+        }
+
+        .store-title {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #dcdcdc;
+            /* Gris clarito */
+            padding: 5px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 45px;
+            font-family: 'Playfair Display', serif;
+            color: #061a80;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            display: inline-block;
+            /* Asegura que el padding y el hover se apliquen a toda el área */
+            width: max-content;
+            /* Expande el área del hover al contenido + padding */
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-weight: bold;
+        }
+
+        /* Aquí puedes agregar estilos personalizados para la categoría */
+        .product-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            margin-top: 10px;
+
+        }
+
+        .category-title {
+            font-size: 1em;
+            color: #333;
+            margin-top: 130px;
+            margin-left: 390px
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            text-align: left;
         }
     </style>
 </head>
 
 <body>
 <nav class="navbar">
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
 
     <div class="nav-links">
         <a class="nav-item nav-link active" href="/">Inicio</a>
@@ -168,28 +244,25 @@
         <a class="nav-item nav-link" href="/category/{{id}}">{{name}}</a>
         {{/categories}}
     </div>
-    <span class="navbar-brand" href="/">CasaNova</span>
-    <div class="nav-icons">
-        <a href="/search"><i class="fas fa-search"></i></a>
-        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
 
-        <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                <i class="fas fa-user"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="/settings">⚙ Ajustes</a></li>
-                <li><a class="dropdown-item" href="/orders">📦 Mis pedidos</a></li>
-                <li><a class="dropdown-item admin-only" href="/admin">🛠 Administración</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="/logout">🚪 Cerrar sesión</a></li>
-            </ul>
-        </div>
+    <!-- Ícono del carrito de compras -->
+    <div class="cart-icon" onclick="viewCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cart-count">0</span>
     </div>
 </nav>
+
+<div class="sidebar" id="sidebar">
+    <a href="#">Add Product</a>
+    <a href="#">Manage Product</a>
+    <a href="#">Add User</a>
+    <a href="#">Add Category</a>
+    <a href="#">Manage Category</a>
+    <a href="#">Ver mis pedidos</a>
+</div>
+
+<!-- Título de la tienda -->
+<div class="store-title">CasaNova</div>
 
 
 <div class="category-title">
@@ -214,6 +287,7 @@
                     <input type="number" class="form-control" id="price" name="price" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Añadir Producto</button>
+                <a href="/products" class="btn btn-primary">Go to Products</a>
             </form>
         </div>
     </div>
@@ -226,7 +300,6 @@
         </div>
     </div>
 </div>
-<a href="/products" class="button" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go to Products</a>
 <script>
     document.getElementById("addFormProduct").addEventListener("submit", function (event) {
         const name = document.getElementById("name").value.trim();
@@ -256,4 +329,12 @@
             document.getElementById("price").setCustomValidity('');
         }
     });
+
+    function toggleMenu() {
+        document.getElementById("sidebar").classList.toggle("show");
+    }
+
+    function viewCart() {
+        alert("Mostrando el carrito de compras...");
+    }
 </script>

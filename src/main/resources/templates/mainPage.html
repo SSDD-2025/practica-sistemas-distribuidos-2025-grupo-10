@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
-    <link rel="shortcut icon" href="Logo.ico" type="image/x-icon"> 
+    <title>Administración - Tienda</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <style>
-        /*Bar settings*/
-        ::-webkit-scrollbar {
-            width: 10px;
-            background-color: #d2b48c;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #654321;
-            border-radius: 5px;
-        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding-top: 60px;
+        }
+
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
+            padding: 15px 20px;
             background-color: white;
             border-bottom: 1px solid #ccc;
             position: fixed;
@@ -35,132 +35,203 @@
             width: 100%;
             z-index: 1000;
         }
-        .menu-icon {
-            font-size: 24px;
-            cursor: pointer;
-        }
+
         .nav-links {
             display: flex;
-            align-items: center;
             gap: 15px;
+            align-items: center;
         }
+
         .nav-links a {
             text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a.active {
             color: black;
-            font-size: 14px;
+            font-weight: bold;
         }
 
-        .container {
+        .nav-links a:not(.active) {
+            color: grey;
+        }
+
+        .nav-links a:hover {
+            color: black;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
             width: 250px;
-            padding: 10px; /* Internal space around the content */
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.5); /* White background with 80% opacity */
-            border-radius: 10px;
-            margin-right: 20px;
-            margin-bottom: 20px;
-            margin-left: 30px;
-            flex-grow: 1;
-        }
-        .container:last-child{
-            margin-right: 0; /*Deletes the right margin of the last container*/
+            height: 100%;
+            background-color: #061a80;
+            color: white;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 700;
+            pointer-events: auto;
         }
 
-        .container img {
-            width: 100%; /* To make the image fill the entire width of the container */
-            height: auto; /* Automatic height adjustment */
-            display: block; /* So that there is no extra space under the image */
-            margin-bottom: 10px; /* Space between the image and the button */
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .container img:hover{
+
+        .sidebar a:hover {
+            background-color: #0a2da3;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+        }
+
+        .sidebar.show {
+            left: 0;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            gap: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .content img {
+            width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .content img:hover {
             transform: scale(1.1);
         }
-
-        .button-container{
+        .store-title {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #dcdcdc;
+            padding: 5px 20px;
+            border-radius: 10px;
             text-align: center;
-            margin-bottom: 30px;
-        }
-        .button{
+            font-size: 45px;
+            font-family: 'Playfair Display', serif;
+            color: #061a80;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
             display: inline-block;
-            padding: 8px 20px;
-            background-color: #9b7045;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease; /* Soft transition */
-        }
-        .button:hover {
-            transform: scale(1.2); /* Increases size a 5% */
-        }
-        .containers-wrapper {
-            display: flex; /* Main container with flex display */
-        }
-        h1 {
-            color: black;
-            font-family: 'Pacifico', cursive;
-            font-weight: bold;
-            align-items: flex-start;
-            align-content: flex-start;
-
-
-            padding: 20px; /* Internal spacing */
-            text-align: center; /* Text centering */
-            width: 100%; /* Occupy the entire screen width */
-            margin-top: 15px; /* Removes the default top margin */
-            margin-bottom: 12px; /* Add bottom margin */
-        }
-        h2 {
-            color: black;
-            font-family: 'Pacifico', cursive;
-            font-weight: bold;
-
-            padding: 20px;
-            text-align: center;
-            width: 100%;
-            margin-top: 0; /* Removes the default top margin */
-            margin-bottom: 0; /* Add bottom margin */
+            width: max-content;
         }
 
-        body {
-            background-color: white;
-            background-size: cover; /* Adjust the image size to cover the entire background*/
-            background-repeat: no-repeat; /* Prevents background image from repeating*/
+        .store-title:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
 
-            font-family: 'Arial', sans-serif;
-            color: black; /* Text color */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
+        /* Carrito */
+        .cart-icon {
+            font-size: 24px;
+            cursor: pointer;
             position: relative;
-            padding-top: 20px;
+            color: black;
+            transition: color 0.3s;
         }
 
-        h1, h2{
+        .cart-icon:hover {
+            color: grey;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
             text-align: center;
+            line-height: 18px;
+            font-weight: bold;
         }
-
     </style>
 </head>
+
 <body>
+
 <nav class="navbar">
-    <div class="menu-icon">☰</div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+
     <div class="nav-links">
-        <a href="/products">INICIAR SESIÓN</a>
-        <a href="/products"><i class="fas fa-search"></i></a>
-        <a href="/products"><i class="fas fa-shopping-cart"></i></a>
+        <a class="nav-item nav-link active" href="/">Inicio</a>
+        {{#categories}}
+        <a class="nav-item nav-link" href="/category/{{id}}">{{name}}</a>
+        {{/categories}}
+    </div>
+
+    <!-- Ícono del carrito de compras -->
+    <div class="cart-icon" onclick="viewCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cart-count">0</span>
     </div>
 </nav>
-<h1>What do you want to do?</h1>
-<div class="containers-wrapper">
-    <div class="container">
-        <div class="image">
-            <img src="laasistenta.jpg">
-        </div>
-        <div class="button-container">
-            <a href="/products" class="button" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go to Products</a>
-        </div>
-    </div>
+
+<div class="sidebar" id="sidebar">
+    <a href="/products/add">Add Product</a>
+    <a href="/products/manage">Manage Product</a>
+    <a href="/users/add">Add User</a>
+    <a href="/categories/add">Add Category</a>
+    <a href="#">Manage Category</a>
+    <a href="#">Ver mis pedidos</a>
 </div>
+
+<!-- Título de la tienda -->
+<div class="store-title">CasaNova</div>
+
+<div class="content">
+    <img src="carrusel1.jpg">
+    <img src="carrusel3.jpg">
+</div>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("sidebar").classList.toggle("show");
+    }
+
+    function viewCart() {
+        alert("Mostrando el carrito de compras...");
+    }
+
+    // Simulación de conteo de productos en el carrito
+    let cartItems = 0;
+
+    function addToCart() {
+        cartItems++;
+        document.getElementById("cart-count").textContent = cartItems;
+    }
+</script>
+
 </body>
 </html>
+
+
+
