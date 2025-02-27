@@ -64,4 +64,15 @@ public class CategoryController{
         model.addAttribute("categories", categories); // Pasamos las categorías al HTML
         return "mainPage";
     }
+
+    @PostMapping("/categories/add")
+    public String addCategory(Category category, Model model) {
+        boolean added = categoryService.addCategory(category);
+        if (!added) {
+            model.addAttribute("error", "La categoría ya existe");
+            return "addCategory"; // Volvemos al formulario con el mensaje de error
+        }
+        return "redirect:/categories";
+    }
+
 }

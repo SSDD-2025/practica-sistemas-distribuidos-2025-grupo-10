@@ -28,6 +28,14 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public boolean addCategory(Category category) {
+        if (!categoryRepository.findByName(category.getName()).isEmpty()) {
+            return false; // La categoría ya existe
+        }
+        categoryRepository.save(category);
+        return true;
+    }
+
     public Optional<Category> findCategoryById(Long id) {
         return categoryRepository.findById(id);
     }
