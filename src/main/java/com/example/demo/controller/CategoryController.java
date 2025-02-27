@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -27,10 +28,18 @@ public class CategoryController{
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @ModelAttribute("categories")
+    public List<Category> getCategories() {
+        return categoryService.findAll();
+    }
+    @GetMapping("/")
+    public String showHomePage() {
+        return "mainPage";  // No necesitamos pasar "categories" manualmente
+    }
     @GetMapping("/categories")
     public String showCategories(Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        return "categories";  // Asegúrate de que "categories.html" esté bien configurado
+        return "addCategory";  // Asegúrate de que "categories.html" esté bien configurado
     }
 
     @GetMapping("/categories/add")
@@ -39,11 +48,6 @@ public class CategoryController{
         return "addCategory";  // Asegúrate de que "addCategory.html" esté bien configurado
     }
 
-    @PostMapping("/categories/add")
-    public String addCategory(Category category) {
-        categoryService.save(category);
-        return "redirect:/categories";  // Redirige después de agregar la categoría
-    }
 
     @GetMapping("/categories/{id}")
     public String showCategory(Model model, @PathVariable Long id) {
@@ -58,12 +62,6 @@ public class CategoryController{
         return "redirect:/categories";  // Redirige después de eliminar la categoría
     }
 
-    @GetMapping("/")
-    public String showHomePage(Model model) {
-        List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("categories", categories); // Pasamos las categorías al HTML
-        return "mainPage";
-    }
 
     @PostMapping("/categories/add")
     public String addCategory(Category category, Model model) {
@@ -72,7 +70,7 @@ public class CategoryController{
             model.addAttribute("error", "La categoría ya existe");
             return "addCategory"; // Volvemos al formulario con el mensaje de error
         }
-        return "redirect:/categories";
+        return "redirect:/categories/add";
     }
 
 }
