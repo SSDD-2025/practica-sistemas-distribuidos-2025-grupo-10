@@ -1,18 +1,25 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Order;
+import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private OrderService orderService;
     /*
     @PersistenceContext
     private EntityManager entityManager;
@@ -72,16 +79,21 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public void addProductToCart(Product productToSave, User user) {
+        user.getUserProducts().add(productToSave);
+        this.save(user);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
+    public void productsFromCartIntoOrder(User user) {
+        Order order = new Order();
+        List<Product> allCartProducts = new ArrayList<>(user.getUserProducts());
+        user.getUserProducts().clear();
+        this.save(user);
+        //  Añadimos el produto al order
+        order.getProducts().addAll(allCartProducts);
+        orderService.save(order);
+        //  Añadimos el order al usuario
+        user.getUserOrders().add(order);
+        this.save(user);
+    }
 }

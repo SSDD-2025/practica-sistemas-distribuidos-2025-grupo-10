@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+
 
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
@@ -114,5 +117,10 @@ public class ProductService {
         for (Product category : categoriesFour) {
             System.out.println(category);
         }
+    }
+
+    public void saveProductCategory(Product productToSave, Category category) {
+        productToSave.setCategory(category);
+        this.save(productToSave);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,35 +26,28 @@ public class SampleDataService {
 
     @PostConstruct
     public void init() {
-        //  Inicializar categoria
-        categoryService.save(new Category("Categoria de cositas XD"));
-        //  Inicializar un producto1 a categoria 1
-        List<Category> all = categoryService.findAll();
-        Category category = all.get(0);
 
-        Product product1 = new Product("producto numero 1", new BigDecimal(15));
-        product1.setCategory(category);
-        productService.save(product1);
+
+        //  Inicializar categoria
+        Category category = new Category("Categoria de cositas XD");
+        categoryService.save(category);
+
+
+        //  Inicializar un producto1 a categoria 1
+        Product productToSave = new Product("producto numero 1", new BigDecimal(15));
+        productService.saveProductCategory(productToSave, category);
+
 
         //  Agregar producto al carrito del usuario
         User user = new User("Alberto", "password", "Hola");
-        user.getUserProducts().add(product1);
-        userService.save(user);
+        userService.addProductToCart(productToSave, user);
 
-        //  Creamos order
-        Order order = new Order();
-        //  Eliminamos el producto del carrito
-        user.getUserProducts().remove(product1);
-        userService.save(user);
-        //  Añadimos el produto al order
-        order.getProducts().add(product1);
-        orderService.save(order);
-
-        //  Añadimos el order al usuario
-        user.getUserOrders().add(order);
-        userService.save(user);
+        //  Eliminamos todos los productos del carrito y añadimos el order al usuario
+        userService.productsFromCartIntoOrder(user);
 
     }
+
+
 
     //  Todo save, o flujo de guardado de datos funciona
     //  Si eliminamos una cateogoria, los productos.idCategory == null
