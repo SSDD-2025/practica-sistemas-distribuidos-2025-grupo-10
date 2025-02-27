@@ -9,14 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/add")
+    public String showAddUserForm() {
+        return "addUser"; // Esto busca addUser.html en src/main/resources/templates
+    }
 
     // Mostrar todos los usuarios
     @GetMapping("/users")
