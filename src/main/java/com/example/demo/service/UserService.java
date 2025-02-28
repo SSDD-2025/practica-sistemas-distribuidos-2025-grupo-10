@@ -90,10 +90,21 @@ public class UserService {
         user.getUserProducts().clear();
         this.save(user);
         //  Añadimos el produto al order
+
         order.getProducts().addAll(allCartProducts);
         orderService.save(order);
         //  Añadimos el order al usuario
-        user.getUserOrders().add(order);
+        if (user.getUserOrders() == null){
+            ArrayList<Order> arrayList = new ArrayList<>();
+            arrayList.add(order);
+            user.setUserOrders(arrayList);
+        }else{
+            user.getUserOrders().add(order);
+        }
+        this.save(user);
+    }
+    public void deleteOrder(User user) {
+        user.setUserOrders(null);
         this.save(user);
     }
 }

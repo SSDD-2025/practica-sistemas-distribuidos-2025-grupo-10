@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SampleDataService {
@@ -24,6 +26,7 @@ public class SampleDataService {
     private UserService userService;
 
 
+    /*
     @PostConstruct
     public void init() {
 
@@ -48,17 +51,19 @@ public class SampleDataService {
     }
 
 
+     */
+
 
     //  Todo save, o flujo de guardado de datos funciona
     //  Si eliminamos una cateogoria, los productos.idCategory == null
-    //  Falta por probar si eliminamos un un pedido, no sabemos que pasa con los productos del pedido
+    //  Falta por probar si eliminamos un un pedido, no sabemos que pasa con los productos del pedido. Si eliminamos un pedido. Se queda en la bbdd
     //  Si eliminamos un usuario, no sabvemos que pasa con el pedido
     //  Si eliminamos un usuario, no sabemos que pasa con su cesta (la mas facil)
 
-    /*
+
     @PostConstruct
     public void init() {
-        /*  FUNCIONAL
+        //  FUNCIONAL
         //  Dado un producto con su categoria, se elimina su categoria y debe de estar a null
         categoryService.save(new Category("Categoria de cositas XD"));
         categoryService.save(new Category("cate2"));
@@ -75,8 +80,60 @@ public class SampleDataService {
         productService.save(product2);
 
         categoryService.deleteCategoryById(category.getId());
-        FIN FUNCIONAL
-        */
+
+        //  Aqui empieza
+        User user = new User("Alberto", "password", "<PASSWORD>");
+        userService.addProductToCart(product1, user);
+        userService.addProductToCart(product2, user);
+        userService.productsFromCartIntoOrder(user);
+
+
+        Product product3 = new Product();
+        productService.save(product3);
+        userService.addProductToCart(product3, user);
+
+
+        categoryService.deleteCategoryById(category2.getId());
+        categoryService.deleteCategoryById(category.getId());
+
+/*
+
+        Collection<Order> all1 = orderService.findAll();
+        ArrayList<Order> orders = new ArrayList<>(all1);
+        for (Order order : orders) {
+            orderService.deleteOrderById(order.getId());
+        }
+
+
+
+ */
+
+
+
+        /*
+        user.getUserProducts().remove(product1);
+
+
+
+        productService.deleteProductById(product1.getId());
+
+
+
+         */
+
+
+
+
+
+        //  userService.deleteOrder(user);
+        //userService.deleteUserById(user.getId());
+        //  Si eliminas un usuario, eliminas sus pedidos, pero no eliminas los productos en si
+
+        //  Dado el ultimo cambio, si eliminas un usuario, no se elimina el pedido (pero no hay relacion entre pedido)
+
+
+        //  FIN FUNCIONAL
+
 
 
         /*
@@ -96,6 +153,8 @@ public class SampleDataService {
         orderService.deleteOrderById(order.getId());
 
          */
-    //}
-    //*/
+
+        //  ELiminar el pedido x
+    }
+
 }

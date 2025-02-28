@@ -16,7 +16,8 @@ public class User {
 
     //  Relations
     //  (Ejem 7)    //  A la hora de borrar un usuario, se borran todos sus pedidos
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()    //  Si quitamos esto, se mantiene los order, aunque se elimine el usuario
+    @JoinColumn(name = "user_id")   //  Quitar si causa problemas
     private List<Order> userOrders = new ArrayList<>();
 
     //  (Ejem 10) User - Product

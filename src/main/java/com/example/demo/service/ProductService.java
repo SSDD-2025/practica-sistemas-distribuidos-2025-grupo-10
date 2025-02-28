@@ -1,8 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Order;
 import com.example.demo.model.Product;
+import com.example.demo.model.User;
 import com.example.demo.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +21,14 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final OrderService orderService;
+    private final UserService userService;
 
 
-    public ProductService(ProductRepository productRepository){
+    public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService){
         this.productRepository = productRepository;
+        this.orderService = orderService;
+        this.userService = userService;
     }
     public void save(Product product){
         productRepository.save(product);
@@ -122,5 +130,28 @@ public class ProductService {
     public void saveProductCategory(Product productToSave, Category category) {
         productToSave.setCategory(category);
         this.save(productToSave);
+    }
+
+    //  Eliminar producto
+    @Transactional
+    public void deleteProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        // Eliminar el producto de todos los pedidos antes de borrarlo
+        for (Order order : product.getOrders()) {
+            order.getProducts().remove(product);
+            orderService.save(order); // Guardar el pedido sin el producto
+        }
+
+        for (User u : userService.findAll()) {
+            if (u.getUserProducts().contains(product)){
+                u.getUserProducts().remove(product);
+                userService.save(u);
+            }
+        }
+
+        // Ahora eliminar el producto
+        productRepository.delete(product);
     }
 }
