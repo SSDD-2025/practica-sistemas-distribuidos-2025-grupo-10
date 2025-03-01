@@ -20,7 +20,10 @@
 5. **Lista de Productos**
    ![Lista_de_Productos](src/main/resources/static/ProductsList.png)
 
-6. **Añadir Categoría**
+6. **Ver Productos**
+   ![Ver_Productos](src/main/resources/static/availableProducts.png)
+
+7. **Añadir Categoría**
    ![Añadir Categoría](src/main/resources/static/addCategory.png)
 
 
