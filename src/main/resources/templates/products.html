@@ -81,19 +81,26 @@
             <div class="alert alert-danger">{{error}}</div>
             {{/error}}
             <h1 style="margin-bottom: 30px;">Available products</h1>
-            {{#hasImage}}
-            <img src="/products/{{product.id}}/image"></img>
-            {{/hasImage}}
-
-            {{^hasImage}}
-            <img src="/img.png"></img>
-            {{/hasImage}}
 
             {{#products}}
             <li class="list-group-item">
+                <strong>Nombre:</strong>
                 {{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}
+                <br>
+
+                <strong>Precio:</strong>
+                {{#price}}{{price}}${{/price}}{{^price}}No disponible{{/price}}
+                <br>
+
+                {{#imageFile}}
+                <img src="/products/{{id}}/image" alt="Imagen de {{name}}" width="150" height="150">
+                {{/imageFile}}
+                {{^imageFile}}
+                <p>Sin imagen disponible</p>
+                {{/imageFile}}
             </li>
             {{/products}}
+
         </div>
     </div>
 </div>

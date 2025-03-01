@@ -46,15 +46,17 @@ public class ProductController {
     @GetMapping("/products")
     public String showProducts(Model model) {
         Collection<Product> products = productService.findall();
-        System.out.println("---- LISTA DE PRODUCTOS ----");
-        for (Product p : products) {
-            System.out.println("Producto: " + p.getName());
-            Optional<Product> op = productService.findProductById(p.getId());
-            if(op.isPresent()) {
-                model.addAttribute("op", op.get());
-                model.addAttribute("hasImage", op.get().getImageFile());
+
+        if (products == null || products.isEmpty()) {
+            System.out.println("No hay productos disponibles.");
+        } else {
+            System.out.println("---- LISTA DE PRODUCTOS ----");
+            for (Product p : products) {
+                System.out.println("Producto: " + p.getName());
             }
         }
+
+        // Agregar los productos al modelo para que Mustache los reconozca
         model.addAttribute("products", products);
         return "products";
     }
