@@ -82,24 +82,28 @@
             {{/error}}
             <h1 style="margin-bottom: 30px;">Available products</h1>
 
-            {{#products}}
-            <li class="list-group-item">
-                <strong>Nombre:</strong>
-                {{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}
-                <br>
+            <div class="container">
+                <div class="row">
+                    {{#products}}
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            {{#imageFile}}
+                            <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 200px; object-fit: cover;">
+                            {{/imageFile}}
+                            {{^imageFile}}
+                            <img src="img.png" class="card-img-top" alt="Imagen no disponible" style="height: 200px; object-fit: cover;">
+                            {{/imageFile}}
 
-                <strong>Precio:</strong>
-                {{#price}}{{price}}${{/price}}{{^price}}No disponible{{/price}}
-                <br>
-
-                {{#imageFile}}
-                <img src="/products/{{id}}/image" alt="Imagen de {{name}}" width="150" height="150">
-                {{/imageFile}}
-                {{^imageFile}}
-                <p>Sin imagen disponible</p>
-                {{/imageFile}}
-            </li>
-            {{/products}}
+                            <div class="card-body">
+                                <h5 class="card-title">{{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}</h5>
+                                <p class="card-text"><strong>Precio:</strong> {{#price}}{{price}}${{/price}}{{^price}}No disponible{{/price}}</p>
+                                <button class="btn btn-primary">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/products}}
+                </div>
+            </div>
 
         </div>
     </div>
