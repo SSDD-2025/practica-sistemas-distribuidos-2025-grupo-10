@@ -29,8 +29,8 @@
 
 1. **Clonar el repositorio**:
    ```sh
-   git clone https://github.com/tu-usuario/tu-repositorio.git
-   cd tu-repositorio
+   https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10.git
+   cd cd practica-sistemas-distribuidos-2025-grupo-10
    ```
 
 2. **Configurar la base de datos MySQL**:
@@ -55,25 +55,14 @@
    mvn spring-boot:run
    ```
 
-## Diagrama con las Entidades de la Base de Datos
-
-### Diagrama Entidad-Relación
-<!-- Añade aquí el diagrama entidad-relación de la base de datos -->
-![Diagrama Entidad-Relación](ruta/a/diagrama-er.png)
-
-### Diagrama UML de las Clases Java
+## Diagrama UML de las Clases Java
 <!-- Añade aquí el diagrama UML de las clases Java -->
-![Diagrama UML](ruta/a/diagrama-uml.png)
+![Diagrama UML](src/main/resources/static/Diagrama_UML_de_clases.png)
 
 ## Diagrama de Clases y Templates
 
-### Diagrama de Clases
 <!-- Añade aquí el diagrama de clases de la aplicación -->
-![Diagrama de Clases](ruta/a/diagrama-clases.png)
-
-### Relación de Templates con @Controller
-<!-- Añade aquí la relación de los templates con los controladores -->
-![Relación de Templates](ruta/a/relacion-templates.png)
+![Diagrama de Clases](src/main/resources/static/Diagrama_de_clases_y_templates.png)
 
 ## Información Adicional
 
