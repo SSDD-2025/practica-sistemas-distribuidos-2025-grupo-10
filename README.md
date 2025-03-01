@@ -29,8 +29,8 @@
 
 1. **Clonar el repositorio**:
    ```sh
-   git clone https://github.com/tu-usuario/tu-repositorio.git
-   cd tu-repositorio
+   https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10.git
+   cd cd practica-sistemas-distribuidos-2025-grupo-10
    ```
 
 2. **Configurar la base de datos MySQL**:
@@ -67,13 +67,8 @@
 
 ## Diagrama de Clases y Templates
 
-### Diagrama de Clases
 <!-- Añade aquí el diagrama de clases de la aplicación -->
-![Diagrama de Clases](ruta/a/diagrama-clases.png)
-
-### Relación de Templates con @Controller
-<!-- Añade aquí la relación de los templates con los controladores -->
-![Relación de Templates](ruta/a/relacion-templates.png)
+![Diagrama de Clases](src/main/resources/static/Diagrama_de_clases_y_templates.png)
 
 ## Información Adicional
 
