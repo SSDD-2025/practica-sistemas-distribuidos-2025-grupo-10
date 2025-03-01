@@ -1,5 +1,56 @@
-{{> common/header }}
-<h1>Error</h1>
-<p>Something went wrong</p>
-<p>{{ message }}</p>
-{{> common/footer }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Page Not Found</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .error-container {
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: 72px;
+            color: #e74c3c;
+        }
+
+        .error-message {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .home-link:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <div class="error-code">404</div>
+    <div class="error-message">Page Not Found</div>
+    <a href="/" class="home-link">Go to main page</a>
+</div>
+</body>
+</html>
