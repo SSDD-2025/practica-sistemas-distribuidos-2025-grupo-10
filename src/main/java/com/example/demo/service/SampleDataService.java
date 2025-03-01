@@ -7,7 +7,8 @@ import com.example.demo.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.service.ImageUtils;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +25,8 @@ public class SampleDataService {
     private ProductService productService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ImageUtils imageUtils;
 
 
     /*
@@ -62,7 +65,7 @@ public class SampleDataService {
 
 
     @PostConstruct
-    public void init() {
+    public void init() throws IOException {
         //  FUNCIONAL
         //  Dado un producto con su categoria, se elimina su categoria y debe de estar a null
         categoryService.save(new Category("Categoria de cositas XD"));
@@ -76,8 +79,8 @@ public class SampleDataService {
         Product product2 = new Product("producto numero 2", new BigDecimal(15));
         product1.setCategory(category);
         product2.setCategory(category2);
-        productService.save(product1);
-        productService.save(product2);
+        productService.save(product1, null);
+        productService.save(product2, null);
 
         categoryService.deleteCategoryById(category.getId());
 
@@ -89,12 +92,17 @@ public class SampleDataService {
 
 
         Product product3 = new Product();
-        productService.save(product3);
+        productService.save(product3, null);
         userService.addProductToCart(product3, user);
 
 
         categoryService.deleteCategoryById(category2.getId());
         categoryService.deleteCategoryById(category.getId());
+    }
+    private void saveproductWithURLImage(Product product, String image) throws IOException {
+        product.setImageFile(imageUtils.localImageToBlob("images/" + image));
+        productService.save(product, null);
+    }
 
 /*
 
@@ -155,6 +163,6 @@ public class SampleDataService {
          */
 
         //  ELiminar el pedido x
-    }
+
 
 }

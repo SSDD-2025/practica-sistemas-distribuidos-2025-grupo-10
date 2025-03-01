@@ -299,7 +299,7 @@
             <h4>Añadir Nuevo Producto</h4>
         </div>
         <div class="card-body">
-            <form action="/products/add" method="post" id="addFormProduct">
+            <form action="/products/add" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre del Producto</label>
                     <input type="text" class="form-control" id="name" name="name" required>
@@ -307,6 +307,10 @@
                 <div class="mb-3">
                     <label for="price" class="form-label">Precio</label>
                     <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image: </label>
+                    <input type='file' class="form-control" name='imageField' accept=".jpg, .jpeg" />
                 </div>
                 <div class="mb-3">
                     <label for="category" class="form-label">Categoría</label>

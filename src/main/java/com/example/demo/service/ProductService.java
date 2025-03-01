@@ -7,10 +7,14 @@ import com.example.demo.model.User;
 import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.channels.MulticastChannel;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,14 +27,19 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final OrderService orderService;
     private final UserService userService;
+    private final CategoryService categoryService;
 
-
-    public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService){
+    public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService, CategoryService categoryService) {
         this.productRepository = productRepository;
         this.orderService = orderService;
         this.userService = userService;
+        this.categoryService = categoryService;
     }
-    public void save(Product product){
+
+    public void save(Product product, MultipartFile imageField) throws IOException {
+        if (imageField != null && !imageField.isEmpty()) {
+            product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        }
         productRepository.save(product);
     }
     public Collection<Product> findall(){
@@ -127,12 +136,12 @@ public class ProductService {
             System.out.println(category);
         }
     }
-
+/*
     public void saveProductCategory(Product productToSave, Category category) {
         productToSave.setCategory(category);
         this.save(productToSave);
     }
-
+*/
     //  Eliminar producto
     @Transactional
     public void deleteProduct(Long productId) {
@@ -154,5 +163,14 @@ public class ProductService {
 
         // Ahora eliminar el producto
         productRepository.delete(product);
+    }
+
+    public List<Product> getProductsByCategory(Long categoryId) {
+        Optional<Category> category = categoryService.findCategoryById(categoryId);
+        if (category.isPresent()) {
+            return productRepository.findByCategory(category.get());
+        } else {
+            return List.of();
+        }
     }
 }

@@ -80,7 +80,10 @@ public class UserService {
     }
 
     public void addProductToCart(Product productToSave, User user) {
-        user.getUserProducts().add(productToSave);
+        List<Product> userProducts = user.getUserProducts();
+        ArrayList<Product> products = new ArrayList<>(userProducts);
+        products.add(productToSave);
+        user.setUserProducts(products);
         this.save(user);
     }
 

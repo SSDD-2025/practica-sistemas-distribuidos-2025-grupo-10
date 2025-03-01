@@ -1,11 +1,11 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -15,11 +15,13 @@ public class Product {
     private long id;
     private String name;
     private BigDecimal price;
+    @Lob
+    private Blob imageFile;
 
     //  Relations
     //  (ejem 9)
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = true)
+    //@JoinColumn(name = "category_id", nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL) //  Si un producto no tiene categoria, quiere que en el html ponga "NO tiene categoria"
     private Category category;
 
@@ -85,6 +87,13 @@ public class Product {
         return (category != null) ? category.getName() : "NO tiene categoria";
     }
 
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
 }
 
 
