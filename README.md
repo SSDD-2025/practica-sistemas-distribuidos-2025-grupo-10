@@ -55,15 +55,9 @@
    mvn spring-boot:run
    ```
 
-## Diagrama con las Entidades de la Base de Datos
-
-### Diagrama Entidad-Relación
-<!-- Añade aquí el diagrama entidad-relación de la base de datos -->
-![Diagrama Entidad-Relación](ruta/a/diagrama-er.png)
-
-### Diagrama UML de las Clases Java
+## Diagrama UML de las Clases Java
 <!-- Añade aquí el diagrama UML de las clases Java -->
-![Diagrama UML](ruta/a/diagrama-uml.png)
+![Diagrama UML](src/main/resources/static/Diagrama_UML_de_clases.png)
 
 ## Diagrama de Clases y Templates
 
