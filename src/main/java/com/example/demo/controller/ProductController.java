@@ -41,13 +41,18 @@ public class ProductController {
         model.addAttribute("categories", categoryService.findAll());
         return "addProduct";
     }
-    @PostMapping("products/add")
-    public String addProduct( Product product, @RequestParam("categoryId") Long categoryId){
-        Category category = categoryService.findCategoryById(categoryId).orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + categoryId));
+    @PostMapping("/products/add")
+    public String addProduct(@ModelAttribute Product product,
+                             @RequestParam("categoryId") Long categoryId) {
+        Category category = categoryService.findCategoryById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + categoryId));
+
         product.setCategory(category);
         productService.save(product);
-        return "redirect:/products/add";
+
+        return "redirect:/products/add?success=true";
     }
+
     @GetMapping("/products/{id}")
     public String showProduct(Model model, @PathVariable long id){
         Optional<Product> product = productService.findProductById(id);

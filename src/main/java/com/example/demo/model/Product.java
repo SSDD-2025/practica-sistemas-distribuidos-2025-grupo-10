@@ -19,6 +19,7 @@ public class Product {
     //  Relations
     //  (ejem 9)
     @ManyToOne
+    @JoinColumn(name = "category_id", nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL) //  Si un producto no tiene categoria, quiere que en el html ponga "NO tiene categoria"
     private Category category;
 

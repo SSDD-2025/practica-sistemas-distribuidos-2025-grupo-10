@@ -333,71 +333,67 @@
 </div>
 <div id="toast" class="toast-message">Producto añadido correctamente</div>
 <script>
-    document.getElementById("addFormProduct").addEventListener("submit", function (event) {
-        const name = document.getElementById("name").value.trim();
-        const price = document.getElementById("price").value.trim();
-
-        if (!name || !price) {
-            document.getElementById("myModal").style.display = "block";
-            event.preventDefault();
-        }
-    });
-
-    document.querySelector(".close").addEventListener("click", function () {
-        document.getElementById("myModal").style.display = "none";
-    });
-
-    window.addEventListener("click", function (event) {
-        if (event.target == document.getElementById("myModal")) {
-            document.getElementById("myModal").style.display = "none";
-        }
-    });
-
-    document.getElementById("price").addEventListener("input", function () {
-        const exp = document.getElementById("price").value.trim();
-        if (exp < 0) {
-            document.getElementById("price").setCustomValidity('El precio debe ser mayor a 0');
-        } else {
-            document.getElementById("price").setCustomValidity('');
-        }
-    });
-
-    function toggleMenu() {
-        document.getElementById("sidebar").classList.toggle("show");
-    }
-
-    function viewCart() {
-        alert("Mostrando el carrito de compras...");
-    }
-
-    document.getElementById("addFormProduct").addEventListener("submit", function (event) {
+        document.getElementById("addFormProduct").addEventListener("submit", function (event) {
             const name = document.getElementById("name").value.trim();
             const price = document.getElementById("price").value.trim();
+            const category = document.getElementById("category").value;
 
-            if (!name || !price) {
-                alert("Debes completar todos los campos.");
+            if (!name || !price || !category) {
+                document.getElementById("myModal").style.display = "block";
+                event.preventDefault();
+                return; // Evita seguir ejecutando si falla validación
+            }
+
+            if (price < 0) {
+                alert("El precio debe ser mayor o igual a 0");
                 event.preventDefault();
                 return;
             }
-
-            event.preventDefault(); // Evita que se recargue automáticamente (en pruebas)
-
-            // Aquí podrías hacer una llamada al backend con fetch() si es necesario
-            // Por ahora, simulamos que el producto se añade correctamente.
-
-            showToast();
-
-            setTimeout(() => {
-                window.location.href = "/products/add";
-            }, 2000);
         });
+
+        // Modal de error
+        document.querySelector(".close").addEventListener("click", function () {
+            document.getElementById("myModal").style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target == document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+            }
+        });
+
+        // Mostrar toast si viene de una redirección exitosa
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("success") === "true") {
+                showToast();
+            }
+        };
 
         function showToast() {
             const toast = document.getElementById("toast");
-            toast.classList.add("show");
-
+            toast.style.display = "block";
             setTimeout(() => {
-                toast.classList.remove("show");
-            }, 2000);
+                toast.style.display = "none";
+            }, 3000);
         }
+
+        // Sidebar y carrito (los mantengo tal cual los tienes)
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("show");
+        }
+
+        function viewCart() {
+            alert("Mostrando el carrito de compras...");
+        }
+
+        // Validación en tiempo real del precio (solo para mejorar UX)
+        document.getElementById("price").addEventListener("input", function () {
+            const price = document.getElementById("price").value.trim();
+            if (price < 0) {
+                document.getElementById("price").setCustomValidity('El precio debe ser mayor o igual a 0');
+            } else {
+                document.getElementById("price").setCustomValidity('');
+            }
+        });
 </script>
