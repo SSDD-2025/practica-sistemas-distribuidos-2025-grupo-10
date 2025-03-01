@@ -6,11 +6,10 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,8 +20,16 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/add")
-    public String showAddUserForm() {
+    public String showAddUserForm(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("users", userService.findAll());
         return "addUser"; // Esto busca addUser.html en src/main/resources/templates
+    }
+
+    @PostMapping("/add")
+    public String addUser(@ModelAttribute User user) {
+        userService.save(user); // Guarda el usuario en la base de datos
+        return "redirect:/users/add"; // Vuelve al formulario
     }
 
     // Mostrar todos los usuarios
@@ -36,15 +43,11 @@ public class UserController {
     @GetMapping("/users/add")
     public String showFormAdd(Model model) {
         model.addAttribute("user", new User()); // Crear un usuario vacío
+        model.addAttribute("users", userService.findAll());
         return "addUser"; // vista para agregar un nuevo usuario
     }
 
-    // Agregar un nuevo usuario
-    @PostMapping("/users/add")
-    public String addUser(User user) {
-        userService.save(user); // Guardamos el usuario
-        return "redirect:/users"; // Redirigimos a la lista de usuarios
-    }
+
 
     // Ver detalles de un usuario
     @GetMapping("/users/{id}")
@@ -70,4 +73,5 @@ public class UserController {
             return "orders";
         }
     }
+
 }

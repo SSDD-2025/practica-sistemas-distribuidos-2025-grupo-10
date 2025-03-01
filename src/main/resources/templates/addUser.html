@@ -89,17 +89,17 @@
             {{/error}}
             <form action="/users/add" method="post" id="addUserForm">
                 <div class="mb-3">
-                    <label for="userName" class="form-label">Username: </label>
-                    <input type="text" class="form-control" id="userName" name="name" required>
+                    <label for="username" class="form-label">Username: </label>
+                    <input type="text" class="form-control" id="username" name="username" required>
                     <div class="text-danger mt-2" id="errorUser" style="display:none;">Este usuario ya existe.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña: </label>
-                    <input type="text" class="form-control" id="password" name="name" required>
+                    <input type="text" class="form-control" id="password" name="password" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email: </label>
-                    <input type="text" class="form-control" id="email" name="name" required>
+                    <input type="text" class="form-control" id="email" name="email" required>
                     <div class="text-danger mt-2" id="errorEmail" style="display:none;">Este usuario ya existe.</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Añadir Usuario</button>
@@ -115,13 +115,13 @@
     <h2 class="mt-4">Usuarios Existentes</h2>
     <ul class="list-group">
         {{#users}}
-        <li class="list-group-item">{{userName}}</li>
+        <li class="list-group-item">{{username}}</li>
         {{/users}}
     </ul>
 </div>
 <script>
     document.getElementById("addUserForm").addEventListener("submit", function(event) {
-        const name = document.getElementById("userName").value.trim();
+        const name = document.getElementById("username").value.trim();
         const pass = document.getElementById("password").value.trim();
         const em = document.getElementById("email").value.trim();
 
