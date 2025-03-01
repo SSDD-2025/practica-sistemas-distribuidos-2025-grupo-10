@@ -121,7 +121,7 @@ public class ProductController {
     }*/
     @PostMapping("/products/{id}/delete")
     public String deleteProduct(@PathVariable long id) {
-        productService.deleteProductById(id);
+        productService.deleteProduct(id);
         return "redirect:/products/manage"; // Recarga la página con la lista actualizada
     }
 
