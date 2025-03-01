@@ -229,6 +229,28 @@
             margin: auto;
             text-align: left;
         }
+        .toast-message {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .toast-message.show {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -286,6 +308,15 @@
                     <label for="price" class="form-label">Precio</label>
                     <input type="number" class="form-control" id="price" name="price" required>
                 </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Categoría</label>
+                    <select id="category" name="categoryId" class="form-select" required>
+                        <option value="">Seleccione una categoría</option>
+                        {{#categories}}
+                        <option value="{{id}}">{{name}}</option>
+                        {{/categories}}
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Añadir Producto</button>
                 <!--<a href="/products" class="btn btn-primary">Go to Products</a>-->
             </form>
@@ -300,6 +331,7 @@
         </div>
     </div>
 </div>
+<div id="toast" class="toast-message">Producto añadido correctamente</div>
 <script>
     document.getElementById("addFormProduct").addEventListener("submit", function (event) {
         const name = document.getElementById("name").value.trim();
@@ -337,4 +369,35 @@
     function viewCart() {
         alert("Mostrando el carrito de compras...");
     }
+
+    document.getElementById("addFormProduct").addEventListener("submit", function (event) {
+            const name = document.getElementById("name").value.trim();
+            const price = document.getElementById("price").value.trim();
+
+            if (!name || !price) {
+                alert("Debes completar todos los campos.");
+                event.preventDefault();
+                return;
+            }
+
+            event.preventDefault(); // Evita que se recargue automáticamente (en pruebas)
+
+            // Aquí podrías hacer una llamada al backend con fetch() si es necesario
+            // Por ahora, simulamos que el producto se añade correctamente.
+
+            showToast();
+
+            setTimeout(() => {
+                window.location.href = "/products/add";
+            }, 2000);
+        });
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2000);
+        }
 </script>

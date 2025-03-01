@@ -5,6 +5,7 @@ import com.example.demo.model.Product;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class ProductController {
     private OrderRepository orderRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
+
 
     @GetMapping("/products")
     public String StringShowProducts(Model model){
@@ -34,12 +38,15 @@ public class ProductController {
     @GetMapping("products/add")
     public String showFormAdd(Model model){
         model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryService.findAll());
         return "addProduct";
     }
     @PostMapping("products/add")
-    public String addProduct(Product product){
+    public String addProduct( Product product, @RequestParam("categoryId") Long categoryId){
+        Category category = categoryService.findCategoryById(categoryId).orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + categoryId));
+        product.setCategory(category);
         productService.save(product);
-        return "redirect:/products";
+        return "redirect:/products/add";
     }
     @GetMapping("/products/{id}")
     public String showProduct(Model model, @PathVariable long id){
