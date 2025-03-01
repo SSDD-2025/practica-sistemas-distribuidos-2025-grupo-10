@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Product;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +29,8 @@ public class CategoryController{
     private ProductRepository productRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductService productService;
 
     @ModelAttribute("categories")
     public List<Category> getCategories() {
@@ -55,6 +59,23 @@ public class CategoryController{
         model.addAttribute("category", category);
         return "showCategory";  // Asegúrate de que "showCategory.html" esté bien configurado
     }
+    @GetMapping("/category/{id}")
+    public String showProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
+        Optional<Category> categoryOpt = categoryService.findCategoryById(categoryId);
+
+        if (categoryOpt.isPresent()) {
+            Category category = categoryOpt.get();
+            List<Product> products = category.getProducts(); // Obtiene los productos de la categoría
+
+            model.addAttribute("category", category);
+            model.addAttribute("products", products);
+
+            return "productsByCategories"; // Nombre de la vista HTML
+        } else {
+            return "redirect:/mainPage"; // Redirige si la categoría no existe
+        }
+    }
+
 
     @PostMapping("/categories/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {

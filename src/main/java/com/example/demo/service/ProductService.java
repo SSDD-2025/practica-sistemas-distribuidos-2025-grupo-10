@@ -168,7 +168,7 @@ public class ProductService {
     public List<Product> getProductsByCategory(Long categoryId) {
         Optional<Category> category = categoryService.findCategoryById(categoryId);
         if (category.isPresent()) {
-            return productRepository.findByCategory(category.get());
+            return productRepository.findCategoryById(category.get().getId());
         } else {
             return List.of();
         }
