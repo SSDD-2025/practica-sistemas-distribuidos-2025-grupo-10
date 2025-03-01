@@ -81,6 +81,10 @@ public class Product {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+    public String getCategoryName() {
+        return (category != null) ? category.getName() : "NO tiene categoria";
+    }
+
 }
 
 

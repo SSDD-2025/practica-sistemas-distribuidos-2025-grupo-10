@@ -55,6 +55,7 @@ public class ProductService {
         productRepository.save(new Product());
         productRepository.save(new Product());
 
+
         // Obtener y mostrar todas las categorías
         List<Product> categories = productRepository.findAll();
         System.out.println("Categories found with findAll():");

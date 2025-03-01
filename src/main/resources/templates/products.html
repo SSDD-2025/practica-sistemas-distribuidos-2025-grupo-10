@@ -143,16 +143,17 @@
 </head>
 <body>
 <h1 style="margin-bottom: 30px;">Available products</h1>
-<ul class="list-group">
-    {{#products}}{{.}}{{/products}}
-    <!--<li class="list-group-item">{{name}}</li>-->
+{{#products}}
+<li class="list-group-item">
+    {{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}
+</li>
+{{/products}}
 
-</ul>
 
 
 
 <a href="/products/add" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Add Product</a>
-<a href="/products/manage" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Manage Product</a>
+<a href="/manageProducts" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Manage Product</a>
 <a href="/mainPage" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Go back to main menu</a>
 <a href="/users/add" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Añadir Usuario</a>
 <a href="/categories/add" class="btn btn-primary" onmouseover="increaseButtonSize(this)" onmouseout="resetButtonSize(this)">Add Category</a>

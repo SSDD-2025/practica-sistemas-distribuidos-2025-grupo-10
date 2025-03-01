@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,23 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    public String StringShowProducts(Model model){
-        model.addAttribute("products", productService.findall());
+    public String showProducts(Model model) {
+        Collection<Product> products = productService.findall();
+        System.out.println("---- LISTA DE PRODUCTOS ----");
+        for (Product p : products) {
+            System.out.println("Producto: " + p.getName());
+        }
+        model.addAttribute("products", products);
         return "products";
     }
+
+
+    @GetMapping("/manageProducts")
+    public String showManageProductsPage(Model model) {
+        model.addAttribute("products", productService.findall());
+        return "manageProducts";
+    }
+
     @GetMapping("products/add")
     public String showFormAdd(Model model){
         model.addAttribute("product", new Product());
