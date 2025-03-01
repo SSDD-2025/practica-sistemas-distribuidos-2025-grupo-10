@@ -74,3 +74,47 @@
 ### Relación de Templates con @Controller
 <!-- Añade aquí la relación de los templates con los controladores -->
 ![Relación de Templates](ruta/a/relacion-templates.png)
+
+## Información Adicional
+
+### Estructura del Proyecto
+
+#### Controladores
+- **UserController**: Maneja las solicitudes relacionadas con los usuarios.
+- **CategoryController**: Maneja las solicitudes relacionadas con las categorías.
+- **OrderController**: Maneja las solicitudes relacionadas con los pedidos.
+
+#### Servicios
+- **UserService**: Proporciona operaciones CRUD para los usuarios.
+- **CategoryService**: Proporciona operaciones CRUD para las categorías.
+- **OrderService**: Proporciona operaciones CRUD para los pedidos.
+
+#### Repositorios
+- **UserRepository**: Interfaz para las operaciones CRUD en la entidad `User`.
+- **CategoryRepository**: Interfaz para las operaciones CRUD en la entidad `Category`.
+- **OrderRepository**: Interfaz para las operaciones CRUD en la entidad `Order`.
+
+#### Entidades
+- **User**: Representa a un usuario en el sistema.
+- **Category**: Representa una categoría de productos.
+- **Order**: Representa un pedido realizado por un usuario.
+
+### Plantillas HTML
+- **users.html**: Muestra la lista de usuarios.
+- **addUser.html**: Formulario para añadir un nuevo usuario.
+- **categories.html**: Muestra la lista de categorías.
+- **addCategory.html**: Formulario para añadir una nueva categoría.
+- **orders.html**: Muestra la lista de pedidos.
+- **addOrder.html**: Formulario para añadir un nuevo pedido.
+
+### Configuración de la Base de Datos
+- **application.properties**: Contiene la configuración de la base de datos MySQL.
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+```
