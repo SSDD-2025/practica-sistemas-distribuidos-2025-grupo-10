@@ -91,7 +91,9 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text"><strong>Precio:</strong> {{price}}$</p>
-                    <button class="btn btn-primary">Añadir</button>
+                    <form action="/cart/add/{{id}}" method="post">
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                    </form>
                 </div>
             </div>
         </div>

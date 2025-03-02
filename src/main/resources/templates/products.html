@@ -97,7 +97,10 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}</h5>
                                 <p class="card-text"><strong>Precio:</strong> {{#price}}{{price}}${{/price}}{{^price}}No disponible{{/price}}</p>
-                                <button class="btn btn-primary">Añadir</button>
+
+                                <form action="/cart/add/{{id}}" method="post">
+                                    <button type="submit" class="btn btn-primary">Añadir</button>
+                                </form>
                             </div>
                         </div>
                     </div>

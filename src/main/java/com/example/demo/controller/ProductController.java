@@ -2,11 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -41,6 +43,8 @@ public class ProductController {
     private CategoryRepository categoryRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/products")
@@ -82,6 +86,14 @@ public class ProductController {
         product.setCategory(category);
         productService.save(product, imageField);
         return "redirect:/products/add?success=true";
+    }
+    @PostMapping("/cart/add/{id}")
+    public String addProductTocart(@PathVariable long id) throws IOException{
+        User user = userService.findUserById(1L)
+                .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + 1));
+        Product product = productService.findProductById(id).orElseThrow();
+        userService.addProductToCart(product, user);
+        return "redirect:/cart";
     }
     @GetMapping("products/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
@@ -174,4 +186,5 @@ public class ProductController {
         model.addAttribute("products", productService.findall());
         return "manageProducts"; // Busca el archivo en templates/manageProducts.html
     }
+
 }
