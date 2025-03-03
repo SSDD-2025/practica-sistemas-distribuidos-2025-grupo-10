@@ -80,7 +80,13 @@ public class CategoryController{
     @PostMapping("/categories/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
-        return "redirect:/categories";  // Redirige después de eliminar la categoría
+        return "redirect:/categories/manage";  // Redirige después de eliminar la categoría
+    }
+
+    @GetMapping("/categories/manage")
+    public String showManageCategories(Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        return "deleteCategories";  // Esto carga el template deleteCategories.html
     }
 
 
@@ -93,5 +99,6 @@ public class CategoryController{
         }
         return "redirect:/categories/add";
     }
+
 
 }

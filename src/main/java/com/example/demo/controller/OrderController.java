@@ -64,16 +64,18 @@ public class OrderController{
         }
     }
 
+    @GetMapping("/orders/manage")
+    public String showManageOrders(Model model) {
+        model.addAttribute("orders", orderService.findAll());
+        return "deleteOrders";
+    }
+
     // Eliminar un pedido
     @PostMapping("/orders/{id}/delete")
     public String deleteOrder(@PathVariable Long id) {
-        Optional<Order> order = orderService.findById(id);
-        if (order.isPresent()){
-            orderService.deleteOrderById(id);
-            return "order";
-        } else{
-            return "orders";
-        }
+        orderService.deleteOrderById(id);
+        return "redirect:/orders/manage";  // Así vuelve a cargar la lista actualizada
     }
+
 
 }

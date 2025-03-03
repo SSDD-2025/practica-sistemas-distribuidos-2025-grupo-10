@@ -61,15 +61,17 @@ public class UserController {
     }
 
     // Eliminar un usuario
-    @PostMapping("/users/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
-        Optional<User> user = userService.findUserById(id);
-        if (user.isPresent()){
-            userService.deleteUserById(id);
-            return "order";
-        } else{
-            return "orders";
-        }
+        userService.deleteUserById(id);
+        return "redirect:/users/manage";
     }
+
+    @GetMapping("/manage")
+    public String showManageUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "deleteUsers";
+    }
+
 
 }

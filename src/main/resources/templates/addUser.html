@@ -89,7 +89,7 @@
             {{/error}}
             <form action="/users/add" method="post" id="addUserForm">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username: </label>
+                    <label for="username" class="form-label">Nombre de usuario: </label>
                     <input type="text" class="form-control" id="username" name="username" required>
                     <div class="text-danger mt-2" id="errorUser" style="display:none;">Este usuario ya existe.</div>
                 </div>
@@ -103,6 +103,7 @@
                     <div class="text-danger mt-2" id="errorEmail" style="display:none;">Este usuario ya existe.</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Añadir Usuario</button>
+                <a href="/users/manage" class="btn btn-primary">Eliminar usuarios</a>
             </form>
             <div id="myModal" class="modal">
                 <div class="modal-content">
