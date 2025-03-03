@@ -10,6 +10,7 @@ import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -140,26 +141,32 @@ public class ProductController {
     public String updateProduct(@PathVariable long id,
                                 @RequestParam String name,
                                 @RequestParam BigDecimal price,
-                                @RequestParam(required = false) Long categoryId, MultipartFile imageField) throws IOException{
-        Optional<Product> existingProduct = productService.findProductById(id);
+                                @RequestParam(required = false) Long categoryId,
+                                @RequestParam(required = false) MultipartFile imageField) throws IOException {
 
-        if (existingProduct.isPresent()) {
-            Product product = existingProduct.get();
-            product.setName(name);
-            product.setPrice(price);
+        Product product = productService.findProductById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 
-            // Si categoryId no es nulo, buscamos la categoría; si es nulo, no asignamos ninguna
-            if (categoryId != null) {
-                Optional<Category> category = categoryRepository.findById(categoryId);
-                category.ifPresent(product::setCategory);
-            } else {
-                product.setCategory(null); // Si el usuario no selecciona una categoría, se deja en null
-            }
+        product.setName(name);
+        product.setPrice(price);
 
-            productService.save(product, imageField);
+        if (categoryId != null) {
+            Category category = categoryService.findCategoryById(categoryId)
+                    .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
+            product.setCategory(category);
+        } else {
+            product.setCategory(null);
         }
+
+        // Solo actualiza la imagen si el campo no está vacío
+        if (imageField != null && !imageField.isEmpty()) {
+            product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        }
+
+        productService.save(product);
         return "redirect:/products";
     }
+
 
 
     @GetMapping("/products/{id}/edit")

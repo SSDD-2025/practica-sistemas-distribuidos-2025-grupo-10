@@ -123,10 +123,10 @@
     <div class="cart-item">
         <div class="d-flex align-items-center">
             {{#imageFile}}
-            <img src="/products/{{id}}/image" alt="Imagen de {{#name}}{{name}}{{/name}}{{^name}}Producto sin nombre{{/name}}">
+            <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 50px; object-fit: cover;">
             {{/imageFile}}
             {{^imageFile}}
-            <img src="/images/default-product.jpg" alt="Imagen no disponible">
+            <img src="img.png" class="card-img-top" alt="Imagen no disponible" style="height: 50px; object-fit: cover;">
             {{/imageFile}}
 
             <div class="cart-item-info">

@@ -36,6 +36,9 @@ public class ProductService {
         this.categoryService = categoryService;
     }
 
+    public void save(Product product) {
+        productRepository.save(product);
+    }
     public void save(Product product, MultipartFile imageField) throws IOException {
         if (imageField != null && !imageField.isEmpty()) {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
