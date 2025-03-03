@@ -20,36 +20,12 @@
             color: #333;
             padding-top: 60px;
         }
-
-        /* Aquí puedes agregar estilos personalizados para la categoría */
-        .product-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
         .category-title {
             text-align: center;
             margin-top: 10px;
             font-size: 2em;
             color: #333;
         }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
-        }
-
         .card {
             margin-top: 20px;
         }
@@ -85,66 +61,6 @@
             font-weight: bold;
         }
 
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-icons a {
-            color: grey;
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-icons a:hover {
-            color: black;
-        }
-
-        .nav-icons i {
-            font-size: 18px;
-            width: 22px;
-            text-align: center;
-        }
-
-        .dropdown-toggle {
-            text-decoration: none;
-            color: black;
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-menu {
-            min-width: 200px;
-            padding: 5px 0;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown-menu .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            font-size: 14px;
-        }
-
-        .dropdown-menu .dropdown-item i {
-            width: 20px;
-            font-size: 16px;
-            text-align: center;
-            color: black;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f8f9fa;
-        }
-
-        .dropdown-menu-end {
-            right: 0 !important;
-            left: auto !important;
-        }
-
         .navbar-brand {
             position: absolute;
             transform: translateX(-50%);
@@ -155,83 +71,69 @@
             font-family: sans-serif;
             pointer-events: none;
         }
+
         .btn-container {
             display: flex;
             gap: 10px;
-            /* Espacio entre botones */
         }
 
         .btn-container form {
             margin: 0;
-            /* Elimina margen extra del formulario */
         }
-
     </style>
 </head>
 
 <body>
 <nav class="navbar">
-        <div class="nav-links">
-            <a class="nav-item nav-link active" href="/">Inicio</a>
-            {{#categories}}
-            <a class="nav-item nav-link" href="/category/{{id}}">{{name}}</a>
-            {{/categories}}
-        </div>
-    <span class="navbar-brand" href="/">CasaNova</span>
-    <div class="nav-icons">
-        <a href="/search"><i class="fas fa-search"></i></a>
-        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
-        <div class="dropdown">
-            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="/settings">⚙ Ajustes</a></li>
-                <li><a class="dropdown-item" href="/orders">📦 Mis pedidos</a></li>
-                <li><a class="dropdown-item admin-only" href="/admin">🛠 Administración</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="/logout">🚪 Cerrar sesión</a></li>
-            </ul>
-        </div>
+    <div class="nav-links">
+        <a class="nav-item nav-link active" href="/">Inicio</a>
+        {{#categories}}
+        <a class="nav-item nav-link" href="/category/{{id}}">{{name}}</a>
+        {{/categories}}
     </div>
+    <span class="navbar-brand">CasaNova</span>
 </nav>
 
 <div class="category-title">
-    <h1>Editar el producto</h1>
+    <h1>Productos</h1>
 </div>
-<div class="container mt-5">
-<h2>Editar Producto</h2>
-
-<!-- Formulario para editar el producto -->
-    <form action="/products/{{product.id}}/update" method="post">
-        <div class="mb-3">
-            <label for="name" class="form-label">Nombre del Producto</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" required>
+<div class="container">
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>Editar Producto</h4>
         </div>
-
-        <div class="mb-3">
-            <label for="price" class="form-label">Precio</label>
-            <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{product.price}}" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Imagen actual:</label><br>
-            <img src="/products/{{product.id}}/image"
-                 onerror="this.onerror=null;this.src='/images/default-product.png';"
-                 alt="Imagen de {{product.name}}"
-                 style="height: 200px; object-fit: cover; margin-bottom: 10px;">
-        </div>
+        <div class="card-body">
+            <form action="/products/{{product.id}}/update" method="post">
+                 <div class="mb-3">
+                     <label for="name" class="form-label">Nombre del Producto</label>
+                     <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" required>
+                 </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Precio</label>
+                    <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{product.price}}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Imagen actual:</label><br>
+                    {{#product.imageFile}}
+                    <img src="/products/{{product.id}}/image"
+                         alt="Imagen de {{product.name}}"
+                         style="height: 200px; object-fit: cover; margin-bottom: 10px;">
+                    {{/product.imageFile}}
+                    {{^product.imageFile}}
+                    <img src="/img.png"
+                         alt="Imagen no disponible"
+                         style="height: 200px; object-fit: cover; margin-bottom: 10px;">
+                    {{/product.imageFile}}
+                </div>
 
         <!--<div class="mb-3">
              <label class="form-label">Reemplazar imagen (opcional):</label>
              <input type='file' class="form-control" name='imageField' accept=".jpg, .jpeg" />
          </div>-->
-
-
-
-         <div class="mb-3">
-             <label for="category" class="form-label">Categoría</label>
-             <select id="category" name="categoryId" class="form-select" required>
-                 <option value="">Seleccione una categoría</option>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Categoría</label>
+                    <select id="category" name="categoryId" class="form-select" required>
+                        <option value="">Seleccione una categoría</option>
                  {{#categories}}
                  <option value="{{id}}">{{name}}</option>
                  {{/categories}}
@@ -239,10 +141,13 @@
          </div>
 
          <div class="d-flex gap-2">
-             <button type="submit" class="btn btn-success">Guardar</button>
+             <button type="submit" class="btn btn-primary">Guardar</button>
              <a href="/products" class="btn btn-secondary">Cancelar</a>
          </div>
      </form>
+            </div>
+        </div>
+    </div>
 
  </div>
  <script>
