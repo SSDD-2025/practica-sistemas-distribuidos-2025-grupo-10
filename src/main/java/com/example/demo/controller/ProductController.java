@@ -205,32 +205,17 @@ public class ProductController {
         User user = userService.findUserById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        List<Product> cartItems = user.getUserProducts();
-
-        if (cartItems.isEmpty()) {
-            model.addAttribute("message", "No puedes finalizar compra con el carrito vacío.");
-            return "orderConfirmation";
+        // Verificar si el carrito está vacío
+        if (user.getUserProducts().isEmpty()) {
+            model.addAttribute("error", "No puedes finalizar la compra con el carrito vacío");
+            return "cart"; // Se mantiene en la vista del carrito
         }
 
-        BigDecimal total = cartItems.stream()
-                .map(Product::getPrice)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        Order order = new Order();
-        order.setTotal(total);
-        order.setNumItems(cartItems.size());
-        order.setDate(new Date());
-        order.setStatus("Realizado"); // Estado fijo para simplificar
-
-        orderRepository.save(order); // Guarda el pedido
-
-        // Vaciar carrito
-        user.getUserProducts().clear();
-        userService.save(user);
-
+        // Si el carrito tiene productos, procesar el pedido
+        userService.productsFromCartIntoOrder(user);
         model.addAttribute("message", "¡Pedido realizado correctamente!");
-        return "orderConfirmation";
+
+        return "redirect:/orders";
     }
 
 

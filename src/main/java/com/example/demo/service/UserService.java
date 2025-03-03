@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -88,13 +86,21 @@ public class UserService {
     }
 
     public void productsFromCartIntoOrder(User user) {
-        Order order = new Order();
         List<Product> allCartProducts = new ArrayList<>(user.getUserProducts());
         user.getUserProducts().clear();
         this.save(user);
         //  Añadimos el produto al order
-
+        BigDecimal total = allCartProducts.stream()
+                .map(Product::getPrice)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        Order order = new Order();
         order.getProducts().addAll(allCartProducts);
+        order.setTotal(total);
+        order.setNumItems(allCartProducts.size());
+        order.setDate(new Date());
+        order.setStatus("Realizado");
+
         orderService.save(order);
         //  Añadimos el order al usuario
         if (user.getUserOrders() == null){

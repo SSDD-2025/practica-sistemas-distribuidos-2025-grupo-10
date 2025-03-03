@@ -148,10 +148,33 @@
     {{/cartItems}}
 
     <div class="text-end mt-4">
-        <a href="/checkout" class="btn btn-success">Finalizar compra</a>
+        <form action="/cart/checkout" method="post" onsubmit="confirmCheckout(event)">
+            <button type="submit" class="btn btn-primary">Finalizar compra</button>
+        </form>
         <a href="/products" class="btn btn-secondary">Seguir comprando</a>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
+    function confirmCheckout(event) {
+        event.preventDefault(); // Evita el envío automático del formulario
+
+        Swal.fire({
+            title: "¿Finalizar compra?",
+            text: "No podrás revertir esta acción.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, finalizar",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                event.target.submit(); // Envía el formulario si se confirma la acción
+            }
+        });
+    }
+</script>
 </body>
 </html>
