@@ -25,7 +25,12 @@
             margin-top: 20px;
             margin-left: 30px;
         }
-
+        .category-title {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 2em;
+            color: #333;
+        }
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -67,6 +72,14 @@
             font-family: sans-serif;
             pointer-events: none;
         }
+        .btn-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-container form {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -78,9 +91,10 @@
     <span class="navbar-brand">CasaNova</span>
 </nav>
 
-<div class="container mt-5">
-    <h1 class="text-center">Gestionar Pedidos</h1>
-
+<div class="category-title">
+    <h1>Pedidos</h1>
+</div>
+<div class="container">
     <div class="card mt-4">
         <div class="card-header">
             <h4>Lista de Pedidos</h4>
@@ -101,9 +115,9 @@
                 </li>
                 {{/orders}}
             </ul>
-        </div>
-        <div class="mt-3">
-            <a href="/orders" class="btn btn-primary">Ver mis pedidos</a>
+            <div class="mt-3">
+                <a href="/orders" class="btn btn-primary">Ver mis pedidos</a>
+            </div>
         </div>
     </div>
 </div>
