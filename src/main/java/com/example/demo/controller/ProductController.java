@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
@@ -27,9 +28,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ProductController {
@@ -186,5 +185,47 @@ public class ProductController {
         model.addAttribute("products", productService.findall());
         return "manageProducts"; // Busca el archivo en templates/manageProducts.html
     }
+
+    @GetMapping("/cart")
+    public String showCart(Model model) {
+        User user = userService.findUserById(1L).orElseThrow();
+        model.addAttribute("cartItems", user.getUserProducts());
+        return "cart";  // Muestra el carrito con los productos añadidos
+    }
+
+    @PostMapping("/cart/checkout")
+    public String checkout(Model model) {
+        User user = userService.findUserById(1L)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        List<Product> cartItems = user.getUserProducts();
+
+        if (cartItems.isEmpty()) {
+            model.addAttribute("message", "No puedes finalizar compra con el carrito vacío.");
+            return "orderConfirmation";
+        }
+
+        BigDecimal total = cartItems.stream()
+                .map(Product::getPrice)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        Order order = new Order();
+        order.setTotal(total);
+        order.setNumItems(cartItems.size());
+        order.setDate(new Date());
+        order.setStatus("Realizado"); // Estado fijo para simplificar
+
+        orderRepository.save(order); // Guarda el pedido
+
+        // Vaciar carrito
+        user.getUserProducts().clear();
+        userService.save(user);
+
+        model.addAttribute("message", "¡Pedido realizado correctamente!");
+        return "orderConfirmation";
+    }
+
+
 
 }

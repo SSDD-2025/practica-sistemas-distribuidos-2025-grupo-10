@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras - CasaNova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding-top: 60px;
+        }
+
+        .card {
+            margin-top: 20px;
+            margin-left: 30px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            border-bottom: 1px solid #ccc;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            color: black;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+
+        .nav-links a.active {
+            color: grey;
+            font-weight: bold;
+        }
+
+        .navbar-brand {
+            position: absolute;
+            transform: translateX(-50%);
+            left: 50%;
+            font-size: 30px;
+            color: #061a80;
+            text-decoration: none;
+            font-family: sans-serif;
+            pointer-events: none;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        .cart-footer {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .btn-secondary {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a class="nav-item nav-link active" href="/">Inicio</a>
+    </div>
+    <span class="navbar-brand">CasaNova</span>
+</nav>
+
+<div class="container mt-4">
+    <h1>Carrito de Compras</h1>
+
+    {{#cartItems}}
+    <div class="cart-item">
+        <div class="d-flex align-items-center">
+            {{#imageFile}}
+            <img src="/products/{{id}}/image" alt="Imagen de {{#name}}{{name}}{{/name}}{{^name}}Producto sin nombre{{/name}}">
+            {{/imageFile}}
+            {{^imageFile}}
+            <img src="/images/default-product.jpg" alt="Imagen no disponible">
+            {{/imageFile}}
+
+            <div class="cart-item-info">
+                <div class="cart-item-name">
+                    {{#name}}{{name}}{{/name}}{{^name}}Producto sin nombre{{/name}}
+                </div>
+                <div>
+                    Precio: {{#price}}${{price}}{{/price}}{{^price}}No disponible{{/price}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/cartItems}}
+
+    {{^cartItems}}
+    <div class="alert alert-info text-center">
+        El carrito está vacío.
+    </div>
+    {{/cartItems}}
+
+    <div class="text-end mt-4">
+        <a href="/checkout" class="btn btn-success">Finalizar compra</a>
+        <a href="/products" class="btn btn-secondary">Seguir comprando</a>
+    </div>
+</div>
+
+</body>
+</html>
