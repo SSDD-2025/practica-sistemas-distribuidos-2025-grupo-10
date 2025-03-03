@@ -192,17 +192,14 @@
     <!-- Ícono del carrito de compras -->
     <div class="cart-icon" onclick="viewCart()">
         <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count" id="cart-count">0</span>
     </div>
 </nav>
 
 <div class="sidebar" id="sidebar">
-    <a href="/categories/add">Add Category</a>
-    <a href="/products/add">Add Product</a>
-    <a href="/users/add">Add User</a>
-    <a href="/products">View products</a>
-    <a href="/manageProducts">Manage Product</a>
-    <a href="#">Manage Category</a>
+    <a href="/categories/add">Añadir categorías</a>
+    <a href="/products/add">Añadir Productos</a>
+    <a href="/users/add">Añadir usuarios</a>
+    <a href="/products">Ver productos</a>
     <a href="#">Ver mis pedidos</a>
 </div>
 
@@ -220,16 +217,9 @@
     }
 
     function viewCart() {
-        alert("Mostrando el carrito de compras...");
+        window.location.href = "/cart";
     }
 
-    // Simulación de conteo de productos en el carrito
-    let cartItems = 0;
-
-    function addToCart() {
-        cartItems++;
-        document.getElementById("cart-count").textContent = cartItems;
-    }
 </script>
 
 </body>

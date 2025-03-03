@@ -90,7 +90,7 @@ public class ProductController {
     @PostMapping("/cart/add/{id}")
     public String addProductTocart(@PathVariable long id) throws IOException{
         User user = userService.findUserById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + 1));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + 1));
         Product product = productService.findProductById(id).orElseThrow();
         userService.addProductToCart(product, user);
         return "redirect:/cart";
