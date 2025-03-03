@@ -20,7 +20,6 @@
             color: #333;
             padding-top: 60px;
         }
-
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -38,20 +37,20 @@
         .nav-links {
             display: flex;
             gap: 15px;
-            align-items: center;
+            color: black;
         }
 
         .nav-links a {
             text-decoration: none;
+            color: black;
             font-size: 16px;
-            padding: 5px 10px;
-            transition: color 0.3s;
         }
 
         .nav-links a.active {
-            color: black;
+            color: grey;
             font-weight: bold;
         }
+
         .navbar-brand {
             position: absolute;
             transform: translateX(-50%);
@@ -61,14 +60,6 @@
             text-decoration: none;
             font-family: sans-serif;
             pointer-events: none;
-        }
-
-        .nav-links a:not(.active) {
-            color: grey;
-        }
-
-        .nav-links a:hover {
-            color: black;
         }
 
         /* Sidebar */
@@ -131,26 +122,6 @@
             transform: scale(1.1);
         }
 
-        .store-title {
-            position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #dcdcdc;
-            padding: 3px 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 45px;
-            font-family: 'Playfair Display', serif;
-            color: #061a80;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .store-title:hover {
-            transform: translateX(-50%) scale(1.1);
-        }
-
         .cart-icon {
             font-size: 24px;
             cursor: pointer;
@@ -161,27 +132,6 @@
 
         .cart-icon:hover {
             color: grey;
-        }
-
-        .store-title {
-            position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #dcdcdc;
-            /* Gris clarito */
-            padding: 5px 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 45px;
-            font-family: 'Playfair Display', serif;
-            color: #061a80;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-            display: inline-block;
-            /* Asegura que el padding y el hover se apliquen a toda el área */
-            width: max-content;
-            /* Expande el área del hover al contenido + padding */
         }
 
         .cart-count {
@@ -227,10 +177,10 @@
         }
 
         .category-title {
-            font-size: 1em;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 2em;
             color: #333;
-            margin-top: 130px;
-            margin-left: 390px
         }
 
         .container {
@@ -282,8 +232,6 @@
     <a href="#">Ver mis pedidos</a>
 </div>
 
-<!-- Título de la tienda -->
-<div class="store-title">CasaNova</div>
 
 
 <div class="category-title">
