@@ -15,14 +15,14 @@ public class Order {
     private BigDecimal total;
     private int numItems;
     private Date date;
-    private String status;  // Estado del pedido (pendiente, procesado, etc.)
+    private String status;  // Order status
 
     //  Relations
     //  (ejem 10) Order - Product
     @ManyToMany()
     private List<Product> products = new ArrayList<>();
 
-    public Order(){
+    public Order() {
 
     }
 
@@ -74,11 +74,11 @@ public class Order {
         this.status = status;
     }
 
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products){
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 }

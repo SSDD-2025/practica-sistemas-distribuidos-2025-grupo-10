@@ -15,36 +15,36 @@ import java.sql.Blob;
 @Service
 public class ImageUtils {
 
-    public Blob remoteImageToBlob(String imageUrl){
+    public Blob remoteImageToBlob(String imageUrl) {
         try {
             Resource image = new UrlResource(imageUrl);
-		    return BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
+            return BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error at processing the image");
         }
-	}
+    }
 
-	public Blob localImageToBlob(String localFilePath){
-		File imageFile = new File(localFilePath);
-		if (imageFile.exists()) {
-			try {
-				return BlobProxy.generateProxy(imageFile.toURI().toURL().openStream(), imageFile.length());
-			} catch (IOException e) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error at processing the image");
-			}
-		}
-		return null;
-	}
-
-    public Blob multiPartFileImageToBlob(MultipartFile image){
-		if (image!=null && !image.isEmpty()) {
-			try {
-				return BlobProxy.generateProxy(image.getInputStream(), image.getSize());
-			} catch (IOException e) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error at processing the image");
-			}
-		}
+    public Blob localImageToBlob(String localFilePath) {
+        File imageFile = new File(localFilePath);
+        if (imageFile.exists()) {
+            try {
+                return BlobProxy.generateProxy(imageFile.toURI().toURL().openStream(), imageFile.length());
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error at processing the image");
+            }
+        }
         return null;
-	}
-    
+    }
+
+    public Blob multiPartFileImageToBlob(MultipartFile image) {
+        if (image != null && !image.isEmpty()) {
+            try {
+                return BlobProxy.generateProxy(image.getInputStream(), image.getSize());
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error at processing the image");
+            }
+        }
+        return null;
+    }
+
 }

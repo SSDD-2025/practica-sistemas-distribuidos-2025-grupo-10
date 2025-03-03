@@ -15,9 +15,9 @@ public class User {
     private String email;
 
     //  Relations
-    //  (Ejem 7)    //  A la hora de borrar un usuario, se borran todos sus pedidos
-    @OneToMany()    //  Si quitamos esto, se mantiene los order, aunque se elimine el usuario
-    @JoinColumn(name = "user_id")   //  Quitar si causa problemas
+    //  (Ejem 7)
+    @OneToMany()
+    @JoinColumn(name = "user_id")
     private List<Order> userOrders = new ArrayList<>();
 
     //  (Ejem 10) User - Product
@@ -34,18 +34,37 @@ public class User {
         this.email = email;
     }
 
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public List<Order> getUserOrders() {
         return userOrders;

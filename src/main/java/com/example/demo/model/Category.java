@@ -3,11 +3,11 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 @Entity
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -18,7 +18,7 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 
-    public Category(){
+    public Category() {
 
     }
 
@@ -43,11 +43,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProduct(List<Product> products){
+    public void setProduct(List<Product> products) {
         this.products = products;
     }
 

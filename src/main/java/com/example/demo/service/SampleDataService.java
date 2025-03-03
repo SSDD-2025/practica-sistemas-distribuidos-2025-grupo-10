@@ -1,19 +1,15 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Category;
-import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.service.ImageUtils;
+
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SampleDataService {
@@ -99,6 +95,7 @@ public class SampleDataService {
         categoryService.deleteCategoryById(category2.getId());
         categoryService.deleteCategoryById(category.getId());
     }
+
     private void saveproductWithURLImage(Product product, String image) throws IOException {
         product.setImageFile(imageUtils.localImageToBlob("images/" + image));
         productService.save(product, null);
@@ -130,17 +127,14 @@ public class SampleDataService {
          */
 
 
+    //  userService.deleteOrder(user);
+    //userService.deleteUserById(user.getId());
+    //  Si eliminas un usuario, eliminas sus pedidos, pero no eliminas los productos en si
+
+    //  Dado el ultimo cambio, si eliminas un usuario, no se elimina el pedido (pero no hay relacion entre pedido)
 
 
-
-        //  userService.deleteOrder(user);
-        //userService.deleteUserById(user.getId());
-        //  Si eliminas un usuario, eliminas sus pedidos, pero no eliminas los productos en si
-
-        //  Dado el ultimo cambio, si eliminas un usuario, no se elimina el pedido (pero no hay relacion entre pedido)
-
-
-        //  FIN FUNCIONAL
+    //  FIN FUNCIONAL
 
 
 
@@ -162,7 +156,7 @@ public class SampleDataService {
 
          */
 
-        //  ELiminar el pedido x
+    //  ELiminar el pedido x
 
 
 }

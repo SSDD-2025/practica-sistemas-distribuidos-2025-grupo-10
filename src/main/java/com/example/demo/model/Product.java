@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 public class Product {
     @Id
@@ -21,8 +22,7 @@ public class Product {
     //  Relations
     //  (ejem 9)
     @ManyToOne
-    //@JoinColumn(name = "category_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.SET_NULL) //  Si un producto no tiene categoria, quiere que en el html ponga "NO tiene categoria"
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Category category;
 
     //  (ejem 10) Order - Product
@@ -30,15 +30,13 @@ public class Product {
     private List<Order> orders = new ArrayList<>();
 
     //  (ejem 10) User - Product
-    @ManyToMany(mappedBy="userProducts")
+    @ManyToMany(mappedBy = "userProducts")
     private List<User> users = new ArrayList<>();
 
-    // Constructor vacío
     public Product() {
 
     }
 
-    // Constructor con parámetros
     public Product(String name, BigDecimal price) {
         super();
         this.name = name;
@@ -49,33 +47,43 @@ public class Product {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public BigDecimal getPrice() {
         return price;
     }
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public List<Order> getOrders(){
+
+    public List<Order> getOrders() {
         return orders;
     }
-    public void setOrders(List<Order> orders){
+
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-    public Category getCategory(){
+
+    public Category getCategory() {
         return category;
     }
-    public void setCategory(Category category){
+
+    public void setCategory(Category category) {
         this.category = category;
     }
+
     public List<User> getUsers() {
         return users;
     }
@@ -83,8 +91,9 @@ public class Product {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
     public String getCategoryName() {
-        return (category != null) ? category.getName() : "NO tiene categoria";
+        return (category != null) ? category.getName() : "It has no category";
     }
 
     public Blob getImageFile() {
