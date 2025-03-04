@@ -70,7 +70,7 @@
 
 ### Diagrama de Navegación
 
-![Diagrama de Navegación](ruta/a/diagrama-navegacion.png)
+![Diagrama de Navegación](src/main/resources/static/Diagrama de Navegación.jpeg)
 
 ## Instrucciones de Ejecución
 
@@ -156,7 +156,7 @@
 - **manageProducts.html**: Página para gestionar productos.
 - **products.html**: Muestra la lista de productos.
 - **showProduct.html**: Muestra los detalles de un producto.
-- **users.html**: Muestra la lista de usuarios.
+
 ### Configuración de la Base de Datos
 - **application.properties**: Contiene la configuración de la base de datos MySQL.
 
@@ -196,7 +196,7 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 ## Participación
 
 ### Javier Castellanos 
-- **Tareas**: mostrar, editar perfil de usuario, puerto 8443, implementar la seguridad, el uso de token, invitado, loging y logout, ver rutina y comentarios, crear rutina, añadir ejercicios en la rutina, algoritmo ordenación, guardar las imágenes en la base de datos y pasarlas a una carpeta.
+- **Tareas**: Colaboración en el desarrollo del UserController para gestionar usuarios mediante operaciones CRUD. Incorporación de una ruta GET en el UserController para servir la vista addUser.html, facilitando la incorporación de nuevos usuarios al sistema. Implementación de los métodos save en UserService y CategoryService para garantizar la persistencia de los datos en la base de datos. Realización del README.md.
 - **5 commits más significativos**:
    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5dd21b20343fcaf1e37d8f953e5b0f0642a57fc4)
    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/7181af3d1441ab48e07ea2f7473e2bb9bb2ff741)
@@ -206,7 +206,7 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 
 ### María Martín
-- **Tareas**: novedades (cargar novedades, spinner y paginación), calendario, notificaciones (ver solicitudes, aceptarlas/denegarlas), agregar/buscar amigo, comentar en la rutina, gráfica, borrar usuario administrador, organización de código, error, diagrama de EER, enlazar base de datos, mostrar amigos agregados
+- **Tareas**: Creación, edición y eliminación de productos. Creación y eliminación de categorías. Desarrollo de la página principal (MainPage). Creación del carrito de la compra. Eliminación de pedidos y usuarios. Adaptación y edición de todos los controllers para conectar correctamente con los nuevos HTML creados. Mejora de la presentación de las páginas HTML para hacerlas más visuales y fáciles de usar. Participación en la creación del Product Model, Product Service y Product Controller.
 - **5 commits más significativos**:
    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5307457bd5a9859fb8daecd9cd36fb1567ab1eb6)
@@ -216,7 +216,7 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 
 ### Verónica Ramírez
-- **Tareas**: registrar usuario, añadir ejercicio administrador, login, paginación lista ejercicios, detalles ejercicios (video, imagen), exportar rutina en PDF, lista ejercicios, buscador de ejercicios, borrar ejercicio administrador, separar header, organización de código, error, diagrama navegación, diagrama clases y templates, logo en página web
+- **Tareas**: Esquema inicial, controllers y services de algunas de las entidades, junto con Wenhao relaciones entre entidades, parte de la visualización de pedido, carrito y productos y página de error
 - **5 commits más significativos**:
    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/4bd30f19b6619d075d6da5987a40e3d93e62afaf)
    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/ff11e368a3839381852616fb136f4f67a4628481)
@@ -226,7 +226,7 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 
 ### Wenhao Zhang
-- **Tarea**: enlace a página rutina (sin funcionalidad)
+- **Tarea**: Implementación de los métodos básicos de las entidades (como clases de Java), implementación de las relaciones de la BBDD. Testeo de las operaciones de guardado, testeo de las operaciones de borrado y testeo de las operaciones de modificación o actualización junto a Vero. Implementación de la visualización de productos por categoría junto a Vero.
 - **5 commits más significativos**:
    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1ef9813341453f52d092a74f7f8a57ce231c92db)
    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/76aba34e88dd7d574523e527003b28e050e339a5)
