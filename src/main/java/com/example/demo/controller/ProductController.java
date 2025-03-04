@@ -1,51 +1,40 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
-import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
-import com.example.demo.repository.OrderRepository;
-import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private UserService userService;
-
 
     @GetMapping("/products")
     public String showProducts(Model model) {
@@ -60,23 +49,23 @@ public class ProductController {
             }
         }
 
-        // Agregar los productos al modelo para que Mustache los reconozca
         model.addAttribute("products", products);
         return "products";
     }
-
 
     @GetMapping("/manageProducts")
     public String showManageProductsPage(Model model) {
         model.addAttribute("products", productService.findall());
         return "manageProducts";
     }
+
     @GetMapping("products/add")
-    public String showFormAdd(Model model){
+    public String showFormAdd(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.findAll());
         return "addProduct";
     }
+
     @PostMapping("/products/add")
     public String addProduct(@ModelAttribute Product product, MultipartFile imageField,
                              @RequestParam("categoryId") Long categoryId) throws IOException {
@@ -87,14 +76,16 @@ public class ProductController {
         productService.save(product, imageField);
         return "redirect:/products/add?success=true";
     }
+
     @PostMapping("/cart/add/{id}")
-    public String addProductTocart(@PathVariable long id) throws IOException{
+    public String addProductTocart(@PathVariable long id) throws IOException {
         User user = userService.findUserById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + 1));
         Product product = productService.findProductById(id).orElseThrow();
         userService.addProductToCart(product, user);
         return "redirect:/cart";
     }
+
     @GetMapping("products/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 
@@ -113,28 +104,17 @@ public class ProductController {
         }
     }
 
-
-
     @GetMapping("/products/{id}")
-    public String showProduct(Model model, @PathVariable long id){
+    public String showProduct(Model model, @PathVariable long id) {
         Optional<Product> product = productService.findProductById(id);
         model.addAttribute("product", product);
         return "showProduct";
     }
 
-    /*@GetMapping("/products/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Optional<Product> product = productService.findProductById(id);
-        if (product.isPresent()) {
-            model.addAttribute("product", product.get());
-            return "manageProduct"; // Apunta al archivo correcto
-        }
-        return "redirect:/products";
-    }*/
     @PostMapping("/products/{id}/delete")
     public String deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
-        return "redirect:/products/manage"; // Recarga la página con la lista actualizada
+        return "redirect:/products/manage"; // Refresh the page with updated list
     }
 
     @PostMapping("/products/{id}/update")
@@ -158,7 +138,7 @@ public class ProductController {
             product.setCategory(null);
         }
 
-        // Solo actualiza la imagen si el campo no está vacío
+        // It only updates the image if the field is not empty
         if (imageField != null && !imageField.isEmpty()) {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
@@ -167,22 +147,20 @@ public class ProductController {
         return "redirect:/products";
     }
 
-
-
     @GetMapping("/products/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
         Optional<Product> product = productService.findProductById(id);
         if (product.isPresent()) {
             Product existingProduct = product.get();
 
-            // Si la categoría es null, no intentamos acceder a su ID
+            // If the category is null we dont access to its ID
             Long categoryId = (existingProduct.getCategory() != null) ? existingProduct.getCategory().getId() : null;
 
             model.addAttribute("product", existingProduct);
             model.addAttribute("categoryId", categoryId);
-            model.addAttribute("categories", categoryRepository.findAll()); // Cargar todas las categorías en el formulario
+            model.addAttribute("categories", categoryRepository.findAll());
 
-            return "editProduct"; // Asegúrate de que el archivo HTML correcto se llame así
+            return "editProduct";
         }
         return "redirect:/products";
     }
@@ -190,14 +168,14 @@ public class ProductController {
     @GetMapping("/products/manage")
     public String showManageProducts(Model model) {
         model.addAttribute("products", productService.findall());
-        return "manageProducts"; // Busca el archivo en templates/manageProducts.html
+        return "manageProducts";
     }
 
     @GetMapping("/cart")
     public String showCart(Model model) {
         User user = userService.findUserById(1L).orElseThrow();
         model.addAttribute("cartItems", user.getUserProducts());
-        return "cart";  // Muestra el carrito con los productos añadidos
+        return "cart";
     }
 
     @PostMapping("/cart/checkout")
@@ -205,19 +183,16 @@ public class ProductController {
         User user = userService.findUserById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        // Verificar si el carrito está vacío
         if (user.getUserProducts().isEmpty()) {
             model.addAttribute("error", "No puedes finalizar la compra con el carrito vacío");
-            return "cart"; // Se mantiene en la vista del carrito
+            return "cart"; // Remains in the cart
         }
 
-        // Si el carrito tiene productos, procesar el pedido
+        // Continues with the process if the cart has products
         userService.productsFromCartIntoOrder(user);
         model.addAttribute("message", "¡Pedido realizado correctamente!");
 
         return "redirect:/orders";
     }
-
-
 
 }

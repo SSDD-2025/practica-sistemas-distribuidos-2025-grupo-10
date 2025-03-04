@@ -66,7 +66,7 @@ public class ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
-        // Eliminar el producto de todos los pedidos antes de borrarlo
+        // Remove the product from all orders before deleting it
         for (Order order : product.getOrders()) {
             order.getProducts().remove(product);
             orderService.save(order); // Guardar el pedido sin el producto
@@ -79,7 +79,7 @@ public class ProductService {
             }
         }
 
-        // Ahora eliminar el producto
+        // Deletes the product
         productRepository.delete(product);
     }
 

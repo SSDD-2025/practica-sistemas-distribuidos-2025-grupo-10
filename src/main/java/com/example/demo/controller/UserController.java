@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Order;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -30,34 +29,29 @@ public class UserController {
         return "redirect:/users/add"; // Vuelve al formulario
     }
 
-    // Mostrar todos los usuarios
     @GetMapping("/users")
     public String showUsers(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "users"; // vista que muestra la lista de usuarios
+        return "users";
     }
 
-    // Mostrar formulario para añadir un nuevo usuario
     @GetMapping("/users/add")
     public String showFormAdd(Model model) {
-        model.addAttribute("user", new User()); // Crear un usuario vacío
+        model.addAttribute("user", new User());
         model.addAttribute("users", userService.findAll());
-        return "addUser"; // vista para agregar un nuevo usuario
+        return "addUser";
     }
-
-
 
     // Ver detalles de un usuario
     @GetMapping("/users/{id}")
     public String showUser(Model model, @PathVariable Long id) {
         Optional<User> user = userService.findUserById(id);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             model.addAttribute("order", user.get());
             return "order";
-        } else{
+        } else {
             return "orders";
         }
-
     }
 
     // Eliminar un usuario
@@ -72,6 +66,5 @@ public class UserController {
         model.addAttribute("users", userService.findAll());
         return "deleteUsers";
     }
-
 
 }
