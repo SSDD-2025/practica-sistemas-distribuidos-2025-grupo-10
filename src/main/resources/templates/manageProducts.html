@@ -21,15 +21,6 @@
             padding-top: 60px;
         }
 
-        /* Aquí puedes agregar estilos personalizados para la categoría */
-        .product-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
         .product-card img {
             max-width: 100%;
             height: auto;
@@ -41,13 +32,6 @@
             margin-top: 10px;
             font-size: 2em;
             color: #333;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
         }
 
         .card {
@@ -85,12 +69,6 @@
             font-weight: bold;
         }
 
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
         .nav-icons a {
             color: grey;
             display: flex;
@@ -105,20 +83,6 @@
             font-size: 18px;
             width: 22px;
             text-align: center;
-        }
-
-        .dropdown-toggle {
-            text-decoration: none;
-            color: black;
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-menu {
-            min-width: 200px;
-            padding: 5px 0;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .dropdown-menu .dropdown-item {
@@ -140,11 +104,6 @@
             background-color: #f8f9fa;
         }
 
-        .dropdown-menu-end {
-            right: 0 !important;
-            left: auto !important;
-        }
-
         .navbar-brand {
             position: absolute;
             transform: translateX(-50%);
@@ -158,12 +117,10 @@
         .btn-container {
             display: flex;
             gap: 10px;
-            /* Espacio entre botones */
         }
 
         .btn-container form {
             margin: 0;
-            /* Elimina margen extra del formulario */
         }
 
     </style>
@@ -214,7 +171,6 @@
 
 
 <script>
-    // Cargar productos dinámicamente al cargar la página
     document.addEventListener("DOMContentLoaded", function () {
         cargarProductos();
     });
@@ -224,7 +180,7 @@
             .then(response => response.json())
             .then(products => {
                 const productList = document.getElementById("product-list");
-                productList.innerHTML = ""; // Limpia la lista antes de agregar nuevos productos
+                productList.innerHTML = "";
 
                 products.forEach(product => {
                     const li = document.createElement("li");
@@ -245,7 +201,7 @@
         fetch(`/products/${id}/delete`, { method: "POST" })
             .then(response => {
                 if (response.ok) {
-                    button.parentElement.remove(); // Elimina el producto de la lista sin recargar la página
+                    button.parentElement.remove();
                 } else {
                     console.error("Error al eliminar el producto");
                 }

@@ -72,10 +72,6 @@
             font-family: sans-serif;
             pointer-events: none;
         }
-        .btn-container {
-            display: flex;
-            gap: 10px;
-        }
 
         .btn-container form {
             margin: 0;
@@ -104,7 +100,7 @@
                 {{#orders}}
                 <li class="list-group-item d-flex flex-column align-items-start" data-id="{{id}}">
                     <h5 class="card-title text-primary">Pedido #{{id}}</h5>
-                    <p class="mb-1"><strong>Total:</strong> {{#total}}{{total}}€{{/total}}{{^total}}No disponible{{/total}}</p>
+                    <p class="mb-1"><strong>Total:</strong> {{#total}}{{total}}${{/total}}{{^total}}No disponible{{/total}}</p>
                     <p class="mb-1"><strong>Número de artículos:</strong> {{numItems}}</p>
                     <p class="mb-1"><strong>Fecha:</strong> {{date}}</p>
                     <p class="mb-3"><strong>Estado:</strong> {{status}}</p>
@@ -132,7 +128,7 @@
             .then(response => response.json())
             .then(orders => {
                 const orderList = document.getElementById("order-list");
-                orderList.innerHTML = ""; // Limpia la lista antes de agregar nuevos pedidos
+                orderList.innerHTML = ""; // Cleans up the list before adding new categories
 
                 orders.forEach(order => {
                     const li = document.createElement("li");
@@ -154,7 +150,7 @@
         fetch(`/orders/${id}/delete`, { method: "POST" })
             .then(response => {
                 if (response.ok) {
-                    button.closest("li").remove(); // Elimina de la lista sin recargar
+                    button.closest("li").remove();
                 } else {
                     console.error("Error al eliminar el pedido");
                 }

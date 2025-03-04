@@ -18,11 +18,6 @@
             padding-top: 60px;
         }
 
-        .card {
-            margin-top: 20px;
-            margin-left: 30px;
-        }
-
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -96,12 +91,6 @@
             font-weight: bold;
         }
 
-        .cart-footer {
-            text-align: right;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
         .btn-secondary {
             margin-top: 15px;
         }
@@ -158,7 +147,7 @@
 
 <script>
     function confirmCheckout(event) {
-        event.preventDefault(); // Evita el envío automático del formulario
+        event.preventDefault(); // Prevents the form to be sent automatically
 
         Swal.fire({
             title: "¿Finalizar compra?",
@@ -171,7 +160,7 @@
             cancelButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                event.target.submit(); // Envía el formulario si se confirma la acción
+                event.target.submit();
             }
         });
     }

@@ -20,19 +20,13 @@ public class UserController {
     public String showAddUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("users", userService.findAll());
-        return "addUser"; // Esto busca addUser.html en src/main/resources/templates
+        return "addUser";
     }
 
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
-        userService.save(user); // Guarda el usuario en la base de datos
-        return "redirect:/users/add"; // Vuelve al formulario
-    }
-
-    @GetMapping("/users")
-    public String showUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "users";
+        userService.save(user);
+        return "redirect:/users/add";
     }
 
     @GetMapping("/users/add")
@@ -42,7 +36,6 @@ public class UserController {
         return "addUser";
     }
 
-    // Ver detalles de un usuario
     @GetMapping("/users/{id}")
     public String showUser(Model model, @PathVariable Long id) {
         Optional<User> user = userService.findUserById(id);
@@ -54,7 +47,6 @@ public class UserController {
         }
     }
 
-    // Eliminar un usuario
     @PostMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);

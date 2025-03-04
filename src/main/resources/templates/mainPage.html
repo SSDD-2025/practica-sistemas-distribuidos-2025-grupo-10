@@ -63,7 +63,6 @@
             color: black;
         }
 
-        /* Sidebar */
         .sidebar {
             position: fixed;
             left: -250px;
@@ -145,7 +144,6 @@
             transform: translateX(-50%) scale(1.1);
         }
 
-        /* Carrito */
         .cart-icon {
             font-size: 24px;
             cursor: pointer;
@@ -158,20 +156,6 @@
             color: grey;
         }
 
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background-color: red;
-            color: white;
-            font-size: 12px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 18px;
-            font-weight: bold;
-        }
     </style>
 </head>
 
@@ -189,7 +173,6 @@
         {{/categories}}
     </div>
 
-    <!-- Ícono del carrito de compras -->
     <div class="cart-icon" onclick="viewCart()">
         <i class="fas fa-shopping-cart"></i>
     </div>

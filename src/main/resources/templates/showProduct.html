@@ -21,57 +21,14 @@
             padding-top: 60px;
         }
 
-        /* Aquí puedes agregar estilos personalizados para la categoría */
-        .product-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
         .product-card img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
         }
 
-        .category-title {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 2em;
-            color: #333;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
-        }
-
         .card {
             margin-top: 20px;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: white;
-            border-bottom: 1px solid #ccc;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            color: black;
         }
 
         .nav-links a {
@@ -83,12 +40,6 @@
         .nav-links a.active {
             color: grey;
             font-weight: bold;
-        }
-
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
         }
 
         .nav-icons a {
@@ -105,20 +56,6 @@
             font-size: 18px;
             width: 22px;
             text-align: center;
-        }
-
-        .dropdown-toggle {
-            text-decoration: none;
-            color: black;
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-menu {
-            min-width: 200px;
-            padding: 5px 0;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .dropdown-menu .dropdown-item {
@@ -138,34 +75,6 @@
 
         .dropdown-menu .dropdown-item:hover {
             background-color: #f8f9fa;
-        }
-
-        .dropdown-menu-end {
-            right: 0 !important;
-            left: auto !important;
-        }
-
-        .navbar-brand {
-            position: absolute;
-            transform: translateX(-50%);
-            left: 50%;
-            font-size: 30px;
-            color: #061a80;
-            text-decoration: none;
-            font-family: sans-serif;
-            pointer-events: none;
-        }
-        .confirmation-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 9999;
         }
 
         .confirmation-popup h2 {
@@ -202,7 +111,7 @@
         </div>
         <div class="card-body">
             <ul id="product-list" class="list-group">
-                <!-- Los productos se llenarán dinámicamente desde el backend -->
+                <!-- Products will be dynamically populated from the backend -->
             </ul>
         </div>
     </div>
@@ -215,9 +124,8 @@
 <a href="/posts/{{post.id}}/edit">Edit post</a>
 
 <script>
-    // Función para cargar los productos dinámicamente desde la API
     function loadProducts() {
-        fetch('/api/products') // Asegúrate de que esta API devuelva la lista de productos en JSON
+        fetch('/api/products')
             .then(response => response.json())
             .then(products => {
                 const productList = document.getElementById("product-list");
@@ -239,18 +147,11 @@
             .catch(error => console.error("Error al cargar los productos:", error));
     }
 
-    // Función para mostrar el popup de confirmación de eliminación
     function showDeleteConfirmation(productId) {
         document.getElementById('deleteConfirmationPopup').style.display = 'block';
         document.getElementById('deleteProductLink').href = `/products/${productId}/delete`; // URL de eliminación
     }
 
-    // Función para ocultar el popup de confirmación de eliminación
-    function hideDeleteConfirmation() {
-        document.getElementById('deleteConfirmationPopup').style.display = 'none';
-    }
-
-    // Cargar productos al cargar la página
     document.addEventListener("DOMContentLoaded", loadProducts);
 </script>
 

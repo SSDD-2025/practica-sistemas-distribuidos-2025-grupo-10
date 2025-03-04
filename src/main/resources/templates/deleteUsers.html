@@ -72,11 +72,6 @@
             pointer-events: none;
         }
 
-        .btn-container {
-            display: flex;
-            gap: 10px;
-        }
-
         .btn-container form {
             margin: 0;
         }
@@ -133,7 +128,7 @@
             .then(response => response.json())
             .then(users => {
                 const userList = document.getElementById("user-list");
-                userList.innerHTML = ""; // Limpia la lista antes de agregar nuevos usuarios
+                userList.innerHTML = ""; // Cleans up the list before adding new categories
 
                 users.forEach(user => {
                     const li = document.createElement("li");
@@ -155,7 +150,7 @@
         fetch(`/users/${id}/delete`, { method: "POST" })
             .then(response => {
                 if (response.ok) {
-                    button.closest("li").remove(); // Elimina el usuario de la lista sin recargar
+                    button.closest("li").remove();
                 } else {
                     console.error("Error al eliminar el usuario");
                 }

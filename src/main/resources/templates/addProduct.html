@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +19,7 @@
             color: #333;
             padding-top: 60px;
         }
+
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -62,7 +62,6 @@
             pointer-events: none;
         }
 
-        /* Sidebar */
         .sidebar {
             position: fixed;
             left: -250px;
@@ -88,26 +87,8 @@
             background-color: #0a2da3;
         }
 
-        .menu-toggle {
-            font-size: 24px;
-            cursor: pointer;
-            color: black;
-        }
-
         .sidebar.show {
             left: 0;
-        }
-
-        .content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-            gap: 30px;
-            flex-wrap: wrap;
-            position: relative;
-            margin-top: 60px;
-            max-width: 200px;
         }
 
         .content img {
@@ -122,53 +103,10 @@
             transform: scale(1.1);
         }
 
-        .cart-icon {
-            font-size: 24px;
-            cursor: pointer;
-            position: relative;
-            color: black;
-            transition: color 0.3s;
-        }
-
-        .cart-icon:hover {
-            color: grey;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background-color: red;
-            color: white;
-            font-size: 12px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 18px;
-            font-weight: bold;
-        }
-
-        /* Aquí puedes agregar estilos personalizados para la categoría */
-        .product-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
         .product-card img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
         }
 
         .card {
@@ -182,7 +120,6 @@
             font-size: 2em;
             color: #333;
         }
-
 
         .toast-message {
             visibility: hidden;
@@ -228,15 +165,11 @@
     <a href="#">Ver mis pedidos</a>
 </div>
 
-
-
 <div class="category-title">
     <h1>Administración de productos</h1>
 </div>
 
 <div class="container">
-
-
     <div class="card">
         <div class="card-header">
             <h4>Añadir Nuevo Producto</h4>
@@ -271,7 +204,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -299,7 +231,6 @@
             }
         });
 
-        // Modal de error
         document.querySelector(".close").addEventListener("click", function () {
             document.getElementById("myModal").style.display = "none";
         });
@@ -310,7 +241,6 @@
             }
         });
 
-        // Mostrar toast si viene de una redirección exitosa
         window.onload = function () {
             const params = new URLSearchParams(window.location.search);
             if (params.get("success") === "true") {
@@ -326,7 +256,6 @@
             }, 3000);
         }
 
-        // Sidebar y carrito (los mantengo tal cual los tienes)
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("show");
         }
@@ -335,7 +264,6 @@
             alert("Mostrando el carrito de compras...");
         }
 
-        // Validación en tiempo real del precio (solo para mejorar UX)
         document.getElementById("price").addEventListener("input", function () {
             const price = document.getElementById("price").value.trim();
             if (price < 0) {
