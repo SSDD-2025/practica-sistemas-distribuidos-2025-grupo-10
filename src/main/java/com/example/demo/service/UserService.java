@@ -76,6 +76,7 @@ public class UserService {
 
     public void deleteOrder(User user) {
         user.setUserOrders(null);
+        //  User.setorder(user.getorders.remove(elorder))
         this.save(user);
     }
 }
