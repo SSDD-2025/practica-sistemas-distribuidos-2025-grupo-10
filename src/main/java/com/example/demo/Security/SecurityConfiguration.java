@@ -1,5 +1,6 @@
 package com.example.demo.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,6 +17,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+    @Autowired
+    public RepositoryUserDetailsService userDetailService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -25,20 +29,10 @@ public class SecurityConfiguration {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
-    }
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("pass"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
     }
 
     @Bean
@@ -52,12 +46,22 @@ public class SecurityConfiguration {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/images/public/**").permitAll()
+                        .requestMatchers("/products").permitAll()
                         // PRIVATE PAGES
-                        .anyRequest().authenticated())
+                        .requestMatchers("/addCategory").hasAnyRole("ADMIN")
+                        .requestMatchers("/addProduct").hasAnyRole("ADMIN")
+                        .requestMatchers("/addUser").hasAnyRole("ADMIN")
+                        .requestMatchers("/deleteCategory").hasAnyRole("ADMIN")
+                        .requestMatchers("/deleteProduct").hasAnyRole("ADMIN")
+                        .requestMatchers("/deleteUsers").hasAnyRole("ADMIN")
+                        .requestMatchers("/editProduct").hasAnyRole("ADMIN")
+                        .requestMatchers("/orders").hasAnyRole("USER")
+                        .requestMatchers("/cart").hasAnyRole("USER")
+                )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginerror")
-                        .defaultSuccessUrl("/private")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -65,9 +69,6 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 );
-
-        // Disable CSRF at the moment
-        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }

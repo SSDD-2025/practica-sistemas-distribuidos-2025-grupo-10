@@ -5,6 +5,7 @@ import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class SampleDataService {
     private UserService userService;
     @Autowired
     private ImageUtils imageUtils;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @PostConstruct
@@ -44,8 +47,13 @@ public class SampleDataService {
         productService.save(product2, null);
 
         // Initialize user
-        User user = new User("Alberto", "ItsNotPassword", "alberto123@gmail.com");
-        userService.save(user);
+
+
+        User user2 = new User("vero", passwordEncoder.encode("adminpass"), "vero@gmail.com", "USER", "ADMIN");
+        userService.save(user2);
+
+        User user1 = new User("Alberto", passwordEncoder.encode("notpass"), "alberto123@gmail.com", "USER");
+        userService.save(user1);
     }
 
     private void saveproductWithURLImage(Product product, String image) throws IOException {

@@ -13,6 +13,8 @@ public class User {
     private String username;
     private String password;
     private String email;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     //  Relations
     //  (Ejem 7)
@@ -28,10 +30,11 @@ public class User {
 
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email, String... roles) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.roles = List.of(roles);
     }
 
     public Long getId() {
@@ -80,5 +83,13 @@ public class User {
 
     public void setUserProducts(List<Product> userProducts) {
         this.userProducts = userProducts;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }
