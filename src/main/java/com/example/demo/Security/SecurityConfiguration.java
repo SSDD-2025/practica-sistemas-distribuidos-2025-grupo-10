@@ -38,7 +38,12 @@ public class SecurityConfiguration {
                 .password(passwordEncoder().encode("pass"))
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("admin"))
+                .roles("USER", "ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
     @Bean
@@ -52,8 +57,30 @@ public class SecurityConfiguration {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/images/public/**").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/loginerror").permitAll()
+                        .requestMatchers("/category/**").permitAll()
+                        .requestMatchers("/products").permitAll()
+                        .requestMatchers("/products/*/image").permitAll()
+
                         // PRIVATE PAGES
-                        .anyRequest().authenticated())
+                        .requestMatchers("/cart").hasRole("USER")
+                        .requestMatchers("/orders/**").hasRole("USER")
+                        .requestMatchers("/products/add**").hasRole("ADMIN")
+                        .requestMatchers("/users/add").hasRole("ADMIN")
+                        .requestMatchers("/categories/*").hasRole("ADMIN")
+                        .requestMatchers("/cart/checkout").hasRole("USER")
+                        .requestMatchers("/categories/*/delete").hasRole("ADMIN")
+                        .requestMatchers("/cart/add/*").hasRole("USER")
+                        .requestMatchers("/manageProducts").hasRole("ADMIN")
+                        .requestMatchers("/products/manage").hasRole("ADMIN")
+                        .requestMatchers("/products/*/delete").hasRole("ADMIN")
+                        .requestMatchers("/users/manage").hasRole("ADMIN")
+                        .requestMatchers("/users/*/delete").hasRole("ADMIN")
+                        .requestMatchers("/products/*/edit").hasRole("ADMIN")
+                        .requestMatchers("/products/*/update").hasRole("ADMIN")
+
+                )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginerror")
