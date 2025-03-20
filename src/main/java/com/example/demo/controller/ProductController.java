@@ -30,8 +30,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
     private CategoryService categoryService;
     @Autowired
     private UserService userService;
@@ -158,7 +156,7 @@ public class ProductController {
 
             model.addAttribute("product", existingProduct);
             model.addAttribute("categoryId", categoryId);
-            model.addAttribute("categories", categoryRepository.findAll());
+            model.addAttribute("categories", categoryService.findAll());
 
             return "editProduct";
         }

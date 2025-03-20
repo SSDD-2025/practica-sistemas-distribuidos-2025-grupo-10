@@ -26,7 +26,7 @@ public class CategoryService {
 
     public boolean addCategory(Category category) {
         if (!categoryRepository.findByName(category.getName()).isEmpty()) {
-            return false; // La categoría ya existe
+            return false; // Category already exists
         }
         categoryRepository.save(category);
         return true;
