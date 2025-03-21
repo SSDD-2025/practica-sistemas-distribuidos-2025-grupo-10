@@ -102,6 +102,7 @@
                     <input type="text" class="form-control" id="email" name="email" required>
                     <div class="text-danger mt-2" id="errorEmail" style="display:none;">Este usuario ya existe.</div>
                 </div>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button type="submit" class="btn btn-primary">Añadir Usuario</button>
                 <a href="/users/manage" class="btn btn-primary">Eliminar usuarios</a>
             </form>

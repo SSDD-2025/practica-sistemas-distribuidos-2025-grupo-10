@@ -93,6 +93,7 @@
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text"><strong>Precio:</strong> {{price}}$</p>
                     <form action="/cart/add/{{id}}" method="post">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                         <button type="submit" class="btn btn-primary">Añadir</button>
                     </form>
                 </div>

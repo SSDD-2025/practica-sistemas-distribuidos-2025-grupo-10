@@ -115,7 +115,7 @@
             <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 50px; object-fit: cover;">
             {{/imageFile}}
             {{^imageFile}}
-            <img src="img.png" class="card-img-top" alt="Imagen no disponible" style="height: 50px; object-fit: cover;">
+            <img src="/images/public/img.png" class="card-img-top" alt="Imagen no disponible" style="height: 50px; object-fit: cover;">
             {{/imageFile}}
 
             <div class="cart-item-info">
@@ -138,6 +138,7 @@
 
     <div class="text-end mt-4">
         <form action="/cart/checkout" method="post" onsubmit="confirmCheckout(event)">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
             <button type="submit" class="btn btn-primary">Finalizar compra</button>
         </form>
         <a href="/products" class="btn btn-secondary">Seguir comprando</a>

@@ -100,6 +100,7 @@
                     <input type="text" class="form-control" id="categoryName" name="name" required>
                     <div class="text-danger mt-2" id="errorCategory" style="display:none;">Esta categoría ya existe.</div>
                 </div>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button type="submit" class="btn btn-primary">Añadir Categoría</button>
                 <a href="/categories/manage" class="btn btn-primary">Eliminar Categorías</a>
             </form>

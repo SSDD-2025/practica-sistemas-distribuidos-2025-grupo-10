@@ -147,6 +147,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center" data-id="{{id}}">
                     <span>{{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}</span>
                     <form action="/categories/{{id}}/delete" method="post" class="m-0">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                     </form>
                 </li>
