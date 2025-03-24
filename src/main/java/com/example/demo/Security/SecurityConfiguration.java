@@ -50,6 +50,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/category/**").permitAll()
                         .requestMatchers("/products").permitAll()
                         .requestMatchers("/products/*/image").permitAll()
+                        .requestMatchers("/register").permitAll()
 
                         // PRIVATE PAGES
                         .requestMatchers("/cart").hasRole("USER")
@@ -80,7 +81,6 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 );
-
         return http.build();
     }
 
