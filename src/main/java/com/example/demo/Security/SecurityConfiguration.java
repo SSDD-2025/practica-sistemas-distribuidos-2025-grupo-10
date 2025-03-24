@@ -74,6 +74,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/profile", "/profile/delete").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/h2-console/**").hasRole("ADMIN")
 
+                        .requestMatchers("/**").denyAll()
+
+
 
                 )
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
