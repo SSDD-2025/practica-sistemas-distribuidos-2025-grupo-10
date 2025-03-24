@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Order;
+import com.example.demo.model.User;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.Date;
 import java.util.Optional;
 
@@ -18,12 +21,19 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("/orders")
-    public String showOrders(Model model) {
-        model.addAttribute("orders", orderService.findAll());
+    public String showOrders(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+        model.addAttribute("orders", user.getUserOrders());
         return "orders";
     }
+
+
 
     @GetMapping("/orders/add")
     public String showFormAdd(Model model) {

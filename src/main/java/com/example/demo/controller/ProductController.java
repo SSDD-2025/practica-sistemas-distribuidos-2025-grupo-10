@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -75,14 +76,6 @@ public class ProductController {
         return "redirect:/products/add?success=true";
     }
 
-    @PostMapping("/cart/add/{id}")
-    public String addProductTocart(@PathVariable long id) throws IOException {
-        User user = userService.findUserById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + 1));
-        Product product = productService.findProductById(id).orElseThrow();
-        userService.addProductToCart(product, user);
-        return "redirect:/cart";
-    }
 
     @GetMapping("products/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
@@ -170,27 +163,46 @@ public class ProductController {
     }
 
     @GetMapping("/cart")
-    public String showCart(Model model) {
-        User user = userService.findUserById(1L).orElseThrow();
+    public String showCart(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+
         model.addAttribute("cartItems", user.getUserProducts());
         return "cart";
     }
 
+    @PostMapping("/cart/add/{id}")
+    public String addProductTocart(@PathVariable long id, Principal principal) throws IOException {
+        if (principal == null) return "redirect:/login";
+
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+
+        Product product = productService.findProductById(id).orElseThrow();
+        userService.addProductToCart(product, user);
+
+        return "redirect:/cart";
+    }
+
     @PostMapping("/cart/checkout")
-    public String checkout(Model model) {
-        User user = userService.findUserById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    public String checkout(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
 
         if (user.getUserProducts().isEmpty()) {
             model.addAttribute("error", "No puedes finalizar la compra con el carrito vacío");
-            return "cart"; // Remains in the cart
+            return "cart";
         }
 
-        // Continues with the process if the cart has products
         userService.productsFromCartIntoOrder(user);
         model.addAttribute("message", "¡Pedido realizado correctamente!");
 
         return "redirect:/orders";
     }
+
 
 }
