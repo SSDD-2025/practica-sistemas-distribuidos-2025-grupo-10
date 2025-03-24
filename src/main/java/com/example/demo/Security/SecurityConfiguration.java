@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -51,6 +52,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/products").permitAll()
                         .requestMatchers("/products/*/image").permitAll()
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/js/**", "/webjars/**", "/favicon.ico").permitAll()
+
 
                         // PRIVATE PAGES
                         .requestMatchers("/cart").hasRole("USER")
@@ -68,16 +71,17 @@ public class SecurityConfiguration {
                         .requestMatchers("/users/*/delete").hasRole("ADMIN")
                         .requestMatchers("/products/*/edit").hasRole("ADMIN")
                         .requestMatchers("/products/*/update").hasRole("ADMIN")
+                        .requestMatchers("/profile", "/profile/delete").hasAnyRole("USER", "ADMIN")
 
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginerror")
-                        .defaultSuccessUrl("/private")
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                         .logoutSuccessUrl("/")
                         .permitAll()
                 );
