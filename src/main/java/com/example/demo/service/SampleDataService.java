@@ -6,6 +6,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class SampleDataService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
+    @Value("${admin.username}")
+    private String adminUsername;
+
+    @Value("${admin.password}")
+    private String adminPassword;
 
 
     @PostConstruct
@@ -54,6 +60,11 @@ public class SampleDataService {
         //userService.save(user);
         userRepository.save(new User("vero", passwordEncoder.encode("adminpass"), "vero@gamil.com", "USER", "ADMIN"));
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "vero@gamil.com", "USER"));
+
+        //Load admin from properties file
+        if (userRepository.findByUsername(adminUsername).isEmpty()) {
+            userRepository.save(new User(adminUsername, adminPassword, "admin@email.com", "ADMIN"));
+        }
 
     }
 
