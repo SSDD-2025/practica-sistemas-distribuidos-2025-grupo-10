@@ -40,7 +40,7 @@ public class ProfileController {
         if (principal != null) {
             String username = principal.getName();
             userRepository.findByUsername(username).ifPresent(user -> userService.deleteUserById(user.getId()));
-            request.getSession().invalidate(); // Cierra sesión
+            request.getSession().invalidate();
         }
         return "redirect:/";
     }

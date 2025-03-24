@@ -72,8 +72,13 @@ public class SecurityConfiguration {
                         .requestMatchers("/products/*/edit").hasRole("ADMIN")
                         .requestMatchers("/products/*/update").hasRole("ADMIN")
                         .requestMatchers("/profile", "/profile/delete").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/h2-console/**").hasRole("ADMIN")
+
 
                 )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginerror")

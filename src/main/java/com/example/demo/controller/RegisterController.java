@@ -4,6 +4,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,12 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
-    public String showRegisterForm(Model model) {
+    public String showRegisterForm(Model model, CsrfToken token) {
         model.addAttribute("user", new User());
+        model.addAttribute("token", token.getToken());
         return "register";
     }
+
 
     @PostMapping("/register")
     public String processRegistration(@ModelAttribute User user, Model model) {
@@ -31,12 +34,12 @@ public class RegisterController {
             model.addAttribute("error", "Ese nombre de usuario ya existe.");
             return "register";
         }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER"));
-        userRepository.save(user);
 
+        userRepository.save(user);
         return "redirect:/login?registered";
     }
+
 }
 

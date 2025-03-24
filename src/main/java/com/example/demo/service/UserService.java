@@ -26,6 +26,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+
     public Collection<User> findAll() {
         return userRepository.findAll();
     }
