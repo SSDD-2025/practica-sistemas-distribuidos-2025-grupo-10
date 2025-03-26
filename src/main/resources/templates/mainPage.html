@@ -162,12 +162,10 @@
 <body>
 
 <nav class="navbar">
-    <!-- Menú hamburguesa -->
     <div class="menu-toggle" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </div>
 
-    <!-- Enlaces del centro -->
     <div class="nav-links mx-auto">
         <a class="nav-item nav-link active" href="/">Inicio</a>
         {{#categories}}
@@ -177,7 +175,6 @@
 
     <p>isAuthenticated: {{isAuthenticated}}</p>
 
-    <!-- Carrito + Perfil -->
     <div class="d-flex align-items-center" style="gap: 15px;">
         <div class="cart-icon" onclick="viewCart()">
             <i class="fas fa-shopping-cart"></i>
@@ -221,8 +218,6 @@
     {{/isAuthenticated}}
 </div>
 
-
-<!-- Título de la tienda -->
 <div class="store-title">CasaNova</div>
 
 <div class="content">
