@@ -173,7 +173,6 @@
         {{/categories}}
     </div>
 
-    <p>isAuthenticated: {{isAuthenticated}}</p>
 
     <div class="d-flex align-items-center" style="gap: 15px;">
         <div class="cart-icon" onclick="viewCart()">
@@ -210,7 +209,9 @@
     <a href="/users/add">Añadir usuarios</a>
     {{/isAdmin}}
     <a href="/products">Ver productos</a>
+    {{^isAdmin}}
     <a href="/orders">Ver mis pedidos</a>
+    {{/isAdmin}}
     {{/isAuthenticated}}
 
     {{^isAuthenticated}}
