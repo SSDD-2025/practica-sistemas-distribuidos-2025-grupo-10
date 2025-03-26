@@ -39,9 +39,15 @@ public class ProfileController {
     public String deleteAccount(Principal principal, HttpServletRequest request) {
         if (principal != null) {
             String username = principal.getName();
-            userRepository.findByUsername(username).ifPresent(user -> userService.deleteUserById(user.getId()));
-            request.getSession().invalidate();
+            userRepository.findByUsername(username).ifPresent(user -> {
+                if (!user.getRoles().contains("ADMIN")) {
+                    userService.deleteUserById(user.getId());
+                    request.getSession().invalidate();
+                }
+            });
         }
-        return "redirect:/";
+        return "redirect:/profile";
     }
+
 }
+
