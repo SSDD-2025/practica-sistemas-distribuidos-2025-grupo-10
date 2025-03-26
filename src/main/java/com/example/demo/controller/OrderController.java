@@ -59,8 +59,10 @@ public class OrderController {
     }
 
     @GetMapping("/orders/manage")
-    public String showManageOrders(Model model) {
-        model.addAttribute("orders", orderService.findAll());
+    public String showManageOrders(Model model, Principal principal) {
+        String name = principal.getName();
+        User byUsername = userService.findByUsername(name);
+        model.addAttribute("orders", byUsername.getUserOrders());
         return "deleteOrders";
     }
 
