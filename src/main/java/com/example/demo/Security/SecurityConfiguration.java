@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,17 +21,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfiguration {
     @Autowired
     public RepositoryUserDetailsService userDetailService;
+    //admin username and password to the application.properties file
+    @Value("${admin.username}")
+    private String adminUsername;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    //admin username and password to the application.properties file
-    @Value("${admin.username}")
-    private String adminUsername;
-
-    @Value("${admin.password}")
-    private String adminPassword;
 
     @Bean
     public UserDetailsService inMemoryUserDetailsService() {
@@ -76,6 +73,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/products/*/image").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/js/**", "/webjars/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
 
 
                         // PRIVATE PAGES
@@ -95,10 +93,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/products/*/edit").hasRole("ADMIN")
                         .requestMatchers("/products/*/update").hasRole("ADMIN")
                         .requestMatchers("/profile", "/profile/delete").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/h2-console/**").hasRole("ADMIN")
 
                         .requestMatchers("/**").denyAll()
-
 
 
                 )

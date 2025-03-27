@@ -13,10 +13,9 @@ import java.util.*;
 @Service
 public class UserService {
 
+    private final UserRepository userRepository;
     @Autowired
     private OrderService orderService;
-
-    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -34,6 +33,7 @@ public class UserService {
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con username: " + username));

@@ -34,7 +34,6 @@ public class OrderController {
     }
 
 
-
     @GetMapping("/orders/add")
     public String showFormAdd(Model model) {
         model.addAttribute("order", new Order(BigDecimal.ZERO, 0, new Date(), null, "")); // Crear un pedido con valores predeterminados
