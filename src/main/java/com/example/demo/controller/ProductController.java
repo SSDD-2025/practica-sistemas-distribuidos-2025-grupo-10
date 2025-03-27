@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
-import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
@@ -94,14 +93,15 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
-/*
-    @GetMapping("/products/{id}")
-    public String showProduct(Model model, @PathVariable long id) {
-        Optional<Product> product = productService.findProductById(id);
-        model.addAttribute("product", product);
-        return "showProduct";
-    }
-*/
+
+    /*
+        @GetMapping("/products/{id}")
+        public String showProduct(Model model, @PathVariable long id) {
+            Optional<Product> product = productService.findProductById(id);
+            model.addAttribute("product", product);
+            return "showProduct";
+        }
+    */
     @PostMapping("/products/{id}/delete")
     public String deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);

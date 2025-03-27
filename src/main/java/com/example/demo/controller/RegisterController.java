@@ -7,9 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class RegisterController {
@@ -35,7 +37,7 @@ public class RegisterController {
             return "register";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
+        user.setRoles(List.of("USER"));
 
         userRepository.save(user);
         return "redirect:/login?registered";
