@@ -94,7 +94,13 @@
                     <p class="card-text"><strong>Precio:</strong> {{price}}$</p>
                     <form action="/cart/add/{{id}}" method="post">
                         <input type="hidden" name="_csrf" value="{{token}}"/>
+                        {{#isAdmin}}
+                        <a href="/products/{{id}}/edit" class="btn btn-warning">Editar Producto</a>
+                        {{/isAdmin}}
+
+                        {{^isAdmin}}
                         <button type="submit" class="btn btn-primary">Añadir</button>
+                        {{/isAdmin}}
                     </form>
                 </div>
             </div>
