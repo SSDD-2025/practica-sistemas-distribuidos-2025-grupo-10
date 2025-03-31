@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserMapper;
 import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
@@ -16,6 +18,8 @@ public class UserService {
     private final UserRepository userRepository;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserMapper mapper;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -37,6 +41,9 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con username: " + username));
+    }
+    public UserDTO getUser(String name){
+        return mapper.toDTO(userRepository.findByUsername(name).orElseThrow());
     }
 
     public void deleteUserById(Long id) {
