@@ -1,14 +1,21 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CategoryDTO;
+import com.example.demo.dto.CategoryMapper;
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CategoryService {
+
+    @Autowired
+    private CategoryMapper mapper;
 
     private final CategoryRepository categoryRepository;
 
@@ -38,6 +45,18 @@ public class CategoryService {
 
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    private CategoryDTO toDTO(Category category){
+        return mapper.toDTO(category);
+    }
+
+    private Category toDomain(CategoryDTO categoryDTO){
+        return mapper.toDomain(categoryDTO);
+    }
+
+    private Collection<CategoryDTO> toDTOs(Collection<Category> categories){
+        return mapper.toDTOs(categories);
     }
 
 }
