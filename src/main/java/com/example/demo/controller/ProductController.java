@@ -144,7 +144,7 @@ public class ProductController {
         if (product.isPresent()) {
             Product existingProduct = product.get();
 
-            // If the category is null we dont access to its ID
+            // If the category is null we don't access to its ID
             Long categoryId = (existingProduct.getCategory() != null) ? existingProduct.getCategory().getId() : null;
 
             model.addAttribute("product", existingProduct);
