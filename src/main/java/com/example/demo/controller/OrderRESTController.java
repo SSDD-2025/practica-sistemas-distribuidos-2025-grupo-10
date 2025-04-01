@@ -43,11 +43,11 @@ public class OrderRESTController {
     private OrderDTO toDTO(Order order){
         return mapper.toDTO(order);
     }
-    /**
+
     private Order toDomain(OrderDTO orderDTO){
         return mapper.toDomain(orderDTO);
     }
-     **/
+
     private Collection<OrderDTO> toDTOs(Collection<Order> orders){
         return mapper.toDTOs(orders);
     }

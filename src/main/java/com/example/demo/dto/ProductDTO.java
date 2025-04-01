@@ -2,12 +2,15 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Category;
 import java.math.BigDecimal;
+import java.util.List;
 
+public record ProductDTO(
+    Long id,
+    String name,
+    BigDecimal price,
+    String categoryName,
+    Category category
+    //Blob imageFile,
+    ) {
 
-public class ProductDTO {
-    private Long id;
-    private String name;
-    private BigDecimal price;
-    private String categoryName;
-    private Category category;
 }

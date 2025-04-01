@@ -10,12 +10,14 @@ import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Collection;
+import java.util.NoSuchElementException;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 public class CategoryRESTController {
@@ -28,7 +30,7 @@ public class CategoryRESTController {
     private CategoryMapper mapper;
 
     @GetMapping("/api/categories")
-    public Collection<CategoryDTO> getCategory() {
+    public Collection<CategoryDTO> getCategories() {
         return toDTOs(categoryRepository.findAll());
     }
 
@@ -36,7 +38,25 @@ public class CategoryRESTController {
     public CategoryDTO getCategory(@PathVariable Long id) {
         return toDTO(categoryRepository.findById(id).orElseThrow());
     }
-
+    @PostMapping("/api/categories")
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
+        Category category = toDomain(categoryDTO);
+        categoryRepository.save(category);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
+        return ResponseEntity.created(location).body(toDTO(category));
+    }
+    @PutMapping("/api/categories/{id}")
+    public CategoryDTO updateCategory(@PathVariable long id,
+                                      @RequestBody CategoryDTO newCategoryDTO){
+        if(categoryRepository.existsById(id)){
+            Category newCategory = toDomain(newCategoryDTO);
+            newCategory.setId(id);
+            categoryRepository.save(newCategory);
+            return toDTO(newCategory);
+        }else{
+            throw new NoSuchElementException();
+        }
+    }
 
     @DeleteMapping("/api/categories/{id}")
     public CategoryDTO deleteCategory(@PathVariable long id) {
