@@ -43,7 +43,7 @@ public class SampleDataService {
         //  Initialize categories
         categoryService.save(new Category("Discos"));
         categoryService.save(new Category("Libros"));
-        List<Category> all = categoryService.findAll();
+        List<Category> all = categoryService.findAllEntities();
         Category category = all.get(0);
         Category category2 = all.get(1);
 

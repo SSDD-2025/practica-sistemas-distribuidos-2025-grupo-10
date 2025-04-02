@@ -12,6 +12,8 @@ import com.example.demo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
@@ -26,25 +28,27 @@ public class CategoryRESTController {
     private CategoryService categoryService;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private CategoryMapper mapper;
 
     @GetMapping("/api/categories")
     public Collection<CategoryDTO> getCategories() {
-        return toDTOs(categoryRepository.findAll());
+        return categoryService.findAll();
     }
 
     @GetMapping("/api/categories/{id}")
     public CategoryDTO getCategory(@PathVariable Long id) {
-        return toDTO(categoryRepository.findById(id).orElseThrow());
+        return categoryService.findCategoryById(id);
     }
     @PostMapping("/api/categories")
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
-        Category category = toDomain(categoryDTO);
+        /*Category category = toDomain(categoryDTO);
         categoryRepository.save(category);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
-        return ResponseEntity.created(location).body(toDTO(category));
+        return ResponseEntity.created(location).body(toDTO(category));*/
+        categoryDTO = categoryService.addCategory(categoryDTO);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(categoryDTO.id()).toUri();
+        return ResponseEntity.created(location).body(categoryDTO);
     }
+    /*Not necessary because we dont update category
     @PutMapping("/api/categories/{id}")
     public CategoryDTO updateCategory(@PathVariable long id,
                                       @RequestBody CategoryDTO newCategoryDTO){
@@ -56,24 +60,11 @@ public class CategoryRESTController {
         }else{
             throw new NoSuchElementException();
         }
-    }
+    }*/
 
     @DeleteMapping("/api/categories/{id}")
     public CategoryDTO deleteCategory(@PathVariable long id) {
-        Category category = categoryRepository.findById(id).orElseThrow();
-        categoryRepository.deleteById(id);
-        return toDTO(category);
-    }
-    private CategoryDTO toDTO(Category category){
-        return mapper.toDTO(category);
-    }
-
-    private Category toDomain(CategoryDTO categoryDTO){
-        return mapper.toDomain(categoryDTO);
-    }
-
-    private Collection<CategoryDTO> toDTOs(Collection<Category> categories){
-        return mapper.toDTOs(categories);
+        return categoryService.deleteCategoryById(id);
     }
 
 }

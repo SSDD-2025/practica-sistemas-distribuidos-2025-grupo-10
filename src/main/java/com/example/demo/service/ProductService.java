@@ -83,6 +83,8 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    /*
+
     public List<Product> getProductsByCategory(Long categoryId) {
         Optional<Category> category = categoryService.findCategoryById(categoryId);
         if (category.isPresent()) {
@@ -90,5 +92,5 @@ public class ProductService {
         } else {
             return List.of();
         }
-    }
+    }*/
 }
