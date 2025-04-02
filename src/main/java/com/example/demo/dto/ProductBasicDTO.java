@@ -9,7 +9,7 @@ public record ProductBasicDTO(
         Long id,
         String name,
         BigDecimal price,
-        String categoryName,
         Category category
+        //Blob imageFile,
 ) {
 }

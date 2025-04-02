@@ -33,22 +33,29 @@ public class ProductController {
     private CategoryService categoryService;
     @Autowired
     private UserService userService;
-
-    @GetMapping("/products")
+    /**
+    @GetMapping("/products") PARA QUE SIRVE ESTE MÉTODO CON LOS SYSTEM.OUT?
     public String showProducts(Model model) {
         Collection<Product> products = productService.findall();
+    if (products == null || products.isEmpty()) {
+    System.out.println("No hay productos disponibles.");
+    } else {
+    System.out.println("---- LISTA DE PRODUCTOS ----");
+    for (Product p : products) {
+    System.out.println("Producto: " + p.getName());
+    }
+    }
 
-        if (products == null || products.isEmpty()) {
-            System.out.println("No hay productos disponibles.");
-        } else {
-            System.out.println("---- LISTA DE PRODUCTOS ----");
-            for (Product p : products) {
-                System.out.println("Producto: " + p.getName());
-            }
-        }
+    model.addAttribute("products", products);
+    return "products";
 
-        model.addAttribute("products", products);
+    }
+     **/
+    @GetMapping("/products")
+    public String showProducts(Model model) {
+        model.addAttribute("products", productService.findall());
         return "products";
+
     }
 
     @GetMapping("/manageProducts")
@@ -74,6 +81,34 @@ public class ProductController {
         productService.save(product, imageField);
         return "redirect:/products/add?success=true";
     }
+    /** Creo que para el add product hay que usar este método
+     * private BookDTO createOrReplaceBook(NewBookRequestDTO newBookRequestDTO, Long bookId, Boolean removeImage)
+     * 			throws SQLException, IOException {
+     *
+     * 		boolean	image = false;
+     * 		if(bookId != null) {
+     * 			BookDTO oldBook = bookService.getBook(bookId);
+     * 			image = removeImage ? false : oldBook.image();
+     *                }
+     *
+     * 		List<ShopBasicDTO> shopDTOs = Collections.emptyList();
+     * 		if(newBookRequestDTO.shops() != null) {
+     * 			shopDTOs = newBookRequestDTO.shops()
+     * 			.stream().map(id -> new ShopBasicDTO(id, null, null)).toList();
+     *        }
+     *
+     * 		BookDTO bookDTO = new BookDTO(bookId,
+     * 			newBookRequestDTO.title(), newBookRequestDTO.description(), image, shopDTOs);
+     *
+     * 		BookDTO newBookDTO = bookService.createOrReplaceBook(bookId, bookDTO);
+     *
+     * 		MultipartFile imageField = newBookRequestDTO.imageField();
+     * 		if (!imageField.isEmpty()) {
+     * 			bookService.createBookImage(bookDTO.id(), imageField.getInputStream(), imageField.getSize());
+     *        }
+     *
+     * 		return newBookDTO;* 	}
+     * 		**/
 
 
     @GetMapping("products/{id}/image")

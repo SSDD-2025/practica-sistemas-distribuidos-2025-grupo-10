@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Product;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.Collection;
 import java.util.List;
@@ -10,8 +11,11 @@ import java.util.List;
 public interface ProductMapper {
 
     ProductDTO toDTO(Product product);
-    Product toDomain(ProductDTO productDTO);
 
     List<ProductDTO> toDTOs(Collection<Product> products);
+    @Mapping(target = "imageFile", ignore = true)
+    Product toDomain(ProductDTO productDTO);
+    @Mapping(target = "orders", ignore = true)
+    Product toDomain(OrderBasicDTO orderDTO);
 }
 
