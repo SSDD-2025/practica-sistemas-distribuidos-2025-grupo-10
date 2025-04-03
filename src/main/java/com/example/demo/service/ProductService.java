@@ -4,6 +4,7 @@ import com.example.demo.model.Category;
 import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -22,6 +23,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final OrderService orderService;
     private final UserService userService;
+    private CategoryRepository categoryRepository;
     private final CategoryService categoryService;
 
     public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService, CategoryService categoryService) {
@@ -31,15 +33,21 @@ public class ProductService {
         this.categoryService = categoryService;
     }
 
-    public void save(Product product) {
+    public void save(Product product, Long id) {
+        if (id != null) {
+            Category category = categoryRepository.findById(id).orElseThrow();
+            product.setCategory(category);
+        } else {
+            product.setCategory(null);
+        }
         productRepository.save(product);
     }
 
-    public void save(Product product, MultipartFile imageField) throws IOException {
+    public void save(Product product, MultipartFile imageField, long id) throws IOException {
         if (imageField != null && !imageField.isEmpty()) {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
-        productRepository.save(product);
+        this.save(product, id);
     }
 
     public Collection<Product> findall() {

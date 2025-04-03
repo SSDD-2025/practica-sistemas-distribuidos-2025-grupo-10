@@ -67,11 +67,8 @@ public class ProductController {
     @PostMapping("/products/add")
     public String addProduct(@ModelAttribute Product product, MultipartFile imageField,
                              @RequestParam("categoryId") Long categoryId) throws IOException {
-        Category category = categoryService.findCategoryById(categoryId)
-                .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + categoryId));
 
-        product.setCategory(category);
-        productService.save(product, imageField);
+        productService.save(product, imageField, categoryId);
         return "redirect:/products/add?success=true";
     }
 
@@ -121,20 +118,12 @@ public class ProductController {
         product.setName(name);
         product.setPrice(price);
 
-        if (categoryId != null) {
-            Category category = categoryService.findCategoryById(categoryId)
-                    .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
-            product.setCategory(category);
-        } else {
-            product.setCategory(null);
-        }
-
         // It only updates the image if the field is not empty
         if (imageField != null && !imageField.isEmpty()) {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
 
-        productService.save(product);
+        productService.save(product, categoryId);
         return "redirect:/products";
     }
 
