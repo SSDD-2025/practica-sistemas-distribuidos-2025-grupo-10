@@ -43,7 +43,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void save(Product product, MultipartFile imageField, long id) throws IOException {
+    public void save(Product product, MultipartFile imageField, Long id) throws IOException {
         if (imageField != null && !imageField.isEmpty()) {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }

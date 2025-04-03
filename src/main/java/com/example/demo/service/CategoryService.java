@@ -30,7 +30,7 @@ public class CategoryService {
         return toDTOs(categoryRepository.findAll());
     }
 
-    public List<Category> findAllEntities() {
+    List<Category> findAllEntities() {
         return categoryRepository.findAll();
     }
 

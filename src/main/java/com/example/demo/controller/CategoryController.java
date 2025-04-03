@@ -94,6 +94,7 @@ public class CategoryController {
             categoryService.addCategory(categoryDTO);
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", "La categoría ya existe");
+            model.addAttribute("categories", categoryService.findAll());
             return "addCategory";
         }
         return "redirect:/categories/add";

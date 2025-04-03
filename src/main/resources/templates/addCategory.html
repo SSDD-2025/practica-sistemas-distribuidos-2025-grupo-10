@@ -101,6 +101,7 @@
                     <div class="text-danger mt-2" id="errorCategory" style="display:none;">Esta categoría ya existe.</div>
                 </div>
                 <input type="hidden" name="_csrf" value="{{token}}"/>
+                <input type="hidden" name="id" value="{{category.id}}">
                 <button type="submit" class="btn btn-primary">Añadir Categoría</button>
                 <a href="/categories/manage" class="btn btn-primary">Eliminar Categorías</a>
             </form>
@@ -115,20 +116,7 @@
     </ul>
 </div>
 
-<script>
-    document.getElementById("addCategoryForm").addEventListener("submit", function (event) {
-        const categoryName = document.getElementById("categoryName").value.trim();
-        const existingCategories = Array.from(document.querySelectorAll(".list-group-item"))
-            .map(el => el.textContent.trim());
 
-        if (existingCategories.includes(categoryName)) {
-            document.getElementById("errorCategory").style.display = "block";
-            event.preventDefault();
-        } else {
-            document.getElementById("errorCategory").style.display = "none";
-        }
-    });
-</script>
 
 </body>
 </html>
