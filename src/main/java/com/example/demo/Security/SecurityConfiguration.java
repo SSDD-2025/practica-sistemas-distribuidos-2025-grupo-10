@@ -90,7 +90,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST,"/api/products/").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/products/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/categories/").hasRole("USER")

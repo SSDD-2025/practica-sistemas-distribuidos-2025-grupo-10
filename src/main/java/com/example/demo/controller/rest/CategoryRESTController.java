@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.rest;
 
 import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.CategoryMapper;
