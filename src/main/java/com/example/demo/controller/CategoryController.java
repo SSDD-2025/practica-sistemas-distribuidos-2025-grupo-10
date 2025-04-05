@@ -99,6 +99,27 @@ public class CategoryController {
         }
         return "redirect:/categories/add";
     }
+    /*
+    @PostMapping("/categories/add")
+    public String addCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
+        if (categoryService.findAll().contains(categoryDTO)){
+            categoryService.addCategory(categoryDTO);
+        }else {
+            model.addAttribute("error", "La categoría ya existe");
+            return "addCategory";
+        }
+        return "redirect:/categories/add";
+        /* No funciona
+        try {
+            categoryService.addCategory(categoryDTO);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "La categoría ya existe");
+            return "addCategory";
+        }
+        return "redirect:/categories/add";
+    }
+    */
+
 
 }
 
