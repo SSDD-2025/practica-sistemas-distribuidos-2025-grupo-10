@@ -93,8 +93,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/api/products/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/categories/").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST,"/api/categories/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/categories").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/categories/**").hasRole("ADMIN") //aunque creo que no hay put
                         .requestMatchers(HttpMethod.DELETE,"/api/categories/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/orders/").hasRole("USER")
