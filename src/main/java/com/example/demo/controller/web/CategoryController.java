@@ -51,7 +51,7 @@ public class CategoryController {
         return "showCategory";
     }
 
-    /*No sé cómo hacerlo y da error si no lo comentamos
+    /*Método en Product service no da error, falta arreglar este
     @GetMapping("/category/{id}")
     public String showProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
         Optional<Category> categoryOpt = categoryService.findCategoryById(categoryId);

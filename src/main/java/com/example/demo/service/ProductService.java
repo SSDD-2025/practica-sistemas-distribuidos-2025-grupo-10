@@ -1,14 +1,19 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CategoryDTO;
+import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.ProductMapper;
 import com.example.demo.model.Category;
 import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,10 +24,15 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
+    @Autowired
+    private ProductMapper mapper;
+    @Autowired
+    private OrderRepository orderRepository;
 
     private final ProductRepository productRepository;
     private final OrderService orderService;
     private final UserService userService;
+    @Autowired
     private CategoryRepository categoryRepository;
     private final CategoryService categoryService;
 
@@ -91,14 +101,26 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    /*
 
+    //no funciona pero ya no da error
     public List<Product> getProductsByCategory(Long categoryId) {
-        Optional<Category> category = categoryService.findCategoryById(categoryId);
-        if (category.isPresent()) {
-            return productRepository.findCategoryById(category.get().getId());
+        CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
+        if (categoryDTO != null) {
+            return productRepository.findCategoryById(categoryDTO.id());
         } else {
             return List.of();
         }
-    }*/
+    }
+    private ProductDTO toDTO(Product product){
+        return mapper.toDTO(product);
+    }
+
+    private Product toDomain(ProductDTO productDTO){
+        return mapper.toDomain(productDTO);
+    }
+
+    private Collection<ProductDTO> toDTOs(Collection<Product> product){
+        return mapper.toDTOs(product);
+    }
+
 }
