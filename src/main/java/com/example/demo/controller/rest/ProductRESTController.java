@@ -59,9 +59,7 @@ public class ProductRESTController {
 
     @DeleteMapping("/api/products/{id}")
     public ProductDTO deleteProduct(@PathVariable long id) {
-        Product product = productRepository.findById(id).orElseThrow();
-        productRepository.deleteById(id);
-        return toDTO(product);
+        return productService.deleteProduct(id);
     }
     private ProductDTO toDTO(Product product){
         return mapper.toDTO(product);

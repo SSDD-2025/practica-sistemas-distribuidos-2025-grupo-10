@@ -8,7 +8,8 @@ public record ProductDTO(
     Long id,
     String name,
     BigDecimal price,
-    Category category
+    Category category,
+    Boolean image
     //Blob imageFile,
     ) {
 

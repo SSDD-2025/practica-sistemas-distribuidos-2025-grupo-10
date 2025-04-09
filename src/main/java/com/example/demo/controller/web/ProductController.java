@@ -1,5 +1,6 @@
 package com.example.demo.controller.web;
 
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
@@ -23,6 +24,7 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -100,9 +102,14 @@ public class ProductController {
         }
     */
     @PostMapping("/products/{id}/delete")
-    public String deleteProduct(@PathVariable long id) {
-        productService.deleteProduct(id);
-        return "redirect:/products/manage"; // Refresh the page with updated list
+    public String deleteProduct(Model model,@PathVariable long id) {
+        try{
+            ProductDTO productDTO = productService.deleteProduct(id);
+            model.addAttribute("product", productDTO);
+            return "redirect:/products/manage";
+        } catch (NoSuchElementException e){
+            return "ProductNotFound";
+        }
     }
 
     @PostMapping("/products/{id}/update")

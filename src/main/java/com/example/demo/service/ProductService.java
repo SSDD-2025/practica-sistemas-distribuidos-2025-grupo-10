@@ -16,10 +16,15 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -79,10 +84,8 @@ public class ProductService {
         productRepository.save(oldProduct);
     }
 
-    @Transactional
-    public void deleteProduct(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+    public ProductDTO deleteProduct(long id) {
+        Product product = productRepository.findById(id).orElseThrow();
 
         // Remove the product from all orders before deleting it
         for (Order order : product.getOrders()) {
@@ -96,9 +99,10 @@ public class ProductService {
                 userService.save(u);
             }
         }
-
+        ProductDTO productDTO = toDTO(product);
         // Deletes the product
-        productRepository.delete(product);
+        productRepository.deleteById(id);
+        return productDTO;
     }
 
 
@@ -110,6 +114,51 @@ public class ProductService {
         } else {
             return List.of();
         }
+    }
+
+    public Resource getProductImage(long id) throws SQLException {
+
+        Product product = productRepository.findById(id).orElseThrow();
+
+        if (product.getImageFile() != null) {
+            return new InputStreamResource(product.getImageFile().getBinaryStream());
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+    public void createProductImage(long id, InputStream inputStream, long size) {
+
+        Product product = productRepository.findById(id).orElseThrow();
+
+        product.setImage(true);
+        product.setImageFile(BlobProxy.generateProxy(inputStream, size));
+
+        productRepository.save(product);
+    }
+    public void updateProductImage(long id, InputStream inputStream, long size) {
+
+        Product product = productRepository.findById(id).orElseThrow();
+
+        if (!product.isImage()) {
+            throw new NoSuchElementException();
+        }
+
+        product.setImageFile(BlobProxy.generateProxy(inputStream, size));
+
+        productRepository.save(product);
+    }
+    public void deleteProductImage(long id) {
+
+        Product product = productRepository.findById(id).orElseThrow();
+
+        if (!product.isImage()) {
+            throw new NoSuchElementException();
+        }
+
+        product.setImageFile(null);
+        product.setImage(false);
+
+        productRepository.save(product);
     }
     private ProductDTO toDTO(Product product){
         return mapper.toDTO(product);

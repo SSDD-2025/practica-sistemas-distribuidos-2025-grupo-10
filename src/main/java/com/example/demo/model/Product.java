@@ -18,6 +18,7 @@ public class Product {
     private BigDecimal price;
     @Lob
     private Blob imageFile;
+    private boolean image;
 
     //  Relations
     //  (ejem 9)
@@ -102,6 +103,14 @@ public class Product {
 
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public boolean isImage() {
+        return image;
+    }
+
+    public void setImage(boolean image) {
+        this.image = image;
     }
 }
 

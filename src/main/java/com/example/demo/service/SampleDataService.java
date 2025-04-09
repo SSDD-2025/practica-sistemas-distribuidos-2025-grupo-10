@@ -58,7 +58,7 @@ public class SampleDataService {
         // Initialize user
         //User user = new User("Alberto", "ItsNotPassword", "alberto123@gmail.com");
         //userService.save(user);
-        userRepository.save(new User("vero", passwordEncoder.encode("adminpass"), "vero@gamil.com", "USER", "ADMIN"));
+        userRepository.save(new User("vero", passwordEncoder.encode("contraseña"), "vero@gmail.com", "USER"));
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "vero@gamil.com", "USER"));
 
         //Load admin from properties file
