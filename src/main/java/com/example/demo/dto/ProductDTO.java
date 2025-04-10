@@ -8,8 +8,8 @@ public record ProductDTO(
     long id,
     String name,
     BigDecimal price,
-    CategoryDTO category,
-    Boolean image
+    Boolean image,
+    CategoryDTO category
     ) {
 
 }

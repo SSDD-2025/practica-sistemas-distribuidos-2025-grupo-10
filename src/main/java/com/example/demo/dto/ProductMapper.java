@@ -12,8 +12,11 @@ import java.util.List;
 public interface ProductMapper {
 
     ProductDTO toDTO(Product product);
-    Product toDomain(ProductDTO productDTO);
 
     List<ProductDTO> toDTOs(Collection<Product> products);
+    @Mapping(target = "imageFile", ignore = true)
+    Product toDomain(ProductDTO productDTO);
+    @Mapping(target = "products", ignore = true)
+    Category toDomain(CategoryDTO categoryDTO);
 }
 

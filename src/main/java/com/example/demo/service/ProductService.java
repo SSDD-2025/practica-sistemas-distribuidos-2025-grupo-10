@@ -67,6 +67,10 @@ public class ProductService {
 
     public ProductDTO createProduct(ProductDTO productDTO){
         Product product = toDomain(productDTO);
+        Category category = categoryRepository.findById(productDTO.category().id())
+                .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
+
+        product.setCategory(category);
         productRepository.save(product);
         return toDTO(product);
     }
