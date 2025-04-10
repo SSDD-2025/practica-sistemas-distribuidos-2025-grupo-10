@@ -132,6 +132,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/images/public/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/loginerror").permitAll()
                         .requestMatchers("/category/**").permitAll()
                         .requestMatchers("/products").permitAll()

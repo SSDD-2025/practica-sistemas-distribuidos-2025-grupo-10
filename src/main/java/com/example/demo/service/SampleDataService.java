@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.List;
 public class SampleDataService {
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -41,8 +44,8 @@ public class SampleDataService {
     public void init() throws IOException {
 
         //  Initialize categories
-        categoryService.save(new Category("Discos"));
-        categoryService.save(new Category("Libros"));
+        categoryRepository.save(new Category("Discos"));
+        categoryRepository.save(new Category("Libros"));
         List<Category> all = categoryService.findAllEntities();
         Category category = all.get(0);
         Category category2 = all.get(1);

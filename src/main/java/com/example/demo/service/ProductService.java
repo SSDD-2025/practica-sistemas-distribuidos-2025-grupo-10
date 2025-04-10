@@ -47,7 +47,7 @@ public class ProductService {
         this.userService = userService;
         this.categoryService = categoryService;
     }
-
+    // Se usa en product controller (ver cómo se podría cambiar para dejar de usar este save)
     public void save(Product product, Long id) {
         if (id != null) {
             Category category = categoryRepository.findById(id).orElseThrow();
@@ -63,6 +63,12 @@ public class ProductService {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
         this.save(product, id);
+    }
+
+    public ProductDTO createProduct(ProductDTO productDTO){
+        Product product = toDomain(productDTO);
+        productRepository.save(product);
+        return toDTO(product);
     }
 
     public Collection<Product> findall() {

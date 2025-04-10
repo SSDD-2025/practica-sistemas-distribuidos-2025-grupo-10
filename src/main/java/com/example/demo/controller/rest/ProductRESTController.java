@@ -1,7 +1,9 @@
 package com.example.demo.controller.rest;
 
+import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductMapper;
+import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
@@ -39,11 +41,11 @@ public class ProductRESTController {
     //Falta la gestión de las imágenes
     @PostMapping("/api/products")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
-        Product product = toDomain(productDTO);
-        productRepository.save(product);
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(product.getId()).toUri();
-        return ResponseEntity.created(location).body(toDTO(product));
+        productDTO = productService.createProduct(productDTO);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(productDTO.id()).toUri();
+        return ResponseEntity.created(location).body(productDTO);
     }
+
     @PutMapping("/api/products/{id}")
     public ProductDTO updateProduct(@PathVariable long id,
                                     @RequestBody ProductDTO newProductDTO){

@@ -1,7 +1,9 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Product;
+import com.example.demo.model.Category;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.Collection;
 import java.util.List;

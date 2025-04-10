@@ -5,12 +5,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record ProductDTO(
-    Long id,
+    long id,
     String name,
     BigDecimal price,
-    Category category,
+    CategoryDTO category,
     Boolean image
-    //Blob imageFile,
     ) {
 
 }
