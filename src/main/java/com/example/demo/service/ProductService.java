@@ -42,19 +42,25 @@ public class ProductService {
     private CategoryRepository categoryRepository;
     private final CategoryService categoryService;
 
-    public Collection<Product> findall() { //cambiar
-        return productRepository.findAll();
+    public Collection<ProductDTO> findall() {
+        return toDTOs(productRepository.findAll());
     }
-
-
-    public Optional<Product> findProductById(Long id) { //cambiar al de abajo
-        return productRepository.findById(id);
-    }
-    /*
     public ProductDTO findProductById(long id){
         return toDTO(productRepository.findById(id).orElseThrow());
     }
+    /*
+    public Collection<Product> findall() { //cambiar
+        return productRepository.findAll();
+    }
      */
+
+    /*
+    public Optional<Product> findProductById(Long id) { //cambiar al de abajo
+        return productRepository.findById(id);
+    }
+    */
+
+
 
     public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService, CategoryService categoryService) {
         this.productRepository = productRepository;

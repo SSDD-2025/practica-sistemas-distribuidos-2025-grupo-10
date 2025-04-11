@@ -1,5 +1,7 @@
 package com.example.demo.controller.web;
 
+import com.example.demo.dto.CategoryDTO;
+import com.example.demo.dto.NewProductRequestDTO;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
@@ -38,18 +40,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public String showProducts(Model model) {
-        Collection<Product> products = productService.findall();
-
-        if (products == null || products.isEmpty()) {
-            System.out.println("No hay productos disponibles.");
-        } else {
-            System.out.println("---- LISTA DE PRODUCTOS ----");
-            for (Product p : products) {
-                System.out.println("Producto: " + p.getName());
-            }
-        }
-
-        model.addAttribute("products", products);
+        model.addAttribute("products", productService.findall());
         return "products";
     }
 
@@ -66,7 +57,7 @@ public class ProductController {
         return "addProduct";
     }
 
-    @PostMapping("/products/add")
+    @PostMapping("/products/add") //hacerlo desde newBookProcess
     public String addProduct(@ModelAttribute Product product, MultipartFile imageField,
                              @RequestParam("categoryId") Long categoryId) throws IOException {
 
@@ -74,8 +65,35 @@ public class ProductController {
         return "redirect:/products/add?success=true";
     }
 
+    /*
+    @PostMapping("/products/add")
+    public String newProductProcess(Model model, NewProductRequestDTO newProductRequestDTO) throws IOException, SQLException{
+        createOrReplaceProduct(newProductRequestDTO, -1, null);
+        return "redirect:/products/add?success=true";
+    }
+    private ProductDTO createOrReplaceProduct(NewProductRequestDTO newProductRequestDTO, long productId, Boolean removeImage) throws IOException, SQLException{
+        boolean image = false;
+        if(productId != 0){
+            ProductDTO oldProduct = productService.findProductById(productId);
+            image = removeImage ? false : oldProduct.image();
+        }
+        CategoryDTO categoryDTO = null;
+        if(newProductRequestDTO.category() != null){
+            categoryDTO = newProductRequestDTO.category();
+        }
+        ProductDTO productDTO = new ProductDTO(productId, newProductRequestDTO.name(), newProductRequestDTO.price(), image, categoryDTO);
+        ProductDTO newProductDTO = productService.createOrReplaceProduct(productId, productDTO);
+        MultipartFile imageField = newProductRequestDTO.imagefield();
+        if(!imageField.isEmpty()){
+            productService.createProductImage(productDTO.id(), imageField.getInputStream(), imageField.getSize());
+        }
+        return newProductDTO;
+    }
 
-    @GetMapping("products/{id}/image")
+     */
+
+
+    @GetMapping("products/{id}/image") //no funciona
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 
         Resource bookImage = productService.getProductImage(id);
@@ -85,6 +103,21 @@ public class ProductController {
                 .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                 .body(bookImage);
     }
+    /*
+    @GetMapping("/products/{id}/image") //Anterior pero no funciona por el optional
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException{
+        Optional<Product> op = productService.findProductById(id);
+        if(op.isPresent() && op.get().getImageFile() != null){
+            Blob image = op.get().getImageFile();
+            Resource file = new InputStreamResource(image.getBinaryStream());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(image.length()).body(file);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+     */
 
     /*
         @GetMapping("/products/{id}")
@@ -104,7 +137,7 @@ public class ProductController {
             return "ProductNotFound";
         }
     }
-
+    /*
     @PostMapping("/products/{id}/update")
     public String updateProduct(@PathVariable long id,
                                 @RequestParam String name,
@@ -127,6 +160,8 @@ public class ProductController {
         return "redirect:/products";
     }
 
+     */
+    /*
     @GetMapping("/products/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
         Optional<Product> product = productService.findProductById(id);
@@ -145,6 +180,8 @@ public class ProductController {
         return "redirect:/products";
     }
 
+     */
+
     @GetMapping("/products/manage")
     public String showManageProducts(Model model) {
         model.addAttribute("products", productService.findall());
@@ -161,7 +198,7 @@ public class ProductController {
         model.addAttribute("cartItems", user.getUserProducts());
         return "cart";
     }
-
+    /* GESTIONAR EN CUANTO SE PONGA LA RELACION USER-PRODUCT
     @PostMapping("/cart/add/{id}")
     public String addProductTocart(@PathVariable long id, Principal principal) throws IOException {
         if (principal == null) return "redirect:/login";
@@ -174,6 +211,8 @@ public class ProductController {
 
         return "redirect:/cart";
     }
+
+     */
 
     @PostMapping("/cart/checkout")
     public String checkout(Model model, Principal principal) {

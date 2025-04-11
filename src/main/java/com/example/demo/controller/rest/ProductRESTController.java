@@ -35,12 +35,12 @@ public class ProductRESTController {
 
     @GetMapping("/api/products")
     public Collection<ProductDTO> getProducts() {
-        return toDTOs(productRepository.findAll());
+        return productService.findall();
     }
 
     @GetMapping("/api/products/{id}")
-    public ProductDTO getProduct(@PathVariable Long id) {
-        return toDTO(productRepository.findById(id).orElseThrow());
+    public ProductDTO getProduct(@PathVariable long id) {
+        return productService.findProductById(id);
     }
 
     //Falta la gestión de las imágenes
