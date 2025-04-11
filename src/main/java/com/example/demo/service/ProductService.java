@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.InputStreamResource;
@@ -40,6 +41,20 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
     private final CategoryService categoryService;
+
+    public Collection<Product> findall() { //cambiar
+        return productRepository.findAll();
+    }
+
+
+    public Optional<Product> findProductById(Long id) { //cambiar al de abajo
+        return productRepository.findById(id);
+    }
+    /*
+    public ProductDTO findProductById(long id){
+        return toDTO(productRepository.findById(id).orElseThrow());
+    }
+     */
 
     public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService, CategoryService categoryService) {
         this.productRepository = productRepository;
@@ -75,23 +90,25 @@ public class ProductService {
         return toDTO(product);
     }
 
-    public Collection<Product> findall() {
-        return productRepository.findAll();
+    public ProductDTO updateProduct(long id, ProductDTO productDTO) throws SQLException{
+        Product oldProduct = productRepository.findById(id).orElseThrow();
+        Product updatedProduct = toDomain(productDTO);
+        updatedProduct.setId(id);
+        if(oldProduct.isImage() && updatedProduct.isImage()){
+            updatedProduct.setImageFile(BlobProxy.generateProxy(oldProduct.getImageFile().getBinaryStream(),
+                    oldProduct.getImageFile().length()));
+        }
+        productRepository.save(updatedProduct);
+        return toDTO(updatedProduct);
     }
-
-    public Optional<Product> findProductById(Long id) {
-        return productRepository.findById(id);
-    }
-
-    public void deleteProductById(Long id) {
-        productRepository.deleteById(id);
-    }
-
-    public void updateProduct(Product oldProduct, Product updatedProduct) {
-        oldProduct.setName(updatedProduct.getName());
-        oldProduct.setPrice(updatedProduct.getPrice());
-        oldProduct.setCategory(updatedProduct.getCategory());
-        productRepository.save(oldProduct);
+    public ProductDTO createOrReplaceProduct(long id, ProductDTO productDTO) throws SQLException{
+        ProductDTO product;
+        if(id == 0){
+            product = createProduct(productDTO);
+        } else {
+            product = updateProduct(id, productDTO);
+        }
+        return product;
     }
 
     public ProductDTO deleteProduct(long id) {
@@ -100,7 +117,7 @@ public class ProductService {
         // Remove the product from all orders before deleting it
         for (Order order : product.getOrders()) {
             order.getProducts().remove(product);
-            orderService.save(order); // Guardar el pedido sin el producto
+            orderService.save(order);
         }
 
         for (User u : userService.findAll()) {
@@ -109,10 +126,9 @@ public class ProductService {
                 userService.save(u);
             }
         }
-        ProductDTO productDTO = toDTO(product);
         // Deletes the product
         productRepository.deleteById(id);
-        return productDTO;
+        return toDTO(product);
     }
 
 

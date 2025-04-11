@@ -78,19 +78,12 @@ public class ProductController {
     @GetMapping("products/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 
-        Optional<Product> op = productService.findProductById(id);
+        Resource bookImage = productService.getProductImage(id);
 
-        if (op.isPresent() && op.get().getImageFile() != null) {
-
-            Blob image = op.get().getImageFile();
-            Resource file = new InputStreamResource(image.getBinaryStream());
-
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                    .contentLength(image.length()).body(file);
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .body(bookImage);
     }
 
     /*

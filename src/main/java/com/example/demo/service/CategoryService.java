@@ -60,9 +60,13 @@ public class CategoryService {
     public CategoryDTO findCategoryById(Long id) {
         return toDTO(categoryRepository.findById(id).orElseThrow());
     }
+
+    /*
     public Optional<Category> findCategoryId(Long id){
         return categoryRepository.findById(id);
     }
+
+     */
 
    /* public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
