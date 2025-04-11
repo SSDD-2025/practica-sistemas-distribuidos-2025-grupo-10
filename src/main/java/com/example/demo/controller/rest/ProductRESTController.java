@@ -8,11 +8,16 @@ import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.sound.sampled.Port;
+import java.io.IOException;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
@@ -47,16 +52,8 @@ public class ProductRESTController {
     }
 
     @PutMapping("/api/products/{id}")
-    public ProductDTO updateProduct(@PathVariable long id,
-                                    @RequestBody ProductDTO newProductDTO){
-        if(productRepository.existsById(id)){
-            Product newProduct = toDomain(newProductDTO);
-            newProduct.setId(id);
-            productRepository.save(newProduct);
-            return toDTO(newProduct);
-        }else{
-            throw new NoSuchElementException();
-        }
+    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO updatedProductDTO) throws SQLException{
+        return productService.updateProduct(id, updatedProductDTO);
     }
 
     @DeleteMapping("/api/products/{id}")
@@ -67,12 +64,38 @@ public class ProductRESTController {
         return mapper.toDTO(product);
     }
 
-    private Product toDomain(ProductDTO productDTO){
-        return mapper.toDomain(productDTO);
-    }
-
     private Collection<ProductDTO> toDTOs(Collection<Product> product){
         return mapper.toDTOs(product);
     }
+    @PostMapping("/api/products/{id}/image")
+    public ResponseEntity<Object> createProductImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
+        productService.createProductImage(id, imageFile.getInputStream(), imageFile.getSize());
+        URI location = fromCurrentRequest().build().toUri();
+        return ResponseEntity.created(location).build();
+    }
+    @GetMapping("/api/products/{id}/image")
+    public ResponseEntity<Object> getProductImage(@PathVariable long id) throws SQLException, IOException {
+
+        Resource productImage = productService.getProductImage(id);
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .body(productImage);
+
+    }
+    @PutMapping("/api/products/{id}/image")
+    public ResponseEntity<Object> updateProductImage(@PathVariable long id, @RequestParam MultipartFile imageFile)
+            throws IOException {
+        productService.updateProductImage(id, imageFile.getInputStream(), imageFile.getSize());
+        return ResponseEntity.noContent().build();
+    }
+    @DeleteMapping("/api/products/{id}/image")
+    public ResponseEntity<Object> deleteProductImage(@PathVariable long id) throws IOException {
+        productService.deleteProductImage(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }

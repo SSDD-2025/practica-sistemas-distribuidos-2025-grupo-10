@@ -91,7 +91,7 @@ public class SecurityConfiguration {
                         // PRIVATE ENDPOINTS
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,"/api/products/").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/products/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/categories/**").hasRole("ADMIN") //aunque creo que no hay put
