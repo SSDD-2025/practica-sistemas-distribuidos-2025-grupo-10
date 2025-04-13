@@ -53,14 +53,10 @@ public class SampleDataService {
         //  Initialize products
         Product product1 = new Product("Producto Ejemplo 1", new BigDecimal("15.99"));
         Product product2 = new Product("Producto Ejemplo 2", new BigDecimal("7.50"));
-        product1.setCategory(category);
-        product2.setCategory(category2);
-        productService.save(product1, null);
-        productService.save(product2, null);
+        productService.save(product1, category.getId());
+        productService.save(product2, category2.getId());
 
         // Initialize user
-        //User user = new User("Alberto", "ItsNotPassword", "alberto123@gmail.com");
-        //userService.save(user);
         userRepository.save(new User("vero", passwordEncoder.encode("contraseña"), "vero@gmail.com", "USER"));
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "vero@gamil.com", "USER"));
 

@@ -88,12 +88,12 @@
                     {{#products}}
                     <div class="col-md-4">
                         <div class="card mb-3">
-                            {{#imageFile}}
+                            {{#image}}
                             <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 200px; object-fit: cover;">
-                            {{/imageFile}}
-                            {{^imageFile}}
+                            {{/image}}
+                            {{^image}}
                             <img src="/images/public/img.png" class="card-img-top" alt="Imagen no disponible" style="height: 200px; object-fit: cover;">
-                            {{/imageFile}}
+                            {{/image}}
 
                             <div class="card-body">
                                 <h5 class="card-title">{{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}</h5>

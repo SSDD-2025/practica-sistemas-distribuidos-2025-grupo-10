@@ -82,12 +82,12 @@
         {{#products}}
         <div class="col-md-4 d-flex justify-content-center">
             <div class="card mb-4" style="width: 18rem;">
-                {{#imageFile}}
+                {{#image}}
                 <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 200px; object-fit: cover;">
-                {{/imageFile}}
-                {{^imageFile}}
+                {{/image}}
+                {{^image}}
                 <img src="/images/public/img.png" class="card-img-top" alt="Imagen no disponible" style="height: 200px; object-fit: cover;">
-                {{/imageFile}}
+                {{/image}}
 
                 <div class="card-body text-center">
                     <h5 class="card-title">{{name}}</h5>

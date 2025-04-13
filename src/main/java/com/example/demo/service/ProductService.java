@@ -10,23 +10,20 @@ import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -45,7 +42,8 @@ public class ProductService {
     public Collection<ProductDTO> findall() {
         return toDTOs(productRepository.findAll());
     }
-    public ProductDTO findProductById(long id){
+
+    public ProductDTO findProductById(long id) {
         return toDTO(productRepository.findById(id).orElseThrow());
     }
     /*
@@ -61,13 +59,13 @@ public class ProductService {
     */
 
 
-
     public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService, CategoryService categoryService) {
         this.productRepository = productRepository;
         this.orderService = orderService;
         this.userService = userService;
         this.categoryService = categoryService;
     }
+
     // Se usa en product controller (ver cómo se podría cambiar para dejar de usar este save)
     public void save(Product product, Long id) {
         if (id != null) {
@@ -82,11 +80,12 @@ public class ProductService {
     public void save(Product product, MultipartFile imageField, Long id) throws IOException {
         if (imageField != null && !imageField.isEmpty()) {
             product.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+            product.setImage(true);
         }
         this.save(product, id);
     }
 
-    public ProductDTO createProduct(ProductDTO productDTO){
+    public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = toDomain(productDTO);
         Category category = categoryRepository.findById(productDTO.category().id())
                 .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
@@ -96,20 +95,21 @@ public class ProductService {
         return toDTO(product);
     }
 
-    public ProductDTO updateProduct(long id, ProductDTO productDTO) throws SQLException{
+    public ProductDTO updateProduct(long id, ProductDTO productDTO) throws SQLException {
         Product oldProduct = productRepository.findById(id).orElseThrow();
         Product updatedProduct = toDomain(productDTO);
         updatedProduct.setId(id);
-        if(oldProduct.isImage() && updatedProduct.isImage()){
+        if (oldProduct.isImage() && updatedProduct.isImage()) {
             updatedProduct.setImageFile(BlobProxy.generateProxy(oldProduct.getImageFile().getBinaryStream(),
                     oldProduct.getImageFile().length()));
         }
         productRepository.save(updatedProduct);
         return toDTO(updatedProduct);
     }
-    public ProductDTO createOrReplaceProduct(long id, ProductDTO productDTO) throws SQLException{
+
+    public ProductDTO createOrReplaceProduct(long id, ProductDTO productDTO) throws SQLException {
         ProductDTO product;
-        if(id == 0){
+        if (id == 0) {
             product = createProduct(productDTO);
         } else {
             product = updateProduct(id, productDTO);
@@ -139,10 +139,12 @@ public class ProductService {
 
 
     //no funciona pero ya no da error
-    public List<Product> getProductsByCategory(Long categoryId) {
+    public List<ProductDTO> getProductsByCategory(Long categoryId) {
         CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
         if (categoryDTO != null) {
-            return productRepository.findCategoryById(categoryDTO.id());
+            List<Product> productsByCategory = productRepository.findCategoryById(categoryDTO.id());
+            List<ProductDTO> productDTOS = (List<ProductDTO>) this.toDTOs(productsByCategory);
+            return Collections.unmodifiableList(productDTOS);
         } else {
             return List.of();
         }
@@ -158,6 +160,7 @@ public class ProductService {
             throw new NoSuchElementException();
         }
     }
+
     public void createProductImage(long id, InputStream inputStream, long size) {
 
         Product product = productRepository.findById(id).orElseThrow();
@@ -167,6 +170,7 @@ public class ProductService {
 
         productRepository.save(product);
     }
+
     public void updateProductImage(long id, InputStream inputStream, long size) {
 
         Product product = productRepository.findById(id).orElseThrow();
@@ -179,6 +183,7 @@ public class ProductService {
 
         productRepository.save(product);
     }
+
     public void deleteProductImage(long id) {
 
         Product product = productRepository.findById(id).orElseThrow();
@@ -192,15 +197,16 @@ public class ProductService {
 
         productRepository.save(product);
     }
-    private ProductDTO toDTO(Product product){
+
+    private ProductDTO toDTO(Product product) {
         return mapper.toDTO(product);
     }
 
-    private Product toDomain(ProductDTO productDTO){
+    private Product toDomain(ProductDTO productDTO) {
         return mapper.toDomain(productDTO);
     }
 
-    private Collection<ProductDTO> toDTOs(Collection<Product> product){
+    private Collection<ProductDTO> toDTOs(Collection<Product> product) {
         return mapper.toDTOs(product);
     }
 

@@ -1,9 +1,9 @@
 package com.example.demo.controller.web;
 
 import com.example.demo.dto.CategoryDTO;
-import com.example.demo.model.Category;
-import com.example.demo.model.Product;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.service.CategoryService;
+import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Controller
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
 
     @ModelAttribute("categories")
     public Collection<CategoryDTO> getCategories() {
@@ -51,23 +53,22 @@ public class CategoryController {
         return "showCategory";
     }
 
-    /*Método en Product service no da error, falta arreglar este
+    // Método en Product service no da error, falta arreglar este
     @GetMapping("/category/{id}")
     public String showProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
-        Optional<Category> categoryOpt = categoryService.findCategoryById(categoryId);
+        try {
+            CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
+            List<ProductDTO> productsByCategoryDTOs = productService.getProductsByCategory(categoryDTO.id());
 
-        if (categoryOpt.isPresent()) {
-            Category category = categoryOpt.get();
-            List<Product> products = category.getProducts(); //It obtains all products from a specific category
-
-            model.addAttribute("category", category);
-            model.addAttribute("products", products);
+            model.addAttribute("category", categoryDTO);
+            model.addAttribute("products", productsByCategoryDTOs);
 
             return "productsByCategories";
-        } else {
-            return "redirect:/mainPage"; // Redirect if the category does not exist
+        } catch (NoSuchElementException e) {
+            return "redirect:/mainPage";
         }
-    }*/
+
+    }
 
     @PostMapping("/categories/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {
