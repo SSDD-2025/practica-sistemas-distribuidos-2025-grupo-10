@@ -126,7 +126,7 @@ public class ProductService {
         // Remove the product from all orders before deleting it
         for (Order order : product.getOrders()) {
             order.getProducts().remove(product);
-            orderService.save(order);
+            orderService.saveEntity(order);
         }
 
         // Lógica delegada a UserService

@@ -11,8 +11,6 @@ import java.util.List;
 public interface OrderMapper {
     OrderDTO toDTO(Order order);
     List<OrderDTO> toDTOs(Collection<Order> orders);
-    @Mapping(target = "products", ignore = true)
     Order toDomain(OrderDTO orderDTO);
-
 
 }

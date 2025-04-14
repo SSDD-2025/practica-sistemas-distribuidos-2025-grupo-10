@@ -215,7 +215,7 @@ public class ProductController {
             return "cart";
         }
 
-        //userService.productsFromCartIntoOrder(user);
+        userService.productsFromCartIntoOrder2(username);
         model.addAttribute("message", "¡Pedido realizado correctamente!");
 
         return "redirect:/orders";

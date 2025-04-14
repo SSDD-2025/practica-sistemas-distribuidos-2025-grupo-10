@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,9 +14,11 @@ import java.util.Optional;
 public class GlobalModelAttributes {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    public GlobalModelAttributes(UserRepository userRepository) {
+    public GlobalModelAttributes(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @ModelAttribute

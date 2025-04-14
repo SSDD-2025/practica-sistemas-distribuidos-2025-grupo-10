@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class SampleDataService {
 
     @Value("${admin.password}")
     private String adminPassword;
+    @Autowired
+    private OrderRepository orderRepository;
 
 
     @PostConstruct
@@ -58,7 +62,7 @@ public class SampleDataService {
 
         // Initialize user
         userRepository.save(new User("vero", passwordEncoder.encode("contraseña"), "vero@gmail.com", "USER"));
-        userRepository.save(new User("user", passwordEncoder.encode("pass"), "vero@gamil.com", "USER"));
+        userRepository.save(new User("user", passwordEncoder.encode("pass"), "user@gmail.com", "USER"));
 
         //Load admin from properties file
         if (userRepository.findByUsername(adminUsername).isEmpty()) {

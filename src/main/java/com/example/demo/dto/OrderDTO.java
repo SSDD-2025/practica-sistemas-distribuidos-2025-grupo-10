@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 public record OrderDTO(
-        long id,
+        Long id,
         BigDecimal total,
         int numItems,
         Date date,
         String status,
-        List<Product> products
+        List<ProductDTO> products
 ) {
 }

@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/login")
     public String login() {
@@ -28,9 +30,9 @@ public class LoginController {
 
         String name = request.getUserPrincipal().getName();
 
-        User user = userRepository.findByUsername(name).orElseThrow();
+        UserDTO userDTO = userService.findByUsername(name);
 
-        model.addAttribute("username", user.getUsername());
+        model.addAttribute("username", userDTO.username());
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         return "private";

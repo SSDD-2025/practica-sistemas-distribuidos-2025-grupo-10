@@ -1,5 +1,6 @@
 package com.example.demo.controller.web;
 
+import com.example.demo.dto.OrderDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Order;
 import com.example.demo.model.User;
@@ -42,7 +43,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders/add")
-    public String addOrder(Order order) {
+    public String addOrder(OrderDTO order) {
         orderService.save(order); // We save the order
         return "redirect:/orders"; // It redirects to order list
     }

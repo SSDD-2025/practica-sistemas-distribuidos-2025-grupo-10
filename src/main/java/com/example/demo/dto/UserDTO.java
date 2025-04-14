@@ -11,5 +11,5 @@ public record UserDTO(
         String email,
         List<String> roles,
         List<ProductDTO> userProducts,
-        List<Order> userOrders) {
+        List<OrderDTO> userOrders) {
 }

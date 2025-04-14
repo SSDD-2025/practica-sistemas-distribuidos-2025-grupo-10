@@ -90,13 +90,18 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/users/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/products/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/products/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/categories/**").hasRole("ADMIN") //aunque creo que no hay put
                         .requestMatchers(HttpMethod.DELETE,"/api/categories/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/orders/").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/products/*/image").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/products/*/image").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/*/image").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/*/image").hasRole("ADMIN")
                         // PUBLIC ENDPOINTS
                         .anyRequest().permitAll()
                 );
