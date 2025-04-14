@@ -1,5 +1,6 @@
 package com.example.demo.controller.web;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user) {
+    public String addUser(@ModelAttribute UserDTO user) {
         userService.save(user);
         return "redirect:/users/add";
     }

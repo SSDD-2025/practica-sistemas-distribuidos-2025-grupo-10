@@ -7,6 +7,7 @@ import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,8 @@ public class ProductRESTController {
     private ProductRepository productRepository;
     @Autowired
     private ProductMapper mapper;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/api/products")
     public Collection<ProductDTO> getProducts() {
@@ -58,7 +61,7 @@ public class ProductRESTController {
 
     @DeleteMapping("/api/products/{id}")
     public ProductDTO deleteProduct(@PathVariable long id) {
-        return productService.deleteProduct(id);
+        return productService.deleteProduct(id, userService);
     }
     private ProductDTO toDTO(Product product){
         return mapper.toDTO(product);

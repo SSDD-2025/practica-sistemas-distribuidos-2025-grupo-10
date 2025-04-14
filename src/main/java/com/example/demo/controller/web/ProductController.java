@@ -3,6 +3,7 @@ package com.example.demo.controller.web;
 import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductMapper;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.service.CategoryService;
@@ -118,7 +119,7 @@ public class ProductController {
     @PostMapping("/products/{id}/delete")
     public String deleteProduct(Model model, @PathVariable long id) {
         try {
-            ProductDTO productDTO = productService.deleteProduct(id);
+            ProductDTO productDTO = productService.deleteProduct(id, userService);
             model.addAttribute("product", productDTO);
             return "redirect:/products/manage";
         } catch (NoSuchElementException e) {
@@ -151,11 +152,10 @@ public class ProductController {
     public String showEditForm(@PathVariable Long id, Model model) {
         try {
             ProductDTO productDTO = productService.findProductById(id);
-            Product existingProduct = productMapper.toDomain(productDTO);
 
-            Long categoryId = (productDTO.category() != null)   //  Si no es null, le asignamos la segunda linea
+            Long categoryId = (productDTO.category() != null)
                     ? productDTO.category().id()
-                    : null;                                             //  Si es null, le asignamos null XD
+                    : null;
 
             model.addAttribute("product", productDTO);
             model.addAttribute("categoryId", categoryId);
@@ -179,9 +179,9 @@ public class ProductController {
         if (principal == null) return "redirect:/login";
 
         String username = principal.getName();
-        User user = userService.findByUsername(username);
+        UserDTO user = userService.findByUsername(username);
 
-        model.addAttribute("cartItems", user.getUserProducts());
+        model.addAttribute("cartItems", user.userProducts());
         return "cart";
     }
 
@@ -196,10 +196,8 @@ public class ProductController {
         if (principal == null) return "redirect:/login";
 
         String username = principal.getName();
-        User user = userService.findByUsername(username);
 
-        Product product = productMapper.toDomain(productService.findProductById(id));
-        userService.addProductToCart(product, user);
+        userService.addProductToCart2(id, username);
 
         return "redirect:/cart";
     }
@@ -210,14 +208,14 @@ public class ProductController {
         if (principal == null) return "redirect:/login";
 
         String username = principal.getName();
-        User user = userService.findByUsername(username);
+        UserDTO user = userService.findByUsername(username);
 
-        if (user.getUserProducts().isEmpty()) {
+        if (user.userProducts().isEmpty()) {
             model.addAttribute("error", "No puedes finalizar la compra con el carrito vacío");
             return "cart";
         }
 
-        userService.productsFromCartIntoOrder(user);
+        //userService.productsFromCartIntoOrder(user);
         model.addAttribute("message", "¡Pedido realizado correctamente!");
 
         return "redirect:/orders";

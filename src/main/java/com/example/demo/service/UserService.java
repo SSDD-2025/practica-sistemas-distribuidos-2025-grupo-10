@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserMapper;
 import com.example.demo.model.Order;
@@ -20,48 +21,91 @@ public class UserService {
     private OrderService orderService;
     @Autowired
     private UserMapper mapper;
+    @Autowired
+    private ProductService productService;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void save(User user) {
-        userRepository.save(user);
-    }
 
 
-    public Collection<User> findAll() {
-        return userRepository.findAll();
+
+
+
+
+
+
+
+
+
+
+//    public Collection<User> findAll() {
+//        return userRepository.findAll();
+//    }
+    public Collection<UserDTO> findAll() {
+        return toDTOs(userRepository.findAll());
     }
 
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con username: " + username));
+    public Optional<User> getUserByID(Long id) {
+        return userRepository.findById(id);
     }
+
+    public UserDTO findByUsername(String username) {
+        return toDTO(userRepository.findByUsername(username).get());
+    }
+    public User findByUsernameEntity(String username) {
+        return (userRepository.findByUsername(username).get());
+    }
+
     public UserDTO getUser(String name){
-        return mapper.toDTO(userRepository.findByUsername(name).orElseThrow());
+        return toDTO(userRepository.findByUsername(name).orElseThrow());
     }
 
-    public void deleteUserById(Long id) {
+    public UserDTO deleteUserById(Long id) {
+        User userDeleted = userRepository.findById(id).orElseThrow();
+        UserDTO dto = toDTO(userDeleted);
         userRepository.deleteById(id);
+        return dto;
     }
 
-    public void addProductToCart(Product productToSave, User user) {
-        List<Product> userProducts = user.getUserProducts();
-        ArrayList<Product> products = new ArrayList<>(userProducts);
-        products.add(productToSave);
-        user.setUserProducts(products);
-        this.save(user);
+
+    public void addProductToCart2(Long productId, String userDtoName) {
+        UserDTO byUsername = findByUsername(userDtoName);
+
+        List<ProductDTO> userProducts = byUsername.userProducts();
+        ArrayList<ProductDTO> products;
+        if (userProducts != null) {
+            products = new ArrayList<>(userProducts);
+            ProductDTO newProduct = productService.findProductById(productId);
+            products.add(newProduct);
+        }else{
+            products = new ArrayList<>();
+            ProductDTO newProduct = productService.findProductById(productId);
+            products.add(newProduct);
+        }
+
+
+        UserDTO updatedUser = new UserDTO(
+                byUsername.id(),
+                byUsername.username(),
+                byUsername.email(),
+                byUsername.roles(),
+                products,
+                byUsername.userOrders()
+        );
+
+        userRepository.save(toDomain(updatedUser));
     }
 
     public void productsFromCartIntoOrder(User user) {
         List<Product> allCartProducts = new ArrayList<>(user.getUserProducts());
         user.getUserProducts().clear();
-        this.save(user);
+        userRepository.save(user);
         //  Add all products from cart into an order
         BigDecimal total = allCartProducts.stream()
                 .map(Product::getPrice)
@@ -83,12 +127,38 @@ public class UserService {
         } else {
             user.getUserOrders().add(order);
         }
-        this.save(user);
+        userRepository.save(user);
     }
 
     public void deleteOrder(User user) {
         user.setUserOrders(null);
         //  User.setorder(user.getorders.remove(elorder))
-        this.save(user);
+        userRepository.save(user);
+    }
+
+    private UserDTO toDTO(User user){
+        return mapper.toDTO(user);
+    }
+
+    private User toDomain(UserDTO userDTO) {
+        return mapper.toDomain(userDTO);
+    }
+
+    private Collection<UserDTO> toDTOs(Collection<User> user) {
+        return mapper.toDTOs(user);
+    }
+
+
+
+    public void removeProductFromAllUsers(ProductDTO product) {
+        for (UserDTO u : findAll()) {
+            if (u.userProducts().contains(product)) {
+                u.userProducts().remove(product);
+                save(u);
+            }
+        }
+    }
+    public void save(UserDTO u) {
+        userRepository.save(toDomain(u));
     }
 }

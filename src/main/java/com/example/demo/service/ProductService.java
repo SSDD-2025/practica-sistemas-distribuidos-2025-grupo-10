@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductMapper;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Category;
 import com.example.demo.model.Order;
 import com.example.demo.model.Product;
@@ -34,7 +35,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final OrderService orderService;
-    private final UserService userService;
     @Autowired
     private CategoryRepository categoryRepository;
     private final CategoryService categoryService;
@@ -45,6 +45,9 @@ public class ProductService {
 
     public ProductDTO findProductById(long id) {
         return toDTO(productRepository.findById(id).orElseThrow());
+    }
+    public Product findProductEntityById(long id) {
+        return (productRepository.findById(id).orElseThrow());
     }
     /*
     public Collection<Product> findall() { //cambiar
@@ -59,10 +62,9 @@ public class ProductService {
     */
 
 
-    public ProductService(ProductRepository productRepository, OrderService orderService, UserService userService, CategoryService categoryService) {
+    public ProductService(ProductRepository productRepository, OrderService orderService, CategoryService categoryService) {
         this.productRepository = productRepository;
         this.orderService = orderService;
-        this.userService = userService;
         this.categoryService = categoryService;
     }
 
@@ -117,8 +119,9 @@ public class ProductService {
         return product;
     }
 
-    public ProductDTO deleteProduct(long id) {
+    public ProductDTO deleteProduct(long id, UserService userService) {
         Product product = productRepository.findById(id).orElseThrow();
+        ProductDTO productDTO = toDTO(product);
 
         // Remove the product from all orders before deleting it
         for (Order order : product.getOrders()) {
@@ -126,16 +129,14 @@ public class ProductService {
             orderService.save(order);
         }
 
-        for (User u : userService.findAll()) {
-            if (u.getUserProducts().contains(product)) {
-                u.getUserProducts().remove(product);
-                userService.save(u);
-            }
-        }
+        // Lógica delegada a UserService
+        userService.removeProductFromAllUsers(productDTO);
+
         // Deletes the product
         productRepository.deleteById(id);
-        return toDTO(product);
+        return productDTO;
     }
+
 
 
     //no funciona pero ya no da error

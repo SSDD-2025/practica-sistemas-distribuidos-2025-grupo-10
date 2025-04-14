@@ -1,5 +1,6 @@
 package com.example.demo.controller.web;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Order;
 import com.example.demo.model.User;
 import com.example.demo.service.OrderService;
@@ -28,8 +29,8 @@ public class OrderController {
     @GetMapping("/orders")
     public String showOrders(Model model, Principal principal) {
         String username = principal.getName();
-        User user = userService.findByUsername(username);
-        model.addAttribute("orders", user.getUserOrders());
+        UserDTO user = userService.findByUsername(username);
+        model.addAttribute("orders", user.userOrders());
         return "orders";
     }
 
@@ -60,8 +61,8 @@ public class OrderController {
     @GetMapping("/orders/manage")
     public String showManageOrders(Model model, Principal principal) {
         String name = principal.getName();
-        User byUsername = userService.findByUsername(name);
-        model.addAttribute("orders", byUsername.getUserOrders());
+        UserDTO byUsername = userService.findByUsername(name);
+        model.addAttribute("orders", byUsername.userOrders());
         return "deleteOrders";
     }
 
