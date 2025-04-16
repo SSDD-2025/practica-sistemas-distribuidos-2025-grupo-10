@@ -102,6 +102,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/products/*/image").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products/*/image").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/products/*/image").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "api/users/cart/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "api/users/cartToOrder").hasRole("USER")
                         // PUBLIC ENDPOINTS
                         .anyRequest().permitAll()
                 );

@@ -62,7 +62,7 @@ public class UserService {
 
 
 
-    public void addProductToCart2(Long productId, String userDtoName) {
+    public UserDTO addProductToCart2(Long productId, String userDtoName) {
         UserDTO byUsername = findByUsername(userDtoName);
 
         List<ProductDTO> userProducts = byUsername.userProducts();
@@ -88,6 +88,7 @@ public class UserService {
         );
 
         userRepository.save(toDomain(updatedUser));
+        return updatedUser;
     }
 
     /*
@@ -120,9 +121,12 @@ public class UserService {
     }
 
      */
-    public void productsFromCartIntoOrder2(String username) {
+    public UserDTO productsFromCartIntoOrder2(String username) {
             UserDTO byUsername = findByUsername(username);
             List<ProductDTO> allCartProducts = new ArrayList<>(byUsername.userProducts());
+            if (allCartProducts.isEmpty()) {
+                throw new IllegalStateException("El carrito de productos está vacío. No se puede realizar el pedido.");
+            }
             UserDTO updatedUser = new UserDTO(
                     byUsername.id(),
                     byUsername.username(),
@@ -155,6 +159,7 @@ public class UserService {
         }
         userRepository.save(byUsername2);
         orderService.saveEntity(domain);
+        return toDTO(byUsername2);
             /*
 
             UserDTO byUsernam2 = findByUsername(username);

@@ -54,7 +54,7 @@ public class ProductController {
         return "addProduct";
     }
 
-    @PostMapping("/products/add") //hacerlo desde newBookProcess
+    @PostMapping("/products/add")
     public String addProduct(@ModelAttribute Product product,
                              MultipartFile imageField,
                              @RequestParam("categoryId") Long categoryId) throws IOException {
