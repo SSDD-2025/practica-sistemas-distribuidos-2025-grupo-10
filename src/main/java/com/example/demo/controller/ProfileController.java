@@ -25,10 +25,14 @@ public class ProfileController {
     @GetMapping
     public String showProfile(Model model, Principal principal) {
         if (principal != null) {
-            String username = principal.getName();
-            UserDTO userDTO = userService.findByUsername(username);
-            model.addAttribute("user", userDTO);
-            return "profile";
+            try{
+                String username = principal.getName();
+                UserDTO userDTO = userService.findByUsername(username);
+                model.addAttribute("user", userDTO);
+                return "profile";
+            }catch (NoSuchElementException e) {
+                return "error";
+            }
             /*
             if (user != null) {
                 model.addAttribute("user", user);
