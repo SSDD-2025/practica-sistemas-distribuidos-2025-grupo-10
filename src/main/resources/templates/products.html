@@ -69,6 +69,9 @@
     </style>
 </head>
 <body>
+
+
+
 <nav class="navbar">
     <div class="nav-links">
         <a class="nav-item nav-link active" href="/">Inicio</a>
@@ -83,43 +86,81 @@
             {{/error}}
             <h1 style="margin-bottom: 30px;">Productos disponibles</h1>
 
+
             <div class="container">
-                <div class="row">
-                    {{#products}}
-                    <div class="col-md-4">
-                        <div class="card mb-3">
-                            {{#image}}
-                            <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 200px; object-fit: cover;">
-                            {{/image}}
-                            {{^image}}
-                            <img src="/images/public/img.png" class="card-img-top" alt="Imagen no disponible" style="height: 200px; object-fit: cover;">
-                            {{/image}}
-
-                            <div class="card-body">
-                                <h5 class="card-title">{{#name}}{{name}}{{/name}}{{^name}}Sin nombre{{/name}}</h5>
-                                <p class="card-text"><strong>Precio:</strong> {{#price}}{{price}}${{/price}}{{^price}}No disponible{{/price}}</p>
-
-
-                                {{#isAdmin}}
-                                <a href="/products/{{id}}/edit" class="btn btn-warning">Editar Producto</a>
-                                {{/isAdmin}}
-
-                                {{^isAdmin}}
-                                <form action="/cart/add/{{id}}" method="post">
-                                    <input type="hidden" name="_csrf" value="{{token}}"/>
-                                    <button type="submit" class="btn btn-primary">Añadir</button>
-                                </form>
-                                {{/isAdmin}}
-                            </div>
+                <div class="card">
+                    <div class="card-body">
+                        <!-- ... -->
+                        <div id="product-grid" class="row"></div>
+                        <!-- Añadir controles de paginación -->
+                        <div class="pagination-controls mt-4">
+                            <button id="prev-page" class="btn btn-primary">Anterior</button>
+                            <span id="current-page" class="mx-3"></span>
+                            <button id="next-page" class="btn btn-primary">Siguiente</button>
                         </div>
                     </div>
-                    {{/products}}
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+<script>
+    let currentPage = 0;
+    const pageSize = 6;
+    let isAdmin = {{#isAdmin}}true{{/isAdmin}}{{^isAdmin}}false{{/isAdmin}}; // Añadir esta línea
 
+    function loadProducts(page) {
+        fetch(`/api/products?page=${page}&size=${pageSize}`)
+            .then(response => response.json())
+            .then(data => {
+                // Actualizar controles de paginación
+                document.getElementById('current-page').textContent = `Página ${page + 1}`;
+                document.getElementById('prev-page').disabled = data.first;
+                document.getElementById('next-page').disabled = data.last;
+
+                // Renderizar productos
+                const productGrid = document.getElementById('product-grid');
+                productGrid.innerHTML = data.content.map(product => `
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            ${product.image ?
+                    `<img src="/products/${product.id}/image" class="card-img-top"
+                                     alt="${product.name}" style="height: 200px; object-fit: cover;">` :
+                    `<img src="/images/public/img.png" class="card-img-top"
+                                     alt="Sin imagen" style="height: 200px; object-fit: cover;">`}
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text">Precio: $${product.price}</p>
+                                ${isAdmin ?  // Usar la variable global
+                    `<a href="/products/${product.id}/edit"
+                                            class="btn btn-warning">Editar</a>` :
+                    `<form action="/cart/add/${product.id}" method="post">
+                                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                                <button class="btn btn-primary">Añadir</button>
+                                            </form>`}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            });
+    }
+
+    // Event listeners para los botones
+    document.getElementById('prev-page').addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            loadProducts(currentPage);
+        }
+    });
+
+    document.getElementById('next-page').addEventListener('click', () => {
+        currentPage++;
+        loadProducts(currentPage);
+    });
+
+    // Cargar productos iniciales
+    loadProducts(currentPage);
+</script>
 </body>
 </html>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class SampleDataService {
@@ -59,6 +60,23 @@ public class SampleDataService {
         Product product2 = new Product("Producto Ejemplo 2", new BigDecimal("7.50"));
         productService.save(product1, category.getId());
         productService.save(product2, category2.getId());
+
+
+        int x = 50; // Número de productos que quieres crear
+        Random random = new Random();
+
+        for (int i = 1; i <= x; i++) {
+            String productName = "Producto Ejemplo " + i;
+            // Generar un precio aleatorio entre 5.00 y 100.00
+            BigDecimal price = BigDecimal.valueOf(5 + (100 - 5) * random.nextDouble()).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+            Product product = new Product(productName, price);
+
+            // Alternar categorías entre category y category2
+            Long categoryId = (i % 2 == 0) ? category.getId() : category2.getId();
+
+            productService.save(product, categoryId);
+        }
 
         // Initialize user
         userRepository.save(new User("vero", passwordEncoder.encode("contraseña"), "vero@gmail.com", "USER"));

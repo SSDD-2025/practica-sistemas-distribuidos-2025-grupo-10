@@ -15,6 +15,8 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -209,6 +211,11 @@ public class ProductService {
 
     private Collection<ProductDTO> toDTOs(Collection<Product> product) {
         return mapper.toDTOs(product);
+    }
+
+    public Page<ProductDTO> findPaginated(int page, int size) {
+        Page<Product> productPage = productRepository.findAll(PageRequest.of(page, size));
+        return productPage.map(mapper::toDTO);
     }
 
 }

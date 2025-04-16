@@ -10,6 +10,7 @@ import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
@@ -36,10 +38,13 @@ public class ProductRESTController {
     @Autowired
     private UserService userService;
 
+    /*
     @GetMapping("/api/products")
     public Collection<ProductDTO> getProducts() {
         return productService.findall();
     }
+
+     */
 
     @GetMapping("/api/products/{id}")
     public ProductDTO getProduct(@PathVariable long id) {
@@ -99,6 +104,26 @@ public class ProductRESTController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/api/products")
+    public ResponseEntity<?> getProducts(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
 
+        if(page != null && size != null) {
+            Page<ProductDTO> productPage = productService.findPaginated(page, size);
+            return ResponseEntity.ok(productPage);
+        } else {
+            return ResponseEntity.ok(productService.findall());
+        }
+    }
+
+    @GetMapping("/api/products/short")
+    public ResponseEntity<List<ProductDTO>> getShortPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+
+        Page<ProductDTO> productPage = productService.findPaginated(page, size);
+        return ResponseEntity.ok(productPage.getContent()); // Solo el array
+    }
 
 }
