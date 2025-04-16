@@ -127,7 +127,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    @Order(2)
+    @Order(1)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authenticationProvider(authenticationProvider());
