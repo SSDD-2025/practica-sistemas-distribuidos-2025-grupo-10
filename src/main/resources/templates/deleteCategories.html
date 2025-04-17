@@ -160,44 +160,5 @@
     </div>
 </div>
 </body>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        cargarCategorias();
-    });
 
-    function cargarCategorias() {
-        fetch("/categories")
-            .then(response => response.json())
-            .then(categories => {
-                const categoryList = document.getElementById("category-list");
-                categoryList.innerHTML = ""; // Cleans up the list before adding new categories
-
-                categories.forEach(category => {
-                    const li = document.createElement("li");
-                    li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-                    li.setAttribute("data-id", category.id);
-
-                    li.innerHTML = `
-                        <span>${category.name || 'Sin nombre'}</span>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarCategoria(${category.id}, this)">Eliminar</button>
-                    `;
-
-                    categoryList.appendChild(li);
-                });
-            })
-            .catch(error => console.error("Error al cargar categorías:", error));
-    }
-
-    function eliminarCategoria(id, button) {
-        fetch(`/categories/${id}/delete`, { method: "POST" })
-            .then(response => {
-                if (response.ok) {
-                    button.closest("li").remove();
-                } else {
-                    console.error("Error al eliminar la categoría");
-                }
-            })
-            .catch(error => console.error("Error en la solicitud:", error));
-    }
-</script>
 </html>

@@ -24,13 +24,11 @@ public class CategoryController {
     @Autowired
     private ProductService productService;
 
-    @ModelAttribute("categories")
-    public Collection<CategoryDTO> getCategories() {
-        return categoryService.findAll();
-    }
+
 
     @GetMapping("/")
-    public String showHomePage() {
+    public String showHomePage(Model model) {
+        model.addAttribute("categories", categoryService.findAll());
         return "mainPage";
     }
 
@@ -43,11 +41,13 @@ public class CategoryController {
     @GetMapping("/categories/add")
     public String showFormAdd(Model model) {
         model.addAttribute("category", new CategoryDTO(0L, ""));
+        model.addAttribute("categories", categoryService.findAll());
         return "addCategory";
     }
 
     @GetMapping("/categories/{id}")
     public String showCategory(Model model, @PathVariable Long id) {
+        model.addAttribute("categories", categoryService.findAll());
         CategoryDTO category = categoryService.findCategoryById(id);
         model.addAttribute("category", category);
         return "showCategory";
@@ -56,6 +56,7 @@ public class CategoryController {
     // Método en Product service no da error, falta arreglar este
     @GetMapping("/category/{id}")
     public String showProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
+        model.addAttribute("categories", categoryService.findAll());
         try {
             CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
             List<ProductDTO> productsByCategoryDTOs = productService.getProductsByCategory(categoryDTO.id());
