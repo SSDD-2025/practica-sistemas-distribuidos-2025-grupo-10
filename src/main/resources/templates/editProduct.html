@@ -98,8 +98,8 @@
             <h4>Editar Producto</h4>
         </div>
         <div class="card-body">
-            <form action="/products/{{product.id}}/update" method="post">
-                 <div class="mb-3">
+            <form action="/products/{{product.id}}/update" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
                      <label for="name" class="form-label">Nombre del Producto</label>
                      <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" required>
                  </div>
@@ -109,24 +109,35 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Imagen actual:</label><br>
-                    {{#product.imageFile}}
+                    {{#product.image}}
                     <img src="/products/{{product.id}}/image"
                          alt="Imagen de {{product.name}}"
                          style="height: 200px; object-fit: cover; margin-bottom: 10px;">
-                    {{/product.imageFile}}
-                    {{^product.imageFile}}
+                    {{/product.image}}
+                    {{^product.image}}
                     <img src="/img.png"
                          alt="Imagen no disponible"
                          style="height: 200px; object-fit: cover; margin-bottom: 10px;">
-                    {{/product.imageFile}}
+                    {{/product.image}}
                 </div>
+                <div class="mb-3">
+                    <label for="imageField" class="form-label">Nueva imagen (opcional)</label>
+                    <input type="file" class="form-control" id="imageField" name="imageField" accept=".jpg, .jpeg">
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="true" id="removeImage" name="removeImage">
+                    <label class="form-check-label" for="removeImage">
+                        Eliminar imagen actual
+                    </label>
+                </div>
+
 
                 <div class="mb-3">
                     <label for="category" class="form-label">Categoría</label>
                     <select id="category" name="categoryId" class="form-select" required>
                         <option value="">Seleccione una categoría</option>
                  {{#categories}}
-                 <option value="{{id}}">{{name}}</option>
+                 <option value="{{id}}" >{{name}}</option>
                  {{/categories}}
              </select>
          </div>

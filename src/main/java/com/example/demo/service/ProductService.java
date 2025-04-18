@@ -99,24 +99,39 @@ public class ProductService {
         return toDTO(product);
     }
 
-    public ProductDTO updateProduct(long id, ProductDTO productDTO) throws SQLException {
+    public ProductDTO updateProduct(long id, ProductDTO productDTO, MultipartFile imageField, boolean removeImage) throws SQLException, IOException {
         Product oldProduct = productRepository.findById(id).orElseThrow();
         Product updatedProduct = toDomain(productDTO);
         updatedProduct.setId(id);
-        if (oldProduct.isImage() && updatedProduct.isImage()) {
+
+        if (removeImage) {
+            updatedProduct.setImage(false);
+            updatedProduct.setImageFile(null);
+        } else if (imageField != null && !imageField.isEmpty()) {
+            updatedProduct.setImage(true);
+            updatedProduct.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        } else if (oldProduct.isImage()) {
+            updatedProduct.setImage(true);
             updatedProduct.setImageFile(BlobProxy.generateProxy(oldProduct.getImageFile().getBinaryStream(),
                     oldProduct.getImageFile().length()));
+        } else {
+            updatedProduct.setImage(false);
+            updatedProduct.setImageFile(null);
         }
+
         productRepository.save(updatedProduct);
         return toDTO(updatedProduct);
     }
 
-    public ProductDTO createOrReplaceProduct(long id, ProductDTO productDTO) throws SQLException {
+
+
+
+    public ProductDTO createOrReplaceProduct(long id, ProductDTO productDTO, MultipartFile imageField, boolean removeImage) throws SQLException, IOException {
         ProductDTO product;
         if (id == 0) {
             product = createProduct(productDTO);
         } else {
-            product = updateProduct(id, productDTO);
+            product = updateProduct(id, productDTO, imageField, removeImage);
         }
         return product;
     }

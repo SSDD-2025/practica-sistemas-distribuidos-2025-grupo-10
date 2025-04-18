@@ -60,8 +60,8 @@ public class ProductRESTController {
     }
 
     @PutMapping("/api/products/{id}")
-    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO updatedProductDTO) throws SQLException{
-        return productService.updateProduct(id, updatedProductDTO);
+    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO updatedProductDTO) throws SQLException, IOException {
+        return productService.updateProduct(id, updatedProductDTO, null, false);
     }
 
     @DeleteMapping("/api/products/{id}")

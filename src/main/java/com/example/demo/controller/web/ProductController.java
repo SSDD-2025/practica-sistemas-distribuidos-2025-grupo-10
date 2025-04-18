@@ -133,12 +133,13 @@ public class ProductController {
                                 @RequestParam String name,
                                 @RequestParam BigDecimal price,
                                 @RequestParam(required = false) Long categoryId,
-                                @RequestParam(required = false) MultipartFile imageField) throws IOException {
+                                @RequestParam(required = false) MultipartFile imageField,
+                                @RequestParam(required = false, defaultValue = "false") boolean removeImage) throws IOException {
         try {
             ProductDTO oldProductDTO = productService.findProductById(id);
             CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
             ProductDTO updatedProductDTO = new ProductDTO(-1, name, price, oldProductDTO.image(), categoryDTO);
-            productService.createOrReplaceProduct(id, updatedProductDTO);
+            productService.createOrReplaceProduct(id, updatedProductDTO, imageField, removeImage);
         } catch (NoSuchElementException e) {
             return "ProductNotFound";
         } catch (SQLException e) {
