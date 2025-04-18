@@ -93,10 +93,9 @@
                         <!-- ... -->
                         <div id="product-grid" class="row"></div>
                         <!-- Añadir controles de paginación -->
-                        <div class="pagination-controls mt-4">
-                            <button id="prev-page" class="btn btn-primary">Anterior</button>
-                            <span id="current-page" class="mx-3"></span>
-                            <button id="next-page" class="btn btn-primary">Siguiente</button>
+                        <button id="load-more" class="btn btn-secondary">Más resultados</button>
+                        <div id="loading-spinner" class="spinner-border text-primary mt-2" role="status" style="display: none;">
+                            <span class="visually-hidden">Cargando...</span>
                         </div>
                     </div>
                 </div>
@@ -107,21 +106,23 @@
 </div>
 <script>
     let currentPage = 0;
-    const pageSize = 6;
-    let isAdmin = {{#isAdmin}}true{{/isAdmin}}{{^isAdmin}}false{{/isAdmin}}; // Añadir esta línea
+    const pageSize = 10;
+    let isAdmin = {{#isAdmin}}true{{/isAdmin}}{{^isAdmin}}false{{/isAdmin}};
+    let lastPageReached = false;
 
     function loadProducts(page) {
+        if (lastPageReached) return;
+
+        document.getElementById('loading-spinner').style.display = 'inline-block';
+        document.getElementById('load-more').disabled = true;
+
         fetch(`/api/products?page=${page}&size=${pageSize}`)
             .then(response => response.json())
             .then(data => {
-                // Actualizar controles de paginación
-                document.getElementById('current-page').textContent = `Página ${page + 1}`;
-                document.getElementById('prev-page').disabled = data.first;
-                document.getElementById('next-page').disabled = data.last;
-
-                // Renderizar productos
                 const productGrid = document.getElementById('product-grid');
-                productGrid.innerHTML = data.content.map(product => `
+
+                // Añadir nuevos productos al grid
+                productGrid.innerHTML += data.content.map(product => `
                     <div class="col-md-4 mb-4">
                         <div class="card">
                             ${product.image ?
@@ -132,7 +133,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">${product.name}</h5>
                                 <p class="card-text">Precio: $${product.price}</p>
-                                ${isAdmin ?  // Usar la variable global
+                                ${isAdmin ?
                     `<a href="/products/${product.id}/edit"
                                             class="btn btn-warning">Editar</a>` :
                     `<form action="/cart/add/${product.id}" method="post">
@@ -143,23 +144,27 @@
                         </div>
                     </div>
                 `).join('');
+
+                // Si es la última página, ocultar el botón
+                if (data.last) {
+                    lastPageReached = true;
+                    document.getElementById('load-more').style.display = 'none';
+                } else {
+                    currentPage++;
+                    document.getElementById('load-more').disabled = false;
+                }
+            })
+            .finally(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
             });
     }
 
-    // Event listeners para los botones
-    document.getElementById('prev-page').addEventListener('click', () => {
-        if (currentPage > 0) {
-            currentPage--;
-            loadProducts(currentPage);
-        }
-    });
-
-    document.getElementById('next-page').addEventListener('click', () => {
-        currentPage++;
+    // Event listener para el botón "Más resultados"
+    document.getElementById('load-more').addEventListener('click', () => {
         loadProducts(currentPage);
     });
 
-    // Cargar productos iniciales
+    // Cargar la primera página al inicio
     loadProducts(currentPage);
 </script>
 </body>
