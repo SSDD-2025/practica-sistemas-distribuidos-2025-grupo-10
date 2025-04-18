@@ -62,7 +62,7 @@ public class UserService {
 
 
 
-    public UserDTO addProductToCart2(Long productId, String userDtoName) {
+    public UserDTO addProductToCart3(Long productId, String userDtoName) {
         UserDTO byUsername = findByUsername(userDtoName);
 
         List<ProductDTO> userProducts = byUsername.userProducts();
@@ -90,6 +90,28 @@ public class UserService {
         userRepository.save(toDomain(updatedUser));
         return updatedUser;
     }
+    public UserDTO addProductToCart2(Long productId, String username) {
+        // Obtener el usuario original desde la base de datos
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+
+        // Obtener el producto en formato DTO
+        ProductDTO productDTO = productService.findProductById(productId);
+
+        // Añadir el producto a la lista del usuario
+        if (user.getUserProducts() == null) {
+            user.setUserProducts(new ArrayList<>());
+        }
+        user.getUserProducts().add(productService.toDomain(productDTO)); // Convertimos DTO a entidad
+
+        // Guardar el usuario actualizado
+        userRepository.save(user);
+
+        // Devolver el DTO actualizado
+        return toDTO(user);
+    }
+
+
 
     /*
     public void productsFromCartIntoOrder(User user) {
@@ -121,7 +143,7 @@ public class UserService {
     }
 
      */
-    public UserDTO productsFromCartIntoOrder2(String username) {
+    public UserDTO productsFromCartIntoOrder3(String username) {
             UserDTO byUsername = findByUsername(username);
             List<ProductDTO> allCartProducts = new ArrayList<>(byUsername.userProducts());
             if (allCartProducts.isEmpty()) {
@@ -194,6 +216,55 @@ public class UserService {
             orderService.save(order);
              */
     }
+    public UserDTO productsFromCartIntoOrder2(String username) {
+        // Obtener la entidad User
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+
+        // Convertir los productos del carrito a DTOs
+        List<ProductDTO> allCartProducts = user.getUserProducts()
+                .stream()
+                .map(productService::toDTO)
+                .toList();
+
+        if (allCartProducts.isEmpty()) {
+            throw new IllegalStateException("El carrito de productos está vacío. No se puede realizar el pedido.");
+        }
+
+        // Limpiar carrito del usuario
+        user.setUserProducts(new ArrayList<>());
+
+        // Calcular el total del pedido
+        BigDecimal total = allCartProducts.stream()
+                .map(ProductDTO::price)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Crear y guardar el pedido
+        OrderDTO orderDTO = new OrderDTO(
+                null,
+                total,
+                allCartProducts.size(),
+                new Date(),
+                "Realizado",
+                allCartProducts
+        );
+        Order order = orderService.toDomain(orderDTO);
+        orderService.saveEntity(order);
+
+        // Añadir el pedido a la lista del usuario
+        if (user.getUserOrders() == null) {
+            user.setUserOrders(new ArrayList<>());
+        }
+        user.getUserOrders().add(order);
+
+        // Guardar el usuario actualizado
+        userRepository.save(user);
+
+        // Devolver el usuario como DTO
+        return toDTO(user);
+    }
+
 
     public void deleteOrder(User user) {
         user.setUserOrders(null);

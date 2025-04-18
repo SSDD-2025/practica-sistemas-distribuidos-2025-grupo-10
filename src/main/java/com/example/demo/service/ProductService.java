@@ -70,7 +70,7 @@ public class ProductService {
         this.categoryService = categoryService;
     }
 
-    // Se usa en product controller (ver cómo se podría cambiar para dejar de usar este save)
+
     public void save(Product product, Long id) {
         if (id != null) {
             Category category = categoryRepository.findById(id).orElseThrow();
@@ -141,7 +141,6 @@ public class ProductService {
 
 
 
-    //no funciona pero ya no da error
     public List<ProductDTO> getProductsByCategory(Long categoryId) {
         CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
         if (categoryDTO != null) {
@@ -201,11 +200,11 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    private ProductDTO toDTO(Product product) {
+    ProductDTO toDTO(Product product) {
         return mapper.toDTO(product);
     }
 
-    private Product toDomain(ProductDTO productDTO) {
+    Product toDomain(ProductDTO productDTO) {
         return mapper.toDomain(productDTO);
     }
 

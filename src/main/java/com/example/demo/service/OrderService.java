@@ -28,26 +28,6 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public Optional<Order> findById(long id) {
         return orderRepository.findById(id);
     }
@@ -80,14 +60,6 @@ public class OrderService {
         return dto;
     }
 
-
-
-
-
-
-
-
-
     private OrderDTO toDTO(Order order){
         return mapper.toDTO(order);
     }
@@ -97,8 +69,6 @@ public class OrderService {
     private Collection<OrderDTO> toDTOs(Collection<Order> orders) {
         return mapper.toDTOs(orders);
     }
-
-
 
 }
 
