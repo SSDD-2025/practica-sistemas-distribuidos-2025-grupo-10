@@ -44,13 +44,25 @@ public class UserRESTController {
         }
     }
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody NewUserRequestDTO newUserRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody NewUserRequestDTO newUserRequest, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+
+        // Si hay usuario autenticado, debe ser ADMIN
+        if (principal != null) {
+            UserDTO authUser = userService.findByUsername(principal.getName());
+            if (!authUser.roles().contains("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Solo el administrador puede registrar usuarios");
+            }
+        }
+
+        // Validar que no exista ya
         if (userService.existsByUsername(newUserRequest.username())) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body("Ese nombre de usuario ya existe.");
         }
 
+        // Crear siempre con rol USER
         NewUserRequestDTO newUser = new NewUserRequestDTO(
                 newUserRequest.username(),
                 newUserRequest.email(),
@@ -64,10 +76,12 @@ public class UserRESTController {
                 .status(HttpStatus.CREATED)
                 .body(createdUser);
     }
-    @DeleteMapping("/{id}")
+
+
+    /*@DeleteMapping("/{id}")
     public UserDTO deleteUser(@PathVariable long id) {
         return userService.deleteUserById(id);
-    }
+    }*/
 
     @PostMapping("/cart/{productId}")
     public ResponseEntity<?> addproductToCart(@PathVariable Long productId, HttpServletRequest request){
@@ -98,4 +112,55 @@ public class UserRESTController {
         }
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable long id, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
+
+        String username = principal.getName();
+        UserDTO authUser = userService.findByUsername(username);
+        UserDTO targetUser;
+
+        try {
+            targetUser = userService.getUserById(id);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        if (authUser.id().equals(targetUser.id()) && authUser.roles().contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Un administrador no puede eliminar su propia cuenta");
+        }
+
+        // ✅ Un usuario normal solo puede eliminarse a sí mismo
+        if (!authUser.roles().contains("ADMIN") && !authUser.id().equals(targetUser.id())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No puedes eliminar a otro usuario");
+        }
+
+        userService.deleteUserById(id);
+        return ResponseEntity.ok("Usuario eliminado correctamente");
+    }
+
+
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
+
+        UserDTO authUser = userService.findByUsername(principal.getName());
+
+        if (!authUser.roles().contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acceso denegado: solo para administradores");
+        }
+
+        return ResponseEntity.ok(userService.findAll());
+    }
+
+
 }

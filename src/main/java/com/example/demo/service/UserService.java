@@ -310,4 +310,10 @@ public class UserService {
         return toDTO(user);
     }
 
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+        return toDTO(user);
+    }
+
 }
