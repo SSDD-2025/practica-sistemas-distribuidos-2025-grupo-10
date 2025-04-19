@@ -118,12 +118,13 @@ public class ProductRESTController {
     }
 
     @GetMapping("/api/products/short")
-    public ResponseEntity<List<ProductDTO>> getShortPaginated(
+    public ResponseEntity<Page<ProductDTO>> getShortPaginated(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size) {
+            @RequestParam(defaultValue = "10") int size) {
 
         Page<ProductDTO> productPage = productService.findPaginated(page, size);
-        return ResponseEntity.ok(productPage.getContent()); // Solo el array
+        return ResponseEntity.ok(productPage);
     }
+
 
 }
