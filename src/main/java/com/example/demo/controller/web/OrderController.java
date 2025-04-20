@@ -3,7 +3,6 @@ package com.example.demo.controller.web;
 import com.example.demo.dto.OrderDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Order;
-import com.example.demo.model.User;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

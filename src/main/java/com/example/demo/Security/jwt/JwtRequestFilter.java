@@ -17,39 +17,39 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	
-	private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
 
-	private final UserDetailsService userDetailsService;
+    private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
 
-	private final JwtTokenProvider jwtTokenProvider;
+    private final UserDetailsService userDetailsService;
 
-	public JwtRequestFilter(UserDetailsService userDetailsService, JwtTokenProvider jwtTokenProvider) {
-		this.userDetailsService = userDetailsService;
-		this.jwtTokenProvider = jwtTokenProvider;
-	}
+    private final JwtTokenProvider jwtTokenProvider;
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
+    public JwtRequestFilter(UserDetailsService userDetailsService, JwtTokenProvider jwtTokenProvider) {
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
-		try {
-			var claims = jwtTokenProvider.validateToken(request, true);
-			var userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
-			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
-				
-			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		} catch (Exception ex) {
-			//Avoid logging when no token is found
-			if(!ex.getMessage().equals("No access token cookie found in request")) {
-				//log.error("Exception processing JWT Token: ", ex);
-			}			
-		}
+        try {
+            var claims = jwtTokenProvider.validateToken(request, true);
+            var userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
 
-		filterChain.doFilter(request, response);
-	}	
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (Exception ex) {
+            //Avoid logging when no token is found
+            if (!ex.getMessage().equals("No access token cookie found in request")) {
+                //log.error("Exception processing JWT Token: ", ex);
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    }
 
 }

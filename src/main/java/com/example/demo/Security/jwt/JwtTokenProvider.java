@@ -1,19 +1,17 @@
 package com.example.demo.Security.jwt;
 
-import java.util.Date;
-
-import javax.crypto.SecretKey;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
@@ -21,12 +19,12 @@ public class JwtTokenProvider {
     private final SecretKey jwtSecret = Jwts.SIG.HS256.key().build();
     private final JwtParser jwtParser = Jwts.parser().verifyWith(jwtSecret).build();
 
-    public String tokenStringFromHeaders(HttpServletRequest req){
+    public String tokenStringFromHeaders(HttpServletRequest req) {
         String bearerToken = req.getHeader(HttpHeaders.AUTHORIZATION);
         if (bearerToken == null) {
             throw new IllegalArgumentException("Missing Authorization header");
         }
-        if(!bearerToken.startsWith("Bearer ")){
+        if (!bearerToken.startsWith("Bearer ")) {
             throw new IllegalArgumentException("Authorization header does not start with Bearer: " + bearerToken);
         }
         return bearerToken.substring(7);
@@ -51,9 +49,9 @@ public class JwtTokenProvider {
         throw new IllegalArgumentException("No access token cookie found in request");
     }
 
-    public Claims validateToken(HttpServletRequest req, boolean fromCookie){
-        var token = fromCookie?
-                tokenStringFromCookies(req):
+    public Claims validateToken(HttpServletRequest req, boolean fromCookie) {
+        var token = fromCookie ?
+                tokenStringFromCookies(req) :
                 tokenStringFromHeaders(req);
         return validateToken(token);
     }

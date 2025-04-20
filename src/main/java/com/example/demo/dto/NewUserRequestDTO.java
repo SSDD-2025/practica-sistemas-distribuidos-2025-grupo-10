@@ -7,4 +7,5 @@ public record NewUserRequestDTO(
         String email,
         List<String> roles,
         String password
-) {}
+) {
+}

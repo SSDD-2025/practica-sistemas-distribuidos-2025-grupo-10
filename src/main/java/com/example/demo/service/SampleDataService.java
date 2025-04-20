@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Category;
-import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
@@ -67,12 +66,10 @@ public class SampleDataService {
 
         for (int i = 1; i <= x; i++) {
             String productName = "Producto Ejemplo " + i;
-            // Generar un precio aleatorio entre 5.00 y 100.00
             BigDecimal price = BigDecimal.valueOf(5 + (100 - 5) * random.nextDouble()).setScale(2, BigDecimal.ROUND_HALF_UP);
 
             Product product = new Product(productName, price);
 
-            // Alternar categorías entre category y category2
             Long categoryId = (i % 2 == 0) ? category.getId() : category2.getId();
 
             productService.save(product, categoryId);

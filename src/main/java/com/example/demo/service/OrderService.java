@@ -2,12 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dto.OrderDTO;
 import com.example.demo.dto.OrderMapper;
-import com.example.demo.dto.ProductMapper;
-import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Order;
-import com.example.demo.model.User;
 import com.example.demo.repository.OrderRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +56,14 @@ public class OrderService {
         return dto;
     }
 
-    private OrderDTO toDTO(Order order){
+    private OrderDTO toDTO(Order order) {
         return mapper.toDTO(order);
     }
-    public Order toDomain(OrderDTO orderDTO){
+
+    public Order toDomain(OrderDTO orderDTO) {
         return mapper.toDomain(orderDTO);
     }
+
     private Collection<OrderDTO> toDTOs(Collection<Order> orders) {
         return mapper.toDTOs(orders);
     }

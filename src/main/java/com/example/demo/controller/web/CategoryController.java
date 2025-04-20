@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -23,7 +22,6 @@ public class CategoryController {
     private CategoryService categoryService;
     @Autowired
     private ProductService productService;
-
 
 
     @GetMapping("/")
@@ -53,7 +51,6 @@ public class CategoryController {
         return "showCategory";
     }
 
-    // Método en Product service no da error, falta arreglar este
     @GetMapping("/category/{id}")
     public String showProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
         model.addAttribute("categories", categoryService.findAll());
@@ -85,13 +82,6 @@ public class CategoryController {
 
     @PostMapping("/categories/add")
     public String addCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
-        /*boolean added = categoryService.addCategory(category);
-        if (!added) {
-            model.addAttribute("error", "La categoría ya existe");
-            return "addCategory";
-        }
-        return "redirect:/categories/add";*/
-
         try {
             categoryService.addCategory(categoryDTO);
         } catch (IllegalArgumentException e) {
@@ -101,28 +91,6 @@ public class CategoryController {
         }
         return "redirect:/categories/add";
     }
-    /*
-    @PostMapping("/categories/add")
-    public String addCategory(@ModelAttribute("category") CategoryDTO categoryDTO, Model model) {
-        if (categoryService.findAll().contains(categoryDTO)){
-            categoryService.addCategory(categoryDTO);
-        }else {
-            model.addAttribute("error", "La categoría ya existe");
-            return "addCategory";
-        }
-        return "redirect:/categories/add";
-        /* No funciona
-        try {
-            categoryService.addCategory(categoryDTO);
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("error", "La categoría ya existe");
-            return "addCategory";
-        }
-        return "redirect:/categories/add";
-    }
-    */
-
-
 }
 
 

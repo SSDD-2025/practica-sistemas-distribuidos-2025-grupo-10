@@ -5,7 +5,6 @@ import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductMapper;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Product;
-import com.example.demo.model.User;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
@@ -63,14 +62,6 @@ public class ProductController {
         return "redirect:/products/add?success=true";
     }
 
-    /*
-    @PostMapping("/products/add")
-    public String newProductProcess(Model model, NewProductRequestDTO newProductRequestDTO) throws IOException, SQLException{
-        createOrReplaceProduct(newProductRequestDTO, -1, null);
-        return "redirect:/products/add?success=true";
-    }
-     */
-
     @GetMapping("products/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 
@@ -81,40 +72,6 @@ public class ProductController {
                 .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                 .body(image);
     }
-
-    /*
-    //  Este apartado no tiene funcionalidad, ni siquiera en la primera practica
-
-    @GetMapping("/products/{id}/image") //Anterior pero no funciona por el optional
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException{
-        Optional<Product> op = productService.findProductById(id);
-        if(op.isPresent() && op.get().getImageFile() != null){
-            Blob image = op.get().getImageFile();
-            Resource file = new InputStreamResource(image.getBinaryStream());
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                    .contentLength(image.length()).body(file);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-     */
-    /*
-    //  Este apartado no tiene funcionalidad, ni siquiera en la primera practica
-    @GetMapping("/products/{id}")
-    public String showProduct(Model model, @PathVariable long id) {
-        try {
-            ProductDTO productById = productService.findProductById(id);
-            Product product = productMapper.toDomain(productById);
-            model.addAttribute("product", productById);
-            return "showProduct";
-
-        } catch (NoSuchElementException e) {
-            return "ProductNotFound";
-        }
-    }
-
-     */
 
     @PostMapping("/products/{id}/delete")
     public String deleteProduct(Model model, @PathVariable long id) {
@@ -147,7 +104,6 @@ public class ProductController {
         }
         return "redirect:/products";
     }
-
 
     @GetMapping("/products/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
@@ -186,12 +142,6 @@ public class ProductController {
         return "cart";
     }
 
-    //  GESTIONAR EN CUANTO SE PONGA LA RELACION USER-PRODUCT Creo que esta hecho,
-    /*
-    He probado con el usuario 1, a añadir cosas a su cesta, salirme
-    Entrar con el usuario 2, y añadir cosas a su cesta, salirme
-    Y comprobar de que sigue estando las cosas de la cesta 1, y hacer la compra
-     */
     @PostMapping("/cart/add/{id}")
     public String addProductTocart(@PathVariable long id, Principal principal) throws IOException {
         if (principal == null) return "redirect:/login";
@@ -202,7 +152,6 @@ public class ProductController {
 
         return "redirect:/cart";
     }
-
 
     @PostMapping("/cart/checkout")
     public String checkout(Model model, Principal principal) {

@@ -17,82 +17,82 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserLoginService {
 
-	private static final Logger log = LoggerFactory.getLogger(UserLoginService.class);
+    private static final Logger log = LoggerFactory.getLogger(UserLoginService.class);
 
-	private final AuthenticationManager authenticationManager;
-	private final UserDetailsService userDetailsService;
-	private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-	public UserLoginService(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtTokenProvider jwtTokenProvider) {
-		this.authenticationManager = authenticationManager;
-		this.userDetailsService = userDetailsService;
-		this.jwtTokenProvider = jwtTokenProvider;
-	}
+    public UserLoginService(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtTokenProvider jwtTokenProvider) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
-	public ResponseEntity<AuthResponse> login(HttpServletResponse response, LoginRequest loginRequest) {
-		
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    public ResponseEntity<AuthResponse> login(HttpServletResponse response, LoginRequest loginRequest) {
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-		
-		String username = loginRequest.getUsername();
-		UserDetails user = userDetailsService.loadUserByUsername(username);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		HttpHeaders responseHeaders = new HttpHeaders();
-		var newAccessToken = jwtTokenProvider.generateAccessToken(user);
-		var newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
 
-		response.addCookie(buildTokenCookie(TokenType.ACCESS, newAccessToken));
-		response.addCookie(buildTokenCookie(TokenType.REFRESH, newRefreshToken));
+        String username = loginRequest.getUsername();
+        UserDetails user = userDetailsService.loadUserByUsername(username);
 
-		AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
-				"Auth successful. Tokens are created in cookie.");
-		return ResponseEntity.ok().headers(responseHeaders).body(loginResponse);
-	}
+        HttpHeaders responseHeaders = new HttpHeaders();
+        var newAccessToken = jwtTokenProvider.generateAccessToken(user);
+        var newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
 
-	public ResponseEntity<AuthResponse> refresh(HttpServletResponse response, String refreshToken) {
-		try {
-			var claims = jwtTokenProvider.validateToken(refreshToken);
-			UserDetails user = userDetailsService.loadUserByUsername(claims.getSubject());
+        response.addCookie(buildTokenCookie(TokenType.ACCESS, newAccessToken));
+        response.addCookie(buildTokenCookie(TokenType.REFRESH, newRefreshToken));
 
-			var newAccessToken = jwtTokenProvider.generateAccessToken(user);
-			response.addCookie(buildTokenCookie(TokenType.ACCESS, newAccessToken));
+        AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
+                "Auth successful. Tokens are created in cookie.");
+        return ResponseEntity.ok().headers(responseHeaders).body(loginResponse);
+    }
 
-			AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
-					"Auth successful. Tokens are created in cookie.");
-			return ResponseEntity.ok().body(loginResponse);
+    public ResponseEntity<AuthResponse> refresh(HttpServletResponse response, String refreshToken) {
+        try {
+            var claims = jwtTokenProvider.validateToken(refreshToken);
+            UserDetails user = userDetailsService.loadUserByUsername(claims.getSubject());
 
-		} catch (Exception e) {
-			log.error("Error while processing refresh token", e);
-			AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.FAILURE,
-					"Failure while processing refresh token");
-			return ResponseEntity.ok().body(loginResponse);
-		}
-	}
+            var newAccessToken = jwtTokenProvider.generateAccessToken(user);
+            response.addCookie(buildTokenCookie(TokenType.ACCESS, newAccessToken));
 
-	public String logout(HttpServletResponse response) {
-		SecurityContextHolder.clearContext();
-		response.addCookie(removeTokenCookie(TokenType.ACCESS));
-		response.addCookie(removeTokenCookie(TokenType.REFRESH));
+            AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
+                    "Auth successful. Tokens are created in cookie.");
+            return ResponseEntity.ok().body(loginResponse);
 
-		return "logout successfully";
-	}
+        } catch (Exception e) {
+            log.error("Error while processing refresh token", e);
+            AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.FAILURE,
+                    "Failure while processing refresh token");
+            return ResponseEntity.ok().body(loginResponse);
+        }
+    }
 
-	private Cookie buildTokenCookie(TokenType type, String token) {
-		Cookie cookie = new Cookie(type.cookieName, token);
-		cookie.setMaxAge((int) type.duration.getSeconds());
-		cookie.setHttpOnly(true);
-		cookie.setPath("/");
-		return cookie;
-	}
+    public String logout(HttpServletResponse response) {
+        SecurityContextHolder.clearContext();
+        response.addCookie(removeTokenCookie(TokenType.ACCESS));
+        response.addCookie(removeTokenCookie(TokenType.REFRESH));
 
-	private Cookie removeTokenCookie(TokenType type){
-		Cookie cookie = new Cookie(type.cookieName, "");
-		cookie.setMaxAge(0);
-		cookie.setHttpOnly(true);
-		cookie.setPath("/");
-		return cookie;
-	}
+        return "logout successfully";
+    }
+
+    private Cookie buildTokenCookie(TokenType type, String token) {
+        Cookie cookie = new Cookie(type.cookieName, token);
+        cookie.setMaxAge((int) type.duration.getSeconds());
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        return cookie;
+    }
+
+    private Cookie removeTokenCookie(TokenType type) {
+        Cookie cookie = new Cookie(type.cookieName, "");
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        return cookie;
+    }
 }

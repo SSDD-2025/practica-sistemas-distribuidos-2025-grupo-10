@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -23,7 +22,9 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public void save(Category category) {categoryRepository.save(category);}
+    public void save(Category category) {
+        categoryRepository.save(category);
+    }
 
     //public List<Category> findAll() {return categoryRepository.findAll();}
     public Collection<CategoryDTO> findAll() {
@@ -35,14 +36,6 @@ public class CategoryService {
     }
 
 
-    /*public boolean addCategory(Category category) {
-        if (!categoryRepository.findByName(category.getName()).isEmpty()) {
-            return false; // Category already exists
-        }
-        categoryRepository.save(category);
-        return true;
-    }*/
-
     public CategoryDTO addCategory(CategoryDTO categoryDTO) {
         if (!categoryRepository.findByName(categoryDTO.name()).isEmpty()) {
             throw new IllegalArgumentException("Ya existe una categoría con ese nombre");
@@ -53,24 +46,11 @@ public class CategoryService {
         return toDTO(category);
     }
 
-    /*public Optional<Category> findCategoryById(Long id) {
-        return categoryRepository.findById(id);
-    }*/
 
     public CategoryDTO findCategoryById(Long id) {
         return toDTO(categoryRepository.findById(id).orElseThrow());
     }
 
-    /*
-    public Optional<Category> findCategoryId(Long id){
-        return categoryRepository.findById(id);
-    }
-
-     */
-
-   /* public void deleteCategoryById(Long id) {
-        categoryRepository.deleteById(id);
-    }*/
 
     public CategoryDTO deleteCategoryById(Long id) {
         Category category = categoryRepository.findById(id).orElseThrow();
@@ -79,15 +59,15 @@ public class CategoryService {
     }
 
     //Mapper methods
-    private CategoryDTO toDTO(Category category){
+    private CategoryDTO toDTO(Category category) {
         return mapper.toDTO(category);
     }
 
-    private Category toDomain(CategoryDTO categoryDTO){
+    private Category toDomain(CategoryDTO categoryDTO) {
         return mapper.toDomain(categoryDTO);
     }
 
-    private Collection<CategoryDTO> toDTOs(Collection<Category> categories){
+    private Collection<CategoryDTO> toDTOs(Collection<Category> categories) {
         return mapper.toDTOs(categories);
     }
 

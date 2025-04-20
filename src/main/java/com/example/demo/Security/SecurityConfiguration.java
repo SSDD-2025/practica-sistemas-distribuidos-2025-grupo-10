@@ -2,12 +2,12 @@ package com.example.demo.Security;
 
 import com.example.demo.Security.jwt.JwtRequestFilter;
 import com.example.demo.Security.jwt.UnauthorizedHandlerJwt;
-import org.springframework.http.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -95,11 +95,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/api/users/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("USER")
 
-                        .requestMatchers(HttpMethod.POST,"/api/products").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/products/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/api/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/*").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/products/*/image").hasRole("ADMIN")
