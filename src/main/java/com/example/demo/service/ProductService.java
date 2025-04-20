@@ -15,6 +15,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -211,6 +212,11 @@ public class ProductService {
     public Page<ProductDTO> findPaginated(int page, int size) {
         Page<Product> productPage = productRepository.findAll(PageRequest.of(page, size));
         return productPage.map(mapper::toDTO);
+    }
+
+    public Page<ProductDTO> getProductsByCategoryPaginated(Long categoryId, Pageable pageable) {
+        Page<Product> productsPage = productRepository.findByCategoryId(categoryId, pageable);
+        return productsPage.map(this::toDTO);
     }
 
 }

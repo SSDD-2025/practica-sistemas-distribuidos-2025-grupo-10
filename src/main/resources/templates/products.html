@@ -121,7 +121,7 @@
             .then(data => {
                 const productGrid = document.getElementById('product-grid');
 
-                // Añadir nuevos productos al grid
+
                 productGrid.innerHTML += data.content.map(product => `
                     <div class="col-md-4 mb-4">
                         <div class="card">
@@ -145,7 +145,7 @@
                     </div>
                 `).join('');
 
-                // Si es la última página, ocultar el botón
+
                 if (data.last) {
                     lastPageReached = true;
                     document.getElementById('load-more').style.display = 'none';
@@ -159,12 +159,12 @@
             });
     }
 
-    // Event listener para el botón "Más resultados"
+
     document.getElementById('load-more').addEventListener('click', () => {
         loadProducts(currentPage);
     });
 
-    // Cargar la primera página al inicio
+
     loadProducts(currentPage);
 </script>
 </body>

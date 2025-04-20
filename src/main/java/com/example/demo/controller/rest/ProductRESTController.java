@@ -11,6 +11,8 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -126,5 +128,12 @@ public class ProductRESTController {
         return ResponseEntity.ok(productPage);
     }
 
+    @GetMapping("/api/categories/{categoryId}/products")
+    public ResponseEntity<Page<ProductDTO>> getProductsByCategoryPaginated(
+            @PathVariable Long categoryId,
+            @PageableDefault(size = 10) Pageable pageable) {
 
+        Page<ProductDTO> productsPage = productService.getProductsByCategoryPaginated(categoryId, pageable);
+        return ResponseEntity.ok(productsPage);
+    }
 }

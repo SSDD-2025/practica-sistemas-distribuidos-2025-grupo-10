@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>List of Products</title>
+    <meta name="_csrf" content="{{token}}">
     <style>
         * {
             margin: 0;
@@ -69,44 +70,98 @@
     </style>
 </head>
 <body>
+
 <nav class="navbar">
     <div class="nav-links">
         <a class="nav-item nav-link active" href="/">Inicio</a>
     </div>
     <span class="navbar-brand">CasaNova</span>
 </nav>
+
 <div class="container">
-    <h2>Productos en la categoría: {{category.name}}</h2>
+    <div class="card">
+        <div class="card-body">
+            <h1 style="margin-bottom: 30px;">Productos en la categoría: {{category.name}}</h1>
 
-    <div class="row">
-        {{#products}}
-        <div class="col-md-4 d-flex justify-content-center">
-            <div class="card mb-4" style="width: 18rem;">
-                {{#image}}
-                <img src="/products/{{id}}/image" class="card-img-top" alt="Imagen de {{name}}" style="height: 200px; object-fit: cover;">
-                {{/image}}
-                {{^image}}
-                <img src="/images/public/img.png" class="card-img-top" alt="Imagen no disponible" style="height: 200px; object-fit: cover;">
-                {{/image}}
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="product-grid" class="row"></div>
 
-                <div class="card-body text-center">
-                    <h5 class="card-title">{{name}}</h5>
-                    <p class="card-text"><strong>Precio:</strong> {{price}}$</p>
-                    <form action="/cart/add/{{id}}" method="post">
-                        <input type="hidden" name="_csrf" value="{{token}}"/>
-                        {{#isAdmin}}
-                        <a href="/products/{{id}}/edit" class="btn btn-warning">Editar Producto</a>
-                        {{/isAdmin}}
-
-                        {{^isAdmin}}
-                        <button type="submit" class="btn btn-primary">Añadir</button>
-                        {{/isAdmin}}
-                    </form>
+                        <button id="load-more" class="btn btn-secondary">Más resultados</button>
+                        <div id="loading-spinner" class="spinner-border text-primary mt-2" role="status" style="display: none;">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {{/products}}
     </div>
 </div>
+
+<div id="category-data" data-category-id="{{category.id}}" style="display: none;"></div>
+
+<script>
+    const categoryId = document.getElementById('category-data').dataset.categoryId;
+    const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+    let currentPage = 0;
+    const pageSize = 10;
+    let isAdmin = {{#isAdmin}}true{{/isAdmin}}{{^isAdmin}}false{{/isAdmin}};
+    let lastPageReached = false;
+
+    function loadProducts(page) {
+        if (lastPageReached) return;
+
+        document.getElementById('loading-spinner').style.display = 'inline-block';
+        document.getElementById('load-more').disabled = true;
+
+        fetch(`/api/categories/${categoryId}/products?page=${page}&size=${pageSize}`)
+            .then(response => response.json())
+            .then(data => {
+                const productGrid = document.getElementById('product-grid');
+
+                productGrid.innerHTML += data.content.map(product => `
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            ${product.image ?
+                    `<img src="/products/${product.id}/image" class="card-img-top"
+                                 alt="${product.name}" style="height: 200px; object-fit: cover;">` :
+                    `<img src="/images/public/img.png" class="card-img-top"
+                                 alt="Sin imagen" style="height: 200px; object-fit: cover;">`}
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text">Precio: $${product.price}</p>
+                                ${isAdmin ?
+                    `<a href="/products/${product.id}/edit"
+                                    class="btn btn-warning">Editar</a>` :
+                    `<form action="/cart/add/${product.id}" method="post">
+                                        <input type="hidden" name="_csrf" value="${csrfToken}"/>
+                                        <button class="btn btn-primary">Añadir</button>
+                                    </form>`}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                if (data.last) {
+                    lastPageReached = true;
+                    document.getElementById('load-more').style.display = 'none';
+                } else {
+                    currentPage++;
+                    document.getElementById('load-more').disabled = false;
+                }
+            })
+            .finally(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
+            });
+    }
+
+    document.getElementById('load-more').addEventListener('click', () => {
+        loadProducts(currentPage);
+    });
+
+    loadProducts(currentPage);
+</script>
 </body>
 </html>

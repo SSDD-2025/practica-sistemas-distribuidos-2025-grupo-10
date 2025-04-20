@@ -10,6 +10,8 @@ import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -169,6 +171,22 @@ public class ProductController {
         model.addAttribute("message", "¡Pedido realizado correctamente!");
 
         return "redirect:/orders";
+    }
+
+    @GetMapping("/category/{id}")
+    public String showProductsByCategory(
+            @PathVariable("id") Long categoryId,
+            Model model) {
+
+        model.addAttribute("categories", categoryService.findAll());
+
+        try {
+            CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
+            model.addAttribute("category", categoryDTO);
+            return "productsByCategories";
+        } catch (NoSuchElementException e) {
+            return "redirect:/mainPage";
+        }
     }
 
 }

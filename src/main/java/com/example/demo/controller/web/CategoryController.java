@@ -51,23 +51,6 @@ public class CategoryController {
         return "showCategory";
     }
 
-    @GetMapping("/category/{id}")
-    public String showProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
-        model.addAttribute("categories", categoryService.findAll());
-        try {
-            CategoryDTO categoryDTO = categoryService.findCategoryById(categoryId);
-            List<ProductDTO> productsByCategoryDTOs = productService.getProductsByCategory(categoryDTO.id());
-
-            model.addAttribute("category", categoryDTO);
-            model.addAttribute("products", productsByCategoryDTOs);
-
-            return "productsByCategories";
-        } catch (NoSuchElementException e) {
-            return "redirect:/mainPage";
-        }
-
-    }
-
     @PostMapping("/categories/{id}/delete")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
