@@ -1,26 +1,18 @@
 package com.example.demo.controller.rest;
 
-import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.NewUserRequestDTO;
-import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.UserDTO;
-import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 @RequestMapping("/api/users")
@@ -29,20 +21,20 @@ public class UserRESTController {
     private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private ProductService productService;
+
 
     @GetMapping("/me")
     public UserDTO me(HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
 
-        if(principal != null) {
+        if (principal != null) {
             return userService.getUser(principal.getName());
         } else {
             throw new NoSuchElementException();
         }
     }
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody NewUserRequestDTO newUserRequest, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -84,9 +76,9 @@ public class UserRESTController {
     }*/
 
     @PostMapping("/cart/{productId}")
-    public ResponseEntity<?> addproductToCart(@PathVariable Long productId, HttpServletRequest request){
+    public ResponseEntity<?> addproductToCart(@PathVariable Long productId, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-        if(principal == null){
+        if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No hay usuario autenticado.");
         }
         try {
@@ -97,16 +89,17 @@ public class UserRESTController {
                     .body("Error al añadir el producto al carrito: " + e.getMessage());
         }
     }
+
     @PostMapping("/cartToOrder")
-    public ResponseEntity<?> addCartToOrder(HttpServletRequest request){
+    public ResponseEntity<?> addCartToOrder(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-        if(principal == null){
+        if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No hay usuario autenticado.");
         }
-        try{
+        try {
             UserDTO user = userService.productsFromCartIntoOrder2(principal.getName());
             return ResponseEntity.ok(user);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al añadir el producto al carrito: " + e.getMessage());
         }
@@ -162,5 +155,19 @@ public class UserRESTController {
         return ResponseEntity.ok(userService.findAll());
     }
 
+    @GetMapping("/me/myOrders")
+    public ResponseEntity<?> getMyOrders(HttpServletRequest request) {
+
+        Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
+
+        UserDTO authUser = userService.findByUsername(principal.getName());
+
+
+        return ResponseEntity.ok(authUser.userOrders());
+    }
 
 }

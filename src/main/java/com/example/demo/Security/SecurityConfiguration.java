@@ -151,6 +151,11 @@ public class SecurityConfiguration {
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/js/**", "/webjars/**", "/favicon.ico").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/v3/api-docs*/**").permitAll()
+
+                        .requestMatchers("/swagger-ui.html").permitAll()
+
+                        .requestMatchers("/swagger-ui/**").permitAll()
 
 
                         // PRIVATE PAGES

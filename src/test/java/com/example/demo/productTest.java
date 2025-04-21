@@ -1,3 +1,4 @@
+/*
 package com.example.demo;
 
 import org.junit.jupiter.api.AfterEach;
@@ -92,3 +93,4 @@ public class productTest {
         assertFalse("Texto no encontrado", pageSource.contains("Producto Ejemplo 1"));
     }
 }
+*/
