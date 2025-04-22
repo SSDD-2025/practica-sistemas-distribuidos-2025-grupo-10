@@ -92,8 +92,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/*").hasAnyRole("USER", "ADMIN")
+                        //.requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
