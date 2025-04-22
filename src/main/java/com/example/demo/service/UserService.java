@@ -187,10 +187,17 @@ public class UserService {
     }
 
 
-    public void deleteOrder(User user) {
+    public void deleteOrder(UserDTO userDTO) {
+        User user = toDomain(userDTO);
         user.setUserOrders(null);
         //  User.setorder(user.getorders.remove(elorder))
         userRepository.save(user);
+    }
+    public void deleteOrder2(UserDTO userDTO) {
+        User existingUser = userRepository.findById(userDTO.id())
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+        existingUser.setUserOrders(null);
+        userRepository.save(existingUser);
     }
 
     private UserDTO toDTO(User user) {

@@ -39,28 +39,15 @@ public class CategoryRESTController {
         return categoryService.findCategoryById(id);
     }
     @PostMapping("/api/categories")
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
-        /*Category category = toDomain(categoryDTO);
-        categoryRepository.save(category);
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
-        return ResponseEntity.created(location).body(toDTO(category));*/
+    public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
+        if (categoryDTO.id() != 0) {
+            return ResponseEntity.badRequest().body("No se debe proporcionar un ID al crear una categoría");
+        }
         categoryDTO = categoryService.addCategory(categoryDTO);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(categoryDTO.id()).toUri();
         return ResponseEntity.created(location).body(categoryDTO);
     }
-    /*Not necessary because we dont update category
-    @PutMapping("/api/categories/{id}")
-    public CategoryDTO updateCategory(@PathVariable long id,
-                                      @RequestBody CategoryDTO newCategoryDTO){
-        if(categoryRepository.existsById(id)){
-            Category newCategory = toDomain(newCategoryDTO);
-            newCategory.setId(id);
-            categoryRepository.save(newCategory);
-            return toDTO(newCategory);
-        }else{
-            throw new NoSuchElementException();
-        }
-    }*/
+
 
     @DeleteMapping("/api/categories/{id}")
     public CategoryDTO deleteCategory(@PathVariable long id) {

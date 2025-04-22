@@ -1,6 +1,7 @@
 package com.example.demo.controller.rest;
 
 import com.example.demo.dto.NewUserRequestDTO;
+import com.example.demo.dto.OrderDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class UserRESTController {
     public ResponseEntity<?> registerUser(@RequestBody NewUserRequestDTO newUserRequest, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
-        // Si hay usuario autenticado, debe ser ADMIN
+        // If there's an authenticated user, it should be an admin
         if (principal != null) {
             UserDTO authUser = userService.findByUsername(principal.getName());
             if (!authUser.roles().contains("ADMIN")) {
@@ -47,14 +48,14 @@ public class UserRESTController {
             }
         }
 
-        // Validar que no exista ya
+        // Validate if it already exists
         if (userService.existsByUsername(newUserRequest.username())) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body("Ese nombre de usuario ya existe.");
         }
 
-        // Crear siempre con rol USER
+        // Create always with the role USER
         NewUserRequestDTO newUser = new NewUserRequestDTO(
                 newUserRequest.username(),
                 newUserRequest.email(),
@@ -68,12 +69,6 @@ public class UserRESTController {
                 .status(HttpStatus.CREATED)
                 .body(createdUser);
     }
-
-
-    /*@DeleteMapping("/{id}")
-    public UserDTO deleteUser(@PathVariable long id) {
-        return userService.deleteUserById(id);
-    }*/
 
     @PostMapping("/cart/{productId}")
     public ResponseEntity<?> addproductToCart(@PathVariable Long productId, HttpServletRequest request) {
@@ -128,7 +123,7 @@ public class UserRESTController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Un administrador no puede eliminar su propia cuenta");
         }
 
-        // ✅ Un usuario normal solo puede eliminarse a sí mismo
+        // A user only can erase itself
         if (!authUser.roles().contains("ADMIN") && !authUser.id().equals(targetUser.id())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No puedes eliminar a otro usuario");
         }
@@ -169,5 +164,37 @@ public class UserRESTController {
 
         return ResponseEntity.ok(authUser.userOrders());
     }
+    @GetMapping("/me/myCart")
+    public ResponseEntity<?> getMyCart(HttpServletRequest request) {
+
+        Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
+
+        UserDTO authUser = userService.findByUsername(principal.getName());
+
+
+        return ResponseEntity.ok(authUser.userProducts());
+    }
+    @DeleteMapping("/me/myOrders")
+    public ResponseEntity<?> deleteMyOrders(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
+
+        UserDTO authUser = userService.findByUsername(principal.getName());
+
+        List<OrderDTO> ordersDeleted = authUser.userOrders();
+
+        userService.deleteOrder2(authUser);
+
+        return ResponseEntity.ok(ordersDeleted);
+    }
+
+
 
 }

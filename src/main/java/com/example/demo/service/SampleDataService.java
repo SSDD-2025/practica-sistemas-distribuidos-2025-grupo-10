@@ -61,7 +61,7 @@ public class SampleDataService {
         productService.save(product2, category2.getId());
 
 
-        int x = 50; // Número de productos que quieres crear
+        int x = 50; // Number of products to create
         Random random = new Random();
 
         for (int i = 1; i <= x; i++) {
@@ -76,7 +76,7 @@ public class SampleDataService {
         }
 
         // Initialize user
-        userRepository.save(new User("vero", passwordEncoder.encode("contraseña"), "vero@gmail.com", "USER"));
+        userRepository.save(new User("vero", passwordEncoder.encode("cont"), "vero@gmail.com", "USER"));
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "user@gmail.com", "USER"));
 
         //Load admin from properties file

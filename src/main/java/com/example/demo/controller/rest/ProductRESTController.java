@@ -34,19 +34,9 @@ public class ProductRESTController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private ProductRepository productRepository;
-    @Autowired
     private ProductMapper mapper;
     @Autowired
     private UserService userService;
-
-    /*
-    @GetMapping("/api/products")
-    public Collection<ProductDTO> getProducts() {
-        return productService.findall();
-    }
-
-     */
 
     @GetMapping("/api/products/{id}")
     public ProductDTO getProduct(@PathVariable long id) {
@@ -70,13 +60,7 @@ public class ProductRESTController {
     public ProductDTO deleteProduct(@PathVariable long id) {
         return productService.deleteProduct(id, userService);
     }
-    private ProductDTO toDTO(Product product){
-        return mapper.toDTO(product);
-    }
 
-    private Collection<ProductDTO> toDTOs(Collection<Product> product){
-        return mapper.toDTOs(product);
-    }
     @PostMapping("/api/products/{id}/image")
     public ResponseEntity<Object> createProductImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
         productService.createProductImage(id, imageFile.getInputStream(), imageFile.getSize());
