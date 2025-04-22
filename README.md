@@ -16,36 +16,36 @@
 ### Capturas de Pantalla
 
 1. **Página Principal**
-- *Pantalla de presentación desde donde puede comenzar a navegar el usuario, haciendo click en las categorías para ver productos filtrados, pulsando en el carrito o en el desplegable*
-   ![Página Principal](src/main/resources/static/PaginaPrincipal.png)
+- *Pantalla de presentación desde donde puede comenzar a navegar el usuario, haciendo click en las categorías para ver productos filtrados, pulsando en el carrito o en el desplegable.*
+  ![Página Principal](src/main/resources/static/PaginaPrincipal.png)
 
 2. **Administración de Usuarios**
 - *Desde aquí podemos añadir o eliminar usuarios, y ver los usuarios existentes.*
-   ![Administración de Usuarios](src/main/resources/static/AdministracionUsuarios.png)
+  ![Administración de Usuarios](src/main/resources/static/AdministracionUsuarios.png)
 
 3. **Lista de Usuarios**
 - *Página para ver la lista de usuarios, donde podremos eliminar a algún usuario de la lista o pulsar el botón de Añadir usuarios  para añadir uno nuevo.*
-   ![Lista de Usuarios](src/main/resources/static/EliminarUsuarios.png)
+  ![Lista de Usuarios](src/main/resources/static/EliminarUsuarios.png)
 
 4. **Administración de Productos**
-- *Aquí podemos añadir productos nuevos, ver los productos o modificarlos*
-   ![Administración de Productos](src/main/resources/static/AñadirProductos.png)
+- *Aquí podemos añadir productos nuevos, ver los productos o modificarlos.*
+  ![Administración de Productos](src/main/resources/static/AñadirProductos.png)
 
 5. **Productos disponibles**
 - *En esta página podemos ver los productos disponibles, que aparecen con una imagen, el nombre y el precio. Podemos añadirlos al carrito.*
-   ![Productos_Disponibles](src/main/resources/static/ProductosDisponiblesUsuario.png)
+  ![Productos_Disponibles](src/main/resources/static/ProductosDisponiblesUsuario.png)
 
 6. **Lista de Productos**
 - *Página para ver la lista de productos de nuestra web, desde donde podremos modificarlos o eliminarlos si nos interesa.*
-   ![Lista_de_Productos](src/main/resources/static/ModificarProductos.png)
+  ![Lista_de_Productos](src/main/resources/static/ModificarProductos.png)
 
 7. **Editar Producto**
 - *Desde aquí podemos editar cualquier producto que hayamos seleccionado: su nombre, el precio y la categoría a la que pertenecen.*
-   ![Editar_Productos](src/main/resources/static/EditarProducto.png)
+  ![Editar_Productos](src/main/resources/static/EditarProducto.png)
 
 8. **Ver Productos en Categoría Discos**
 - *Podemos ver los productos de la categoría Discos.*
-   ![Ver_Productos_en_una_Categoria](src/main/resources/static/ProductosEnDiscosCategoria.png)
+  ![Ver_Productos_en_una_Categoria](src/main/resources/static/ProductosEnDiscosCategoria.png)
 
 9. **Ver Productos en Categoría Libros**
 - *Podemos ver los productos de la categoría Libros.*
@@ -53,43 +53,43 @@
 
 10. **Administración de Categorías**
 - *Página para añadir categorías nuevas, desde donde también podemos ver o modificar las categorías existentes.*
-   ![Administración de Categorias](src/main/resources/static/AdministraciónCategorias.png)
+  ![Administración de Categorias](src/main/resources/static/AdministraciónCategorias.png)
 
 11. **Lista de Categorías**
 - *Página para eliminar categorías.*
-   ![Lista_de_Categorías](src/main/resources/static/EliminarCategorias.png)
+  ![Lista_de_Categorías](src/main/resources/static/EliminarCategorias.png)
 
 12. **Pedido**
 - *En esta página podemos ver todos nuestros pedidos.*
-   ![Pedido](src/main/resources/static/TokenPedido.png)
+  ![Pedido](src/main/resources/static/TokenPedido.png)
 
 13. **Lista de Pedidos**
 - *En esta página podemos eliminar nuestros pedidos.*
-   ![Lista_de_Pedidos](src/main/resources/static/orderslist.jpeg)
+  ![Lista_de_Pedidos](src/main/resources/static/orderslist.jpeg)
 
 14. **Carrito**
 - *Página del carrito de la compra, desde donde podremos finalizar la compra o seguir comprando.*
-   ![Carrito](src/main/resources/static/shoppingcart.jpeg)
+  ![Carrito](src/main/resources/static/shoppingcart.jpeg)
 
 15. **Finalizar Compra**
-- *Aviso que salta al finalizar la compra*
-    ![Finalizar_Compra](src/main/resources/static/FinalizarCompra.png)
+- *Aviso que salta al finalizar la compra.*
+  ![Finalizar_Compra](src/main/resources/static/FinalizarCompra.png)
 
 16. **Mi Perfil**
-- *Página de perfil, donde podremos ver los datos de nuestro perfil*
-    ![Mi_Perfil](src/main/resources/static/MiPerfil.png)
+- *Página de perfil, donde podremos ver los datos de nuestro perfil.*
+  ![Mi_Perfil](src/main/resources/static/MiPerfil.png)
 
 17. **Inicio de Sesión**
-- *Página de inicio de sesión*
-    ![Inicio_de_Sesion](src/main/resources/static/InicioSesion.png)
+- *Página de inicio de sesión.*
+  ![Inicio_de_Sesion](src/main/resources/static/InicioSesion.png)
 
 18. **Registrarse**
-- *Página de registro*
-    ![Registrarse](src/main/resources/static/registrarse.png)
+- *Página de registro.*
+  ![Registrarse](src/main/resources/static/registrarse.png)
 
-15. **Página de Error**
-- *Página de error, al tratarse de una operación indebida o excepción*
-    ![Página_de_Error](src/main/resources/static/errorpage.jpeg)
+19. **Página de Error**
+- *Página de error, al tratarse de una operación indebida o excepción.*
+  ![Página_de_Error](src/main/resources/static/errorpage.jpeg)
 
 ### Diagrama de Navegación
 
@@ -156,7 +156,7 @@
 - **LoginController**: Controlador de vistas de login.
 - **NoElemExceptionController**: Manejo global de excepciones.
 - **ProfileController**: Vista de perfil y eliminación de cuenta.
-- **RegisterController**: Registro de nuevos usuarios
+- **RegisterController**: Registro de nuevos usuarios.
 
 ### Controladores REST
 - **CategoryRESTController**: API REST de categorías.
@@ -247,19 +247,15 @@ spring.mustache.suffix=.html
 spring.mustache.prefix=classpath:/templates/
 
 # MySQL
-#spring.datasource.url=jdbc:mysql://localhost:3306/shop
-#spring.datasource.username=root
-#Password depends on your personal computer database configuration
-#spring.datasource.password=88888888
-#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-#JPA and hibernate configuration
-#spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.datasource.url=jdbc:mysql://localhost:3306/shop
+spring.datasource.username=root
+Password depends on your personal computer database configuration
+spring.datasource.password=88888888
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+JPA and hibernate configuration
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
 
-# H2
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.h2.console.enabled=true
-
-spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 
@@ -282,46 +278,53 @@ admin.password=$2a$12$62SMakJh7Lj2U5cHe2G0m.0uOT3rx7tafzx4o8vnqm7tzlDopL6s2
 
 ## Participación
 
-### Javier Castellanos 
+### Javier Castellanos
 - **Tareas**: Colaboración en el desarrollo del UserController para gestionar usuarios mediante operaciones CRUD. Incorporación de una ruta GET en el UserController para servir la vista addUser.html, facilitando la incorporación de nuevos usuarios al sistema. Implementación de los métodos save en UserService y CategoryService para garantizar la persistencia de los datos en la base de datos. Realización del README.md.
 - **5 commits más significativos**:
-   1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5dd21b20343fcaf1e37d8f953e5b0f0642a57fc4)
-   2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/7181af3d1441ab48e07ea2f7473e2bb9bb2ff741)
-   3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/c55777c00e9cce2239ceb8e2f7a01adb5b7fe878)
-   4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/825148a8159113f8ec795c44e53a12dbd9f36190)
-   5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/7cdcea4476c5ab38c69e8b7be0a8ab25023b5762)
+    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5dd21b20343fcaf1e37d8f953e5b0f0642a57fc4)
+    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/7181af3d1441ab48e07ea2f7473e2bb9bb2ff741)
+    3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/c55777c00e9cce2239ceb8e2f7a01adb5b7fe878)
+    4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/825148a8159113f8ec795c44e53a12dbd9f36190)
+    5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/7cdcea4476c5ab38c69e8b7be0a8ab25023b5762)
 - **Ficheros más importantes**:
     1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/README.md
+    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/README.md
 
 ### María Martín
 - **Tareas**: Creación, edición y eliminación de productos. Creación y eliminación de categorías. Desarrollo de la página principal (MainPage). Creación del carrito de la compra. Eliminación de pedidos y usuarios. Adaptación y edición de todos los controllers para conectar correctamente con los nuevos HTML creados. Mejora de la presentación de las páginas HTML para hacerlas más visuales y fáciles de usar. Participación en la creación del Product Model, Product Service y Product Controller.
 - **5 commits más significativos**:
-   1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
-   2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5307457bd5a9859fb8daecd9cd36fb1567ab1eb6)
-   3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/a82227cde0b2736ae7fb5f365961c2225888ded5)
-   4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/72dc52a7e6eea2683c48e8e659b08ba5e055b5ff)
-   5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
+    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
+    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5307457bd5a9859fb8daecd9cd36fb1567ab1eb6)
+    3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/a82227cde0b2736ae7fb5f365961c2225888ded5)
+    4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/72dc52a7e6eea2683c48e8e659b08ba5e055b5ff)
+    5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
+    6. [Commit 6](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/a9d42c554508c1a4531e834ad79686d2dfadf4f5)
 - **Ficheros más importantes**:
-     1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/src/main/resources/templates/addCategory.html
+    1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/src/main/resources/templates/addCategory.html
+    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/Security/SecurityConfiguration.java
 
 ### Verónica Ramírez
 - **Tareas**: Esquema inicial, controllers y services de algunas de las entidades, junto con Wenhao relaciones entre entidades, parte de la visualización de pedido, carrito y productos y página de error.
 - **5 commits más significativos**:
-   1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/4bd30f19b6619d075d6da5987a40e3d93e62afaf)
-   2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/ff11e368a3839381852616fb136f4f67a4628481)
-   3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/30adb43bc690644fa6daa0e76b8cc65662553e14)
-   4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/2f267fbdc681a344dd2a5cd869b8217f3459cc8b)
-   5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1a6b5b713c3ce116bc4105c6dafce95179f3381e)
+    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/4bd30f19b6619d075d6da5987a40e3d93e62afaf)
+    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/ff11e368a3839381852616fb136f4f67a4628481)
+    3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/30adb43bc690644fa6daa0e76b8cc65662553e14)
+    4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/2f267fbdc681a344dd2a5cd869b8217f3459cc8b)
+    5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1a6b5b713c3ce116bc4105c6dafce95179f3381e)
+    6. [Commit 6](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/fa3acbf8824afbfa25da8ef39cda7f80f6af4396)
 - **Ficheros más importantes**:
-     1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/src/main/resources/templates/orders.html
+    1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/src/main/resources/templates/orders.html
+    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/UserService.java
 
 ### Wenhao Zhang
 - **Tarea**: Implementación de los métodos básicos de las entidades (como clases de Java), implementación de las relaciones de la BBDD. Testeo de las operaciones de guardado, testeo de las operaciones de borrado y testeo de las operaciones de modificación o actualización junto a Vero. Implementación de la visualización de productos por categoría junto a Vero.
 - **5 commits más significativos**:
-   1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1ef9813341453f52d092a74f7f8a57ce231c92db)
-   2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/76aba34e88dd7d574523e527003b28e050e339a5)
-   3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/57c5923e7fe2de489ce51931316ebccaf73bf933)
-   4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1a6b5b713c3ce116bc4105c6dafce95179f3381e )
-   5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/825148a8159113f8ec795c44e53a12dbd9f36190)
+    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1ef9813341453f52d092a74f7f8a57ce231c92db)
+    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/76aba34e88dd7d574523e527003b28e050e339a5)
+    3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/57c5923e7fe2de489ce51931316ebccaf73bf933)
+    4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1a6b5b713c3ce116bc4105c6dafce95179f3381e )
+    5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/825148a8159113f8ec795c44e53a12dbd9f36190)
+    6. [Commit 6](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/e9789f17a686e2ea802660a591566fd0a2907084)
 - **Ficheros más importantes**:
-     1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/UserService.java
+    1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/UserService.java
+    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/UserService.java
