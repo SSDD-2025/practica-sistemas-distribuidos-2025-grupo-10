@@ -83,6 +83,8 @@ public class SampleDataService {
         if (userRepository.findByUsername(adminUsername).isEmpty()) {
             userRepository.save(new User(adminUsername, adminPassword, "admin@email.com", "ADMIN"));
         }
+        userRepository.save(new User("user2", passwordEncoder.encode("pass2"), "user2@gmail.com", "USER"));
+
 
     }
 

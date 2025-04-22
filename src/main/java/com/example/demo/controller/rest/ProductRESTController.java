@@ -45,7 +45,10 @@ public class ProductRESTController {
 
     //Falta la gestión de las imágenes
     @PostMapping("/api/products")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO){
+        if (productDTO.id() != 0) {
+            return ResponseEntity.badRequest().body("No se debe proporcionar un ID al crear un producto");
+        }
         productDTO = productService.createProduct(productDTO);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(productDTO.id()).toUri();
         return ResponseEntity.created(location).body(productDTO);
