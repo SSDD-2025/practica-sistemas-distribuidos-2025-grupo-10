@@ -347,14 +347,23 @@ admin.password=$2a$12$62SMakJh7Lj2U5cHe2G0m.0uOT3rx7tafzx4o8vnqm7tzlDopL6s2
     5. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/src/main/java/com/example/demo/controller/rest/OrderRESTController.java
 
 ### Wenhao Zhang
-- **Tarea**: Implementación de los métodos básicos de las entidades (como clases de Java), implementación de las relaciones de la BBDD. Testeo de las operaciones de guardado, testeo de las operaciones de borrado y testeo de las operaciones de modificación o actualización junto a Vero. Implementación de la visualización de productos por categoría junto a Vero.
-- **5 commits más significativos**:
+- **Tareas práctica 1**: Implementación de los métodos básicos de las entidades (como clases de Java), implementación de las relaciones de la BBDD. Testeo de las operaciones de guardado, testeo de las operaciones de borrado y testeo de las operaciones de modificación o actualización junto a Vero. Implementación de la visualización de productos por categoría junto a Vero.
+- **Tareas práctica 2**: Implementacion del HTTPS, junto a los roles y el LOGIN. Adaptación de las entidades más importantes a DTO y junto a sus funciones como es el caso de comprar, añadir productos a la cesta. Implementación de la solicitud AJAX en la web de productos, implemnetanción de metodos variados en REST.
+- **5 commits más significativos práctica 1**:
     1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1ef9813341453f52d092a74f7f8a57ce231c92db)
     2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/76aba34e88dd7d574523e527003b28e050e339a5)
     3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/57c5923e7fe2de489ce51931316ebccaf73bf933)
     4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/1a6b5b713c3ce116bc4105c6dafce95179f3381e )
     5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/825148a8159113f8ec795c44e53a12dbd9f36190)
-    6. [Commit 6](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/e9789f17a686e2ea802660a591566fd0a2907084)
+- **5 commits más significativos práctica 2**:
+    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/e9789f17a686e2ea802660a591566fd0a2907084)
+    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/54fb6cddabc2dc8afdbe1bcd0bb7bd1c2030e689)
+    3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5ec3ed0e3803ea273552d2ee8ceb56a6934d47aa)
+    4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/0d414786686729d1fc2a346a42460c3dfeade3f0)
+    5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/168ff370819629e46d4ac847fe2c4568976bf0e4)
 - **Ficheros más importantes**:
     1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/UserService.java
-    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/UserService.java
+    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/ProductService.java
+    3. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/Open%20API.yaml
+    4. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/rest/ProductRESTController.java
+    5. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/rest/UserRESTController.java
