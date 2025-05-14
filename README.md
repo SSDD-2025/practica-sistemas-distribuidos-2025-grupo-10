@@ -6,7 +6,7 @@
 | Nombre                     | Email                              | GitHub                                  |
 |----------------------------|------------------------------------|-----------------------------------------|
 | Javier Castellanos Serrano | j.castellanos.2018@alumnos.urjc.es | [GitHub](https://github.com/Javicastes) |
-| María Martín Mullor        | m.martin.2021@alumnos.urjc.es      | [GitHub](https://github.com/maria-marmul) |
+| María Martín Mullor        | m.martinmul.2021@alumnos.urjc.es   | [GitHub](https://github.com/maria-marmul) |
 | Verónica Ramírez Marín     | v.ramirez.2021@alumnos.urjc.es     | [GitHub](https://github.com/VeroRam1)   |
 | Wenhao Zhang               | w.zhang.2022@alumnos.urjc.es       | [GitHub](https://github.com/wenhiii)    |
 
@@ -291,7 +291,8 @@ admin.password=$2a$12$62SMakJh7Lj2U5cHe2G0m.0uOT3rx7tafzx4o8vnqm7tzlDopL6s2
     2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/README.md
 
 ### María Martín
-- **Tareas**: Creación, edición y eliminación de productos. Creación y eliminación de categorías. Desarrollo de la página principal (MainPage). Creación del carrito de la compra. Eliminación de pedidos y usuarios. Adaptación y edición de todos los controllers para conectar correctamente con los nuevos HTML creados. Mejora de la presentación de las páginas HTML para hacerlas más visuales y fáciles de usar. Participación en la creación del Product Model, Product Service y Product Controller.
+- **Tareas práctica 1**: Creación, edición y eliminación de productos. Creación y eliminación de categorías. Desarrollo de la página principal (MainPage). Creación del carrito de la compra. Eliminación de pedidos y usuarios. Adaptación y edición de todos los controllers para conectar correctamente con los nuevos HTML creados. Mejora de la presentación de las páginas HTML para hacerlas más visuales y fáciles de usar. Participación en la creación del Product Model, Product Service y Product Controller.
+- **Tareas práctica 2**: Implementación de REST para categorías, model y DTO, y modificación de CategoryController. Seguridad JWT y ayuda con la colección Postman. Cambios necesarios en el HTML.
 - **5 commits más significativos**:
     1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
     2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/5307457bd5a9859fb8daecd9cd36fb1567ab1eb6)
@@ -299,9 +300,19 @@ admin.password=$2a$12$62SMakJh7Lj2U5cHe2G0m.0uOT3rx7tafzx4o8vnqm7tzlDopL6s2
     4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/72dc52a7e6eea2683c48e8e659b08ba5e055b5ff)
     5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/843bb3a20fe8e3c6a407e71b6e006c8735851364)
     6. [Commit 6](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/a9d42c554508c1a4531e834ad79686d2dfadf4f5)
-- **Ficheros más importantes**:
-    1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blame/main/src/main/resources/templates/addCategory.html
-    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/Security/SecurityConfiguration.java
+- **5 commits más significativos práctica 2**:
+    1. [Commit 1](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/cacff5a684f51612b5ebcfd53253b6c791f41d7e)
+    2. [Commit 2](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/9732a032b4e79183a04b86c646c05d0bc363759e)
+    3. [Commit 3](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/9137021b4ef8afc1ed5658b9f47a54b6d33a416c)
+    4. [Commit 4](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/b4b2a5b61f48b79460da8b1cbc95b01d07eff294)
+    5. [Commit 5](https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/commit/d85d567a4721fb39e8fcdba81c9f3cd05d0462f3)
+- **Ficheros más importantes práctica 2**:
+    1. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/web/CategoryController.java
+    2. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/service/CategoryService.java
+    3. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/RegisterController.java
+    4. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/web/ProductController.java
+    5. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/LoginController.java
+  
 
 ### Verónica Ramírez
 - **Tareas práctica 1**: Esquema inicial, controllers y services de algunas de las entidades, junto con Wenhao relaciones entre entidades, parte de la visualización de pedido, carrito y productos y página de error. 
