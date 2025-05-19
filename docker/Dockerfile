@@ -1,32 +1,32 @@
-# Imagen base para el contenedor de compilación
+# Base image for the compilation container
 FROM maven:3.9.9-eclipse-temurin-21-jammy AS builder
 
-# Define el directorio de trabajo donde ejecutar comandos
+# Defines the working directory where to execute commands
 WORKDIR /project
 
-# Copia las dependencias del proyecto
-COPY pom.xml /project/
+# Copies the project dependencies
+COPY ../pom.xml /project/
 
-# Descarga las dependencias del proyecto
+# Downloads the project dependencies
 RUN mvn dependency:go-offline
 
-# Copia el código del proyecto
-COPY /src /project/src
+# Copies the project code
+COPY ../src /project/src
 
-# Compila proyecto
+# Compiles the project
 RUN mvn -B package -DskipTests
 
-# Imagen base para el contenedor de la aplicación
+# Base image for the application container
 FROM eclipse-temurin:21-jre
 
-# Define el directorio de trabajo donde se encuentra el JAR
+# Defines the working directory where the JAR is located
 WORKDIR /usr/src/app/
 
-# Copia el JAR del contenedor de compilación
+# Copy the JAR from the compilation container
 COPY --from=builder /project/target/*.jar /usr/src/app/app.jar
 
-# Indica el puerto que expone el contenedor
+# Indicates the port that exposes the container
 EXPOSE 8443
 
-# Comando que se ejecuta al hacer docker run
+# Command to be executed when running docker run
 CMD [ "java", "-jar", "app.jar" ]

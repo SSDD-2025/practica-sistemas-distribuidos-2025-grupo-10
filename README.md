@@ -367,3 +367,92 @@ admin.password=$2a$12$62SMakJh7Lj2U5cHe2G0m.0uOT3rx7tafzx4o8vnqm7tzlDopL6s2
     3. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/Open%20API.yaml
     4. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/rest/ProductRESTController.java
     5. https://github.com/SSDD-2025/practica-sistemas-distribuidos-2025-grupo-10/blob/main/src/main/java/com/example/demo/controller/rest/UserRESTController.java
+
+## Documentación Docker - Práctica 3:
+
+### Instrucciones de ejecución de la aplicación dockerizada
+#### Para usar el docker compose, necesitamos que
+  - Este instalado Docker.
+  - Permisos de administrador.
+  - Se ejecute desde la carpeta /docker del proyecto.
+
+1. Para la producción tenemos este comando. Se hace un pull de la imagen publicada en dockerhub tanto para la app como para la bbdd.
+```bash
+sudo docker compose -f docker-compose.prod.yml up -d
+```
+
+2. Para la construcción local tenemos este comando. Se construye la aplicación en local sin tener JVM instalado y se ejecuta la aplicación como en el caso anterior.
+```bash
+sudo docker compose -f docker-compose.local.yml up -d
+```
+
+Para entrar en la página web se usa esta URL.
+```URL
+https://sidi10-1.sidi.etsii.urjc.es:8443
+```
+[Aplicación web](https://sidi10-1.sidi.etsii.urjc.es:8443)
+
+### Documentación para construcción de la imagen docker
+#### Para construir la imagen en docker
+```bash
+./create_image.sh
+```
+Se ejecuta el script que construye una imagen Docker llamada wenwenshrek/shop:1.0.0 utilizando el Dockerfile. Define el nombre y ruta del Dockerfile y ejecuta el comando. Finaliza mostrando un mensaje de éxito si la imagen se construye correctamente.
+- Construcción con buildpacks
+  - No implementada
+- Construcción con comandos
+  - Es necesario ejecutar el comando desde la carpeta raíz
+    ```bash
+    sudo docker build -f ./docker/Dockerfile .
+    ```
+#### Para publicar la imagen Docker
+```bash
+./publish_image.sh
+```
+Este script publica la imagen Docker wenwenshrek/shop:1.0.0 en Docker Hub. Utiliza docker push para subir la imagen y muestra mensajes antes y después del proceso para indicar su inicio y éxito.
+### Documentación para desplegar en las máquinas virtuales
+  - Requisitos:
+  - Tener instalador Docker
+  - Tener permisos como el sudo
+  - Que ambas máquinas estén conectados 
+  - Para la de datos:
+    ```bash
+    sudo docker run -d --name mysql --restart unless-stopped -e MYSQL_ROOT_PASSWORD=88888888 -e MYSQL_DATABASE=shop -v mysql_data:/var/lib/mysql -p 3306:3306 mysql:9.2
+    ```
+-	Para la aplicacion web:
+     - Tener lanzada la BBDD en la máquina 2:
+
+    ```bash
+    sudo docker run -d -p 8443:8443 -e SPRING_DATASOURCE_URL=jdbc:mysql://{ip de la máquina dos sin corchetes}:3306/shop wenwenshrek/shop:1.0.0
+    ```
+### Documentación para desplegar en las máquinas virtuales
+Para desplegar las aplicaciones y que esten conectadas es necesario que:
+  - La máquina 2 con la BBDD esté activa en el puerto 3306 y que sea accesible desde la máquina 1.
+  - La máquina 1 tiene que poner establecer comunicación con la máquina 2. Y lanzar la web referenciando la BBDD de la máquina 2.
+
+  - Siguiendo este orden de ejecución podemos desplegar las dos aplicaciones.
+    1. Despliegar la BBDD en la máquina 2
+    ```bash
+      sudo docker run -d --name mysql --restart unless-stopped -e MYSQL_ROOT_PASSWORD=88888888 -e MYSQL_DATABASE=shop -v mysql_data:/var/lib/mysql -p 3306:3306 mysql:9.2
+    ```
+    2. Desplegar la aplicación en la máquina principal con referencia a la BBDD de la máquina 2.
+    ```bash
+      sudo docker run -d -p 8443:8443 -e SPRING_DATASOURCE_URL=jdbc:mysql://{IP MÁQUINA2}:3306/shop wenwenshrek/shopprueba:1.0.0
+    ```
+### URL de la aplicación desplegada en la máquina virtual
+Se podrá acceder a la aplicación desde la siguiente URL
+```URL
+https://sidi10-1.sidi.etsii.urjc.es:8443
+```
+[Aplicación web](https://sidi10-1.sidi.etsii.urjc.es:8443)
+#### Credenciales de acceso
+ - Administrador 
+   - Usuario: admin
+   - Contraseña: adminpass
+
+- Usuario normal 1
+  - Usuario: vero
+  - Contraseña: cont
+- Usuario normal 2
+  - Usuario: user
+  - Contraseña: pass
